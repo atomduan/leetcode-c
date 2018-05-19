@@ -1,0 +1,6 @@
+*.s
+asm/
+
+*.o
+*.bin
+Makefile
