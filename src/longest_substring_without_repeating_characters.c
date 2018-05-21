@@ -70,4 +70,5 @@ int main(int argc, char **argv)
     //char *p = "abba";
     int res = lengthOfLongestSubstring(p);
     printf("result is %d\n", res);
+    return 0;
 }
