@@ -83,6 +83,6 @@ int main(int argc, char **argv)
     int nums2Size = 3;
     double res = 0.0;
     res = findMedianSortedArrays(nums1, nums1Size, nums2, nums2Size);
-    printf("the result is %e\n", res);
+    printf("the result is %f\n", res);
     return 0;
 }
