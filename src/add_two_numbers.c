@@ -72,3 +72,8 @@ addTwoNumbers(struct ListNode* l1, struct ListNode* l2)
 
     return result;
 }
+
+int main(int argc, char **argv) 
+{
+    return 0;
+}
