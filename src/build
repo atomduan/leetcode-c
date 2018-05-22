@@ -17,11 +17,11 @@ CFLAGS = -c -pipe  -O0 -W -Wall -Wpointer-arith -Wno-unused-parameter -Werror -g
 
 LINK = \$(CC)
 
-BUILD_DEPS = ./lib/misc_utils.h
+BUILD_DEPS = ./header/misc_utils.h
 
 BUILD_INCS = -I ./ \\
 	-I ./lib \\
-	-I ./linux
+	-I ./header
 
 
 END
