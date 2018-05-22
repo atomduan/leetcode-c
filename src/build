@@ -17,9 +17,10 @@ CFLAGS = -c -pipe  -O0 -W -Wall -Wpointer-arith -Wno-unused-parameter -Werror -g
 
 LINK = \$(CC)
 
-BUILD_DEPS = misc_utils.h
+BUILD_DEPS = ./lib/misc_utils.h
 
 BUILD_INCS = -I ./ \\
+	-I ./lib \\
 	-I ./linux
 
 
@@ -45,7 +46,7 @@ fi
 
 cat <<END >> Makefile
 misc_utils.o:	\$(BUILD_DEPS)
-	\$(CC) \$(CFLAGS) \$(BUILD_INCS) -o misc_utils.o misc_utils.c
+	\$(CC) \$(CFLAGS) \$(BUILD_INCS) -o misc_utils.o ./lib/misc_utils.c
 
 
 END
