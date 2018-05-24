@@ -48,6 +48,8 @@ convert(char* s, int numRows)
     int i = 0;
     char *result = NULL; 
     char *curr = NULL;
+    char **dict = NULL;
+    char **tmpd = NULL;
 
     if (numRows == 1) return s;
 
@@ -56,11 +58,23 @@ convert(char* s, int numRows)
     curr = result;
     memset(result, 0, len+1);
 
-    for (line_index=0; line_index<numRows; line_index++) {
-        for (i = 0; i<len; i++) {
-            if (compute_line_number(i, numRows) == line_index) {
-                *curr++ = s[i];
-            }
+    dict = malloc(sizeof(char *)*numRows);
+    for (i=0; i<numRows; i++) {
+        dict[i] = malloc(len/numRows + 1);
+        memset(dict[i], 0, len/numRows + 1);
+    }
+
+    tmpd = malloc(sizeof(char *)*numRows);
+    memcpy(tmpd, dict, sizeof(char *)*numRows);
+
+    for (i = 0; i<len; i++) {
+        line_index = compute_line_number(i, numRows);
+        *tmpd[line_index]++ = s[i];
+    }
+
+    for (i=0; i<numRows; i++) {
+        for (;*dict[i]!='\0'; dict[i]++) {
+            *curr++ = *dict[i];
         }
     }
 
