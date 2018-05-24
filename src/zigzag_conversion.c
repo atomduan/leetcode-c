@@ -28,13 +28,48 @@
 #include <linux_config.h>
 #include <misc_utils.h>
 
+static int 
+compute_line_number(int index, int row_num) 
+{
+    int step = 0;
+    int sidx = 0;
+    int line = 0;
+    step = (row_num - 1) * 2;
+    sidx = index % step;
+    line = sidx < row_num ? sidx : 2*(row_num-1) - sidx;
+    return line;
+}
+
 char *
 convert(char* s, int numRows) 
 {
-    char * result = NULL; 
+    int len = 0; 
+    int line_index = 0;
+    int i = 0;
+    char *result = NULL; 
+    char *curr = NULL;
+
+    if (numRows == 1) return s;
+
+    len = strlen(s);
+    result = malloc(len+1);; 
+    curr = result;
+    memset(result, 0, len+1);
+
+    for (line_index=0; line_index<numRows; line_index++) {
+        for (i = 0; i<len; i++) {
+            if (compute_line_number(i, numRows) == line_index) {
+                *curr++ = s[i];
+            }
+        }
+    }
+
     return result;
 }
 
 int main(int argc, char **argv) {
+    char *s = "PAYPALISHIRING";
+    int numRows = 4;
+    printf("result is:\n%s\n%s should\n", convert(s, numRows), "PINALSIGYAHRPI");
     return 0;
 }
