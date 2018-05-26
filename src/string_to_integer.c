@@ -44,11 +44,76 @@
 #include <linux_config.h>
 #include <misc_utils.h>
 
+
 int myAtoi(char* str) {
-    return 0; 
+    int INIT_STAT = 0;
+    int NUM_STAT = 2;
+    int FIN_STAT = 3;
+
+    char * ss = malloc(strlen(str)+3);
+    memset(ss, 0 , strlen(str)+3);
+    memcpy(ss, str, strlen(str));
+    ss[strlen(str)] = 'z';
+    ss[strlen(str)+1] = 'z';
+
+    int stat = INIT_STAT;
+    int result = 0;
+    int test = 0;
+    int sign = 1;
+    int curr = 0;
+
+    char *p = NULL;
+    for (p=ss ; *p!='\0'; p++) {
+        if(INIT_STAT == stat) {
+            if (*p == ' ') {
+                continue;
+            }
+            if (*p == '-') {
+                sign = -1;
+                stat = NUM_STAT;
+                continue;
+            }
+            if (*p == '+') {
+                stat = NUM_STAT;
+                continue;
+            }
+            if (*p >= 48 && *p <= 57) {
+                curr = (*p - 48);
+                stat = NUM_STAT;
+                continue;
+            }
+            stat = FIN_STAT;
+            continue;
+        }
+        if(NUM_STAT == stat) {
+            //test integer boundary...
+            test = result*10 + curr;
+            if (((test-curr)/10 == result) && (test>=0)) {
+                result = test;
+            } else {
+                return sign>0 ? INT_MAX: INT_MIN;
+                continue;
+            }
+            if (*p >= 48 && *p <= 57) {
+                curr = (*p - 48);
+                continue;
+            } else {
+                stat = FIN_STAT;
+                continue;
+            }
+            stat = FIN_STAT;
+            continue;
+        }
+        if(FIN_STAT == stat) {
+            result = result * sign;
+            break;
+        }
+    }
+    return result; 
 }
 
 int
 main(int argc, char **argv) {
-    return 0;
+    char *p = "   -42";
+    printf("result is %d\n", myAtoi(p));
 }
