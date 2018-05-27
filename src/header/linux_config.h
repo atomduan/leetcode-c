@@ -47,6 +47,7 @@
 #include <sys/ioctl.h>
 #include <crypt.h>
 #include <sys/utsname.h>        /* uname() */
+#include <stdbool.h>
 
 /* use of dirname */
 #include <libgen.h>
