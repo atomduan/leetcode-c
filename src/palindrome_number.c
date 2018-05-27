@@ -22,13 +22,21 @@
 #include <linux_config.h>
 #include <misc_utils.h>
 
-static bool 
+static int 
 isPalindrome(int x) {
-    return false;
+    int result = 0;
+    int orgx = x;
+    if (x < 0) return 0;
+    while (1) {
+       result = result * 10 + (x % 10); 
+       x /= 10;
+       if (x == 0) break;
+    }
+    return result == orgx;
 }
 
 int
 main(int argc, char **argv)
 {
-    return 0;
+    printf("result is %d\n", isPalindrome(1111));
 }
