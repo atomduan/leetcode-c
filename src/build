@@ -13,7 +13,7 @@ rm Makefile
 
 cat <<END > Makefile
 CC = gcc
-CFLAGS = -c -pipe  -O0 -W -Wall -Wpointer-arith -Wno-unused-parameter -Werror -g
+CFLAGS = -c -pipe -O0 -W -Wall -Wpointer-arith -Wno-unused-parameter -Werror -g
 
 LINK = \$(CC)
 
@@ -22,7 +22,6 @@ BUILD_DEPS = ./header/misc_utils.h
 BUILD_INCS = -I ./ \\
 	-I ./lib \\
 	-I ./header
-
 
 END
 
@@ -35,10 +34,8 @@ ${name}:	${name}.o \\
 	misc_utils.o \\
 	-ldl -lpthread -Wl,-E
 
-
 ${name}.o:	\$(BUILD_DEPS)
 	\$(CC) \$(CFLAGS) \$(BUILD_INCS) -o ${name}.o ${name}.c
-
 
 END
 fi
@@ -47,7 +44,6 @@ fi
 cat <<END >> Makefile
 misc_utils.o:	\$(BUILD_DEPS)
 	\$(CC) \$(CFLAGS) \$(BUILD_INCS) -o misc_utils.o ./lib/misc_utils.c
-
 
 END
 
