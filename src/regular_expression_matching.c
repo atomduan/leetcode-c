@@ -47,9 +47,87 @@
 #include <linux_config.h>
 #include <misc_utils.h>
 
+typedef step_s step;
+
+struct step_s {
+    char *pos;
+    step *next;
+}; 
+
+static step *
+new_step()
+{
+    step *res = NULL;
+    res = malloc(sizeof(step));
+    memset(res, 0, sizeof(step));
+    return res;
+}
+
+static bool
+is_accept(step *sp, char *ss) {
+    if (*sp->pos == '.') {
+        return true;
+    } else {
+        if (*sp->pos == *ss) {
+            return true;
+        }
+    }
+    return false;
+}
+
 static bool 
 isMatch(char* s, char* p) {
-    return 0; 
+    char *ss = NULL;
+    step *sp = NULL 
+    step *head = NULL 
+    step *curr = NULL 
+    step *prev = NULL 
+    step *tmp = NULL 
+    for (ss=s; *ss!='\0'; ss++) {
+        //init
+        if (sp == NULL && ss==s) {
+            sp = new_step();
+            sp->pos = p; 
+            head = sp;
+        }
+
+        curr = head; 
+        prev = NULL;
+        do {
+            if (is_accept(curr, ss)) {
+                if (curr->pos[1] == '*') {
+                    //fork new step
+                    tmp = new_step();
+                    tmp->pos = curr->pos;
+                    tmp->next = curr->next;
+                    curr->next = tmp;
+                    //curr go far step
+                    curr->pos = curr->pos[2];
+                } else {
+                    curr->pos++;
+                }
+                if (curr->pos == '\0') {
+                    return true;
+                } else {
+                    prev = curr;
+                }
+            } else {
+                if (prev == NULL) {
+                    free(curr);
+                    return false;
+                } else {
+                    prev->next = curr->next;
+                    free(curr);
+                    if (prev->next == NULL) {
+                        return false;
+                    }
+                    continue;
+                }
+            }
+            curr = prev->next;
+        } while (curr!=NULL);
+    }
+    return true; 
 }
 
 int main(int argc, char **argv) 
