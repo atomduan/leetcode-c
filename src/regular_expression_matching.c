@@ -53,25 +53,26 @@ typedef struct step_s step;
 struct step_s {
     char *pos;
     step *next;
+    step *prev;
 }; 
 
 static step *
-new_step()
+new_step(char *pos)
 {
     step *res = NULL;
     res = malloc(sizeof(step));
     memset(res, 0, sizeof(step));
+    res->pos = pos;
     return res;
 }
 
 static bool
 is_accept(step *sp, char *ss) {
+    if (*sp->pos == '\0') return false;
     if (*sp->pos == '.') {
         return true;
     } else {
-        if (*sp->pos == *ss) {
-            return true;
-        }
+        if (*sp->pos == *ss) return true;
     }
     return false;
 }
@@ -79,63 +80,68 @@ is_accept(step *sp, char *ss) {
 static bool 
 isMatch(char* s, char* p) {
     char *ss = NULL;
-    step *sp = NULL; 
+    char *tmpstr = NULL;
+    step *stp = NULL; 
     step *head = NULL;
-    step *curr = NULL;
-    step *prev = NULL;
     step *tmp = NULL;
-    for (ss=s; *ss!='\0'; ss++) {
-        //init
-        if (sp == NULL && ss==s) {
-            sp = new_step();
-            sp->pos = p; 
-            head = sp;
-        }
+    int score = 0;
 
-        curr = head; 
-        prev = NULL;
-        do {
-            if (is_accept(curr, ss)) {
-                    printf("2\n");
-                if (curr->pos[1] == '*') {
+    head = new_step(p);
+
+    for (ss=s; *ss!='\0'; ss++) {
+        for (stp = head; stp!=NULL; stp=stp->next) {
+            if (is_accept(stp, ss)) {
+                if (stp->pos[1] == '*') {
                     //fork new step
-                    tmp = new_step();
-                    tmp->pos = curr->pos;
-                    tmp->next = curr->next;
-                    curr->next = tmp;
-                    //curr go far step
-                    curr->pos = &curr->pos[2];
+                    tmp = new_step(stp->pos);
+                    if (stp->prev == NULL) {
+                        head = tmp; 
+                    } else {
+                        stp->prev->next = tmp; tmp->prev = stp->prev;
+                    }
+                    tmp->next = stp; stp->prev = tmp;
+                    //step over * 
+                    stp->pos = &stp->pos[2];
                 } else {
-                    curr->pos++;
-                }
-                if (*curr->pos == '\0') {
-                    return true;
-                } else {
-                    prev = curr;
+                    stp->pos++;
                 }
             } else {
-                if (curr->pos[1] != '*') {
-                    if (prev == NULL) {
-                        free(curr);
-                        return false;
-                    } else {
-                        prev->next = curr->next;
-                        free(curr);
-                        if (prev->next == NULL) {
-                            return false;
-                        }
-                        continue;
-                    }
+                if (stp->pos[1] == '*') {
+                    //step over * 
+                    stp->pos = &stp->pos[2];
                 } else {
-                    curr->pos = &curr->pos[2];
-                    prev = curr;
-                    continue;
+                    //remove this step from list
+                    if (stp->prev == NULL) {
+                        head = stp->next; 
+                        tmp = stp->next; free(stp); stp = tmp;
+                    } else {
+                        stp->prev->next = stp->next;
+                        if (stp->next != NULL) {
+                            stp->next->prev = stp->prev;
+                        }
+                        tmp = stp->next; free(stp); stp = tmp;
+                    }
                 }
             }
-            curr = prev->next;
-        } while (curr!=NULL);
+        }
     }
-    return true; 
+
+    //check remain step
+    for (stp = head; stp!=NULL; stp=stp->next) {
+        if (*stp->pos == '\0') return true;
+        score = 0;
+        for (tmpstr = stp->pos; *tmpstr!='\0'; tmpstr++) {
+            if (*tmpstr != '*') {
+                score++;
+                if (score != 1) return false;
+            } else {
+                score--;
+                if (score != 0) return false;
+            }
+            return true;
+        }
+    }
+    return false; 
 }
 
 int main(int argc, char **argv) 
