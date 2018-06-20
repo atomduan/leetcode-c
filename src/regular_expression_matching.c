@@ -96,6 +96,7 @@ isMatch(char* s, char* p) {
         prev = NULL;
         do {
             if (is_accept(curr, ss)) {
+                    printf("2\n");
                 if (curr->pos[1] == '*') {
                     //fork new step
                     tmp = new_step();
@@ -113,15 +114,21 @@ isMatch(char* s, char* p) {
                     prev = curr;
                 }
             } else {
-                if (prev == NULL) {
-                    free(curr);
-                    return false;
-                } else {
-                    prev->next = curr->next;
-                    free(curr);
-                    if (prev->next == NULL) {
+                if (curr->pos[1] != '*') {
+                    if (prev == NULL) {
+                        free(curr);
                         return false;
+                    } else {
+                        prev->next = curr->next;
+                        free(curr);
+                        if (prev->next == NULL) {
+                            return false;
+                        }
+                        continue;
                     }
+                } else {
+                    curr->pos = &curr->pos[2];
+                    prev = curr;
                     continue;
                 }
             }
@@ -133,6 +140,6 @@ isMatch(char* s, char* p) {
 
 int main(int argc, char **argv) 
 {
-    printf("isMatch %d\n", isMatch("ab", "abc*"));
+    printf("isMatch %d\n", isMatch("abb", "c*a*b"));
     return 0;
 }
