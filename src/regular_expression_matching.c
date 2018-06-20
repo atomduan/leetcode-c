@@ -47,7 +47,8 @@
 #include <linux_config.h>
 #include <misc_utils.h>
 
-typedef step_s step;
+
+typedef struct step_s step;
 
 struct step_s {
     char *pos;
@@ -78,11 +79,11 @@ is_accept(step *sp, char *ss) {
 static bool 
 isMatch(char* s, char* p) {
     char *ss = NULL;
-    step *sp = NULL 
-    step *head = NULL 
-    step *curr = NULL 
-    step *prev = NULL 
-    step *tmp = NULL 
+    step *sp = NULL; 
+    step *head = NULL;
+    step *curr = NULL;
+    step *prev = NULL;
+    step *tmp = NULL;
     for (ss=s; *ss!='\0'; ss++) {
         //init
         if (sp == NULL && ss==s) {
@@ -102,11 +103,11 @@ isMatch(char* s, char* p) {
                     tmp->next = curr->next;
                     curr->next = tmp;
                     //curr go far step
-                    curr->pos = curr->pos[2];
+                    curr->pos = &curr->pos[2];
                 } else {
                     curr->pos++;
                 }
-                if (curr->pos == '\0') {
+                if (*curr->pos == '\0') {
                     return true;
                 } else {
                     prev = curr;
@@ -132,6 +133,6 @@ isMatch(char* s, char* p) {
 
 int main(int argc, char **argv) 
 {
-    isMatch(NULL, NULL);
+    printf("isMatch %d\n", isMatch("ab", "abc*"));
     return 0;
 }
