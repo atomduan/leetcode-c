@@ -106,7 +106,7 @@ compile_pattern(char *pattern)
     char *p = NULL;
     statm *head = NULL;
     statm *curr = NULL;
-    head = curr = new_stat(ATTR_START, '\0');
+    head = curr = new_stat(ATTR_START, '\a');
     for (p=pattern; *p!='\0'; p++) {
         if (p[1] == '*') {
             curr->next = new_stat(ATTR_REPEAT,*p++);
@@ -143,6 +143,7 @@ process_curr_step(step *curr_step, char *input_char, step *tail_step)
             curr_step->status = STEP_OFF;
         }
     }
+
     if (tmp_step!=NULL && next_stat->attr == ATTR_END) {
         return MATCH_ACCEPT;
     } else {
@@ -162,14 +163,14 @@ isMatch(char* s, char* p) {
 
     int end_flag = 0;
     for (ss=s; end_flag != 1; ss++) {
-        if(ss == '\0') end_flag = 1;
+        if(*ss == '\0') end_flag = 1;
         curr_step = step_head;
         do {
             tail_step = curr_step;
             curr_step = curr_step->next;
         } while (curr_step != NULL);
 
-        for (curr_step = step_head; curr_step->next != tail_step; curr_step=curr_step->next) {
+        for (curr_step = step_head; curr_step!=NULL && curr_step->next!=tail_step; curr_step=curr_step->next) {
             if (curr_step->status == STEP_ON) {
                 res = process_curr_step(curr_step, ss, tail_step); 
                 if (res == MATCH_ACCEPT) return true;
@@ -185,6 +186,6 @@ isMatch(char* s, char* p) {
 
 int main(int argc, char **argv) 
 {
-    printf("isMatch %d\n", isMatch("a", "a"));
+    printf("isMatch %d\n", isMatch("a", "ab*"));
     return 0;
 }
