@@ -44,101 +44,140 @@
  *p = "mis*is*p*."
  *Output: false
  */
+
 #include <linux_config.h>
 #include <misc_utils.h>
 
+#define ATTR_START 0
+#define ATTR_PLAN 1 
+#define ATTR_REPEAT 2
+#define ATTR_END 3
 
+#define STEP_OFF 0
+#define STEP_ON 1
+
+#define MATCH_DENY 0
+#define MATCH_ACCEPT 1
+
+typedef struct statm_s statm;
 typedef struct step_s step;
 
-struct step_s {
-    char *pos;
-    step *next;
-    step *prev;
+struct statm_s {
+    int     attr; 
+    char    val;
+    statm   *next;
 }; 
 
+struct step_s {
+    int     status;
+    statm   *curr_stat;
+    step    *next;
+}; 
+
+static statm *
+new_stat(int attr, char val)
+{
+    statm *res = NULL;
+    res = malloc(sizeof(statm));
+    memset(res, 0, sizeof(statm));
+    res->attr = attr;
+    res->val = val;
+    return res;
+}
+
 static step *
-new_step(char *pos)
+new_step(statm *st)
 {
     step *res = NULL;
     res = malloc(sizeof(step));
     memset(res, 0, sizeof(step));
-    res->pos = pos;
+    res->status = STEP_ON;
+    res->curr_stat = st;
+    res->next = NULL;
     return res;
 }
 
+/**
+ * compile and build a NFA, in this case is a link list
+ */
+static statm *
+compile_pattern(char *pattern)
+{
+    char *p = NULL;
+    statm *head = NULL;
+    statm *curr = NULL;
+    head = curr = new_stat(ATTR_START, '\0');
+    for (p=pattern; *p!='\0'; p++) {
+        if (p[1] == '*') {
+            curr->next = new_stat(ATTR_REPEAT,*p++);
+        } else {
+            curr->next = new_stat(ATTR_PLAN,*p);
+        }
+        curr = curr->next;
+    }
+    curr->next = new_stat(ATTR_END,'\0');
+    return head;
+}
+
 static bool
-is_accept(step *sp, char *ss) {
-    if (*sp->pos == '\0') return false;
-    if (*sp->pos == '.') {
+is_compatibale(char *sp, char *ss) {
+    if (*sp == '.') {
         return true;
     } else {
-        if (*sp->pos == *ss) return true;
+        if (*sp == *ss) return true;
     }
     return false;
+}
+
+static int
+process_curr_step(step *curr_step, char *input_char, step *tail_step)
+{
+    statm *curr_stat = curr_step->curr_stat;
+    statm *next_stat = curr_stat->next;
+    step *tmp_step = NULL;
+    if (is_compatibale(&next_stat->val, input_char)) {
+        tmp_step = new_step(next_stat);
+        tail_step->next = tmp_step;
+    } else {
+        if (curr_stat->attr != ATTR_REPEAT) {
+            curr_step->status = STEP_OFF;
+        }
+    }
+    if (tmp_step!=NULL && next_stat->attr == ATTR_END) {
+        return MATCH_ACCEPT;
+    } else {
+        return MATCH_DENY;
+    }
 }
 
 static bool 
 isMatch(char* s, char* p) {
     char *ss = NULL;
-    char *tmpstr = NULL;
-    step *stp = NULL; 
-    step *head = NULL;
-    step *tmp = NULL;
-    int score = 0;
+    int  res = MATCH_DENY;
+    statm *stat_head = compile_pattern(p);
 
-    head = new_step(p);
+    step *curr_step = NULL;
+    step *tail_step = NULL;
+    step *step_head = new_step(stat_head);
 
-    for (ss=s; *ss!='\0'; ss++) {
-        for (stp = head; stp!=NULL; stp=stp->next) {
-            if (is_accept(stp, ss)) {
-                if (stp->pos[1] == '*') {
-                    //fork new step
-                    tmp = new_step(stp->pos);
-                    if (stp->prev == NULL) {
-                        head = tmp; 
-                    } else {
-                        stp->prev->next = tmp; tmp->prev = stp->prev;
-                    }
-                    tmp->next = stp; stp->prev = tmp;
-                    //step over * 
-                    stp->pos = &stp->pos[2];
-                } else {
-                    stp->pos++;
-                }
-            } else {
-                if (stp->pos[1] == '*') {
-                    //step over * 
-                    stp->pos = &stp->pos[2];
-                } else {
-                    //remove this step from list
-                    if (stp->prev == NULL) {
-                        head = stp->next; 
-                        tmp = stp->next; free(stp); stp = tmp;
-                    } else {
-                        stp->prev->next = stp->next;
-                        if (stp->next != NULL) {
-                            stp->next->prev = stp->prev;
-                        }
-                        tmp = stp->next; free(stp); stp = tmp;
-                    }
-                }
+    int end_flag = 0;
+    for (ss=s; end_flag != 1; ss++) {
+        if(ss == '\0') end_flag = 1;
+        curr_step = step_head;
+        do {
+            tail_step = curr_step;
+            curr_step = curr_step->next;
+        } while (curr_step != NULL);
+
+        for (curr_step = step_head; curr_step->next != tail_step; curr_step=curr_step->next) {
+            if (curr_step->status == STEP_ON) {
+                res = process_curr_step(curr_step, ss, tail_step); 
+                if (res == MATCH_ACCEPT) return true;
             }
         }
-    }
-
-    //check remain step
-    for (stp = head; stp!=NULL; stp=stp->next) {
-        if (*stp->pos == '\0') return true;
-        score = 0;
-        for (tmpstr = stp->pos; *tmpstr!='\0'; tmpstr++) {
-            if (*tmpstr != '*') {
-                score++;
-                if (score != 1) return false;
-            } else {
-                score--;
-                if (score != 0) return false;
-            }
-            return true;
+        if (tail_step->status == STEP_ON) {
+            res = process_curr_step(tail_step, ss, tail_step); 
+            if (res == MATCH_ACCEPT) return true;
         }
     }
     return false; 
@@ -146,6 +185,6 @@ isMatch(char* s, char* p) {
 
 int main(int argc, char **argv) 
 {
-    printf("isMatch %d\n", isMatch("abb", "c*a*b"));
+    printf("isMatch %d\n", isMatch("a", "a"));
     return 0;
 }
