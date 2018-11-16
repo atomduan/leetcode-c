@@ -1,10 +1,10 @@
 .*
-!.gitignore
 *.class
 
 *.war
 *.ear
 *.swp
+src/core
 
 target
 *.xml.bak

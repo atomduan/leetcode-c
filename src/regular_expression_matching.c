@@ -115,8 +115,22 @@ compile_pattern(char *pattern)
         }
         curr = curr->next;
     }
-    curr->next = new_stat(ATTR_END,'\0');
+    curr->next = new_stat(ATTR_PLAN,'\0');
+    curr = curr->next;
+    curr->next = new_stat(ATTR_END,'\a');
     return head;
+}
+
+static step *
+get_tail_step(step *step_head) 
+{
+    step *curr_step = step_head;
+    step *tail_step = NULL;
+    do {
+        tail_step = curr_step;
+        curr_step = curr_step->next;
+    } while (curr_step != NULL);
+    return tail_step;
 }
 
 static bool
@@ -129,69 +143,121 @@ is_compatibale(char *sp, char *ss) {
     return false;
 }
 
-static int
-process_curr_step(step *curr_step, char *input_char, step *tail_step)
+static void 
+process_stat_detect(statm *des_stat, char input_char, step *tail_step)
 {
-    statm *curr_stat = curr_step->curr_stat->next;
-    int res = MATCH_DENY;
-    
-    for (;curr_stat != NULL; curr_stat = curr_stat->next) {
-        if (curr_stat->attr == ATTR_END) res = MATCH_ACCEPT;
-        if (is_compatibale(&curr_stat->val, input_char)) {
-            printf("input_char %c, AT and add step of %s\n", *input_char, &curr_stat->val);
-            step *tmp_step = new_step(curr_stat);
-            tail_step->next = tmp_step;
-            tail_step = tail_step->next;
-        } else {
-            if (curr_stat->attr != ATTR_REPEAT) {
-                curr_step->status = STEP_OFF;
-                break;
-            }
+    if (des_stat == NULL) return;
+    if (is_compatibale(&des_stat->val, &input_char)) {
+        step *tmp_step = new_step(des_stat);
+        tail_step->next = tmp_step;
+        tail_step = tail_step->next;
+    }
+    if (des_stat->attr == ATTR_REPEAT){
+        process_stat_detect(des_stat->next, input_char, tail_step);
+    }
+}
+
+static void
+process_curr_step(step *src_step, char input_char, step *tail_step)
+{
+    statm *des_stat = NULL;
+    if (src_step->status == STEP_ON) {
+        des_stat = src_step->curr_stat->next;
+        process_stat_detect(des_stat, input_char, tail_step);
+        if (src_step->curr_stat->attr != ATTR_REPEAT){
+            src_step->status = STEP_OFF;
         }
     }
-    return res;
+}
+
+static void
+read_one_char(char c, step *head_step) {
+    step *curr_step = NULL;
+    step *tail_step = NULL;
+    tail_step = get_tail_step(head_step);
+    for (curr_step=head_step; 
+            curr_step!=NULL && 
+            curr_step!=tail_step; 
+            curr_step=curr_step->next) {
+        process_curr_step(curr_step,c,tail_step); 
+    }
+    process_curr_step(tail_step,c,tail_step); 
+}
+
+void 
+print_steps(step *head_step)
+{
+    step *tmp = NULL;
+    char *status = NULL;
+    char *statval = NULL;
+    char *stattyp = NULL;
+    int count = 0;
+
+    for (tmp = head_step; tmp != NULL; tmp=tmp->next) {
+        if(tmp->status == STEP_OFF) {
+            status = "STEP_OFF";
+        } else if (tmp->status == STEP_ON) {
+            status = "STEP_ON";
+        } else {
+            status = "UNKNOWN";
+        }
+
+        if (tmp->curr_stat != NULL) {
+            if (tmp->curr_stat->attr == ATTR_START) {
+                statval = "\\a";
+                stattyp = "ATTR_START";
+            }
+            if (tmp->curr_stat->attr == ATTR_END) {
+                statval = "\\a";
+                stattyp = "ATTR_END";
+            }
+            if (tmp->curr_stat->attr == ATTR_PLAN) {
+                statval = &tmp->curr_stat->val;
+                stattyp = "ATTR_PLAN";
+            }
+            if (tmp->curr_stat->attr == ATTR_REPEAT) {
+                statval = &tmp->curr_stat->val;
+                stattyp = "ATTR_REPEAT";
+            }
+        }
+        printf ("[%d: step_stat:%s, step_typ:%s, step_status:%s]\n", count, statval, stattyp, status);
+        count++;
+    }
+}
+
+static bool
+determin_match(step *head_step)
+{
+    step *curr_step = NULL;
+    for (curr_step=head_step; curr_step!=NULL; curr_step=curr_step->next) {
+        if (curr_step->curr_stat->val == '\0') return true; 
+    }
+    return false;
 }
 
 static bool 
-isMatch(char* s, char* p) {
+isMatch(char* s, char* p) 
+{
     char *ss = NULL;
-    int  res = MATCH_DENY;
-    statm *stat_head = compile_pattern(p);
-
-    step *curr_step = NULL;
-    step *tail_step = NULL;
-    step *step_head = new_step(stat_head);
-
     int end_flag = 0;
-    printf("INPUT s is '%s', patter is '%s'\n", s,p);
+    statm *stat_head = compile_pattern(p);
+    step *head_step = new_step(stat_head);
     for (ss=s; end_flag != 1; ss++) {
         if(*ss == '\0') end_flag = 1;
-        curr_step = step_head;
-        printf("-------------------------\n");
-        printf("loop : current ss is %c, end_flag is %d\n", ss[0], end_flag);
-        do {
-            tail_step = curr_step;
-            curr_step = curr_step->next;
-        } while (curr_step != NULL);
-
-        for (curr_step = step_head; curr_step!=NULL && curr_step->next!=tail_step && curr_step!=tail_step; curr_step=curr_step->next) {
-            printf("check loop : current step stat is %c, status is %d\n", curr_step->curr_stat->val, curr_step->status);
-            if (curr_step->status == STEP_ON) {
-                res = process_curr_step(curr_step, ss, tail_step); 
-                if (res == MATCH_ACCEPT && end_flag==1) return true;
-            }
-        }
-        if (tail_step->status == STEP_ON) {
-            printf("tail loop : current step stat is %c, status is %d\n", curr_step->curr_stat->val, curr_step->status);
-            res = process_curr_step(tail_step, ss, tail_step); 
-            if (res == MATCH_ACCEPT && end_flag==1) return true;
-        }
+        //printf("%c-------------------------------------------%s\n",*ss, p);
+        //print_steps(head_step);
+        read_one_char(*ss, head_step);
+        //printf("########################\n");
+        //print_steps(head_step);
     }
-    return false; 
+    return determin_match(head_step); 
 }
 
 int main(int argc, char **argv) 
 {
-    printf("isMatch %d\n", isMatch("acxc", ".*"));
+    printf("isMatch %d\n", isMatch("aa", "a"));
+    printf("isMatch %d\n", isMatch("aa", ".*"));
+    printf("isMatch %d\n", isMatch("aa", "."));
+    printf("isMatch %d\n", isMatch("aa", ".*ax*aa*"));
     return 0;
 }
