@@ -132,23 +132,24 @@ is_compatibale(char *sp, char *ss) {
 static int
 process_curr_step(step *curr_step, char *input_char, step *tail_step)
 {
-    statm *curr_stat = curr_step->curr_stat;
+    statm *curr_stat = curr_step->curr_stat->next;
+    int res = MATCH_DENY;
     
     for (;curr_stat != NULL; curr_stat = curr_stat->next) {
-        if (curr_stat->attr == ATTR_END) return MATCH_ACCEPT;
-        printf("xxxxinput_char %s step at %s\n", input_char, &curr_stat->val);
+        if (curr_stat->attr == ATTR_END) res = MATCH_ACCEPT;
         if (is_compatibale(&curr_stat->val, input_char)) {
-            printf("input_char %s step at %s\n", input_char, &curr_stat->val);
+            printf("input_char %c, AT and add step of %s\n", *input_char, &curr_stat->val);
             step *tmp_step = new_step(curr_stat);
             tail_step->next = tmp_step;
+            tail_step = tail_step->next;
         } else {
             if (curr_stat->attr != ATTR_REPEAT) {
+                curr_step->status = STEP_OFF;
                 break;
             }
         }
     }
-    curr_step->status = STEP_OFF;
-    return MATCH_DENY;
+    return res;
 }
 
 static bool 
@@ -162,24 +163,28 @@ isMatch(char* s, char* p) {
     step *step_head = new_step(stat_head);
 
     int end_flag = 0;
+    printf("INPUT s is '%s', patter is '%s'\n", s,p);
     for (ss=s; end_flag != 1; ss++) {
         if(*ss == '\0') end_flag = 1;
         curr_step = step_head;
+        printf("-------------------------\n");
+        printf("loop : current ss is %c, end_flag is %d\n", ss[0], end_flag);
         do {
             tail_step = curr_step;
             curr_step = curr_step->next;
         } while (curr_step != NULL);
 
-        printf("input_char %s step\n", ss);
-        for (curr_step = step_head; curr_step!=NULL && curr_step->next!=tail_step; curr_step=curr_step->next) {
+        for (curr_step = step_head; curr_step!=NULL && curr_step->next!=tail_step && curr_step!=tail_step; curr_step=curr_step->next) {
+            printf("check loop : current step stat is %c, status is %d\n", curr_step->curr_stat->val, curr_step->status);
             if (curr_step->status == STEP_ON) {
                 res = process_curr_step(curr_step, ss, tail_step); 
-                if (res == MATCH_ACCEPT) return true;
+                if (res == MATCH_ACCEPT && end_flag==1) return true;
             }
         }
         if (tail_step->status == STEP_ON) {
+            printf("tail loop : current step stat is %c, status is %d\n", curr_step->curr_stat->val, curr_step->status);
             res = process_curr_step(tail_step, ss, tail_step); 
-            if (res == MATCH_ACCEPT) return true;
+            if (res == MATCH_ACCEPT && end_flag==1) return true;
         }
     }
     return false; 
@@ -187,6 +192,6 @@ isMatch(char* s, char* p) {
 
 int main(int argc, char **argv) 
 {
-    printf("isMatch %d\n", isMatch("acc", "acb*x*c*.*"));
+    printf("isMatch %d\n", isMatch("acxc", ".*"));
     return 0;
 }
