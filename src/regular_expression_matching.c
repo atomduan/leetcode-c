@@ -60,6 +60,7 @@ typedef struct statm_s statm;
 typedef struct step_s step;
 
 struct statm_s {
+    int     index;
     int     attr; 
     char    val;
     statm   *next;
@@ -101,10 +102,12 @@ static statm *
 compile_pattern(char *pattern)
 {
     char *p = NULL;
+    int index = 0;
     statm *head = NULL;
     statm *curr = NULL;
     head = curr = new_stat(ATTR_START, '\a');
     for (p=pattern; *p!='\0'; p++) {
+        curr->index = index++;
         if (p[1] == '*') {
             curr->next = new_stat(ATTR_REPEAT,*p++);
         } else {
@@ -112,9 +115,12 @@ compile_pattern(char *pattern)
         }
         curr = curr->next;
     }
+    curr->index = index++;
     curr->next = new_stat(ATTR_PLAN,'\0');
     curr = curr->next;
+    curr->index = index++;
     curr->next = new_stat(ATTR_END,'\a');
+    curr->next->index = index++;
     return head;
 }
 
@@ -140,16 +146,30 @@ is_compatibale(char *sp, char *ss) {
     return false;
 }
 
+static void append_tail(step *tail_step, step *tmp_step)
+{
+    if (tail_step == NULL) return;
+    for (;;) {
+        if(tail_step->next != NULL) {
+            tail_step = tail_step->next;
+        } else {
+            break;
+        }
+    }
+    tail_step->next = tmp_step;
+}
+
 static void 
 process_stat_detect(statm *des_stat, char input_char, step *tail_step)
 {
     if (des_stat == NULL) return;
     if (is_compatibale(&des_stat->val, &input_char)) {
+        //printf("xx\n");
         step *tmp_step = new_step(des_stat);
-        tail_step->next = tmp_step;
-        tail_step = tail_step->next;
+        append_tail(tail_step, tmp_step);
     }
     if (des_stat->attr == ATTR_REPEAT){
+        //printf("detect recursive, stat:%s\n", &des_stat->val);
         process_stat_detect(des_stat->next, input_char, tail_step);
     }
 }
@@ -169,6 +189,7 @@ evaluate_src_step_close(step *src_step, char input_char)
 static void
 process_curr_step(step *src_step, char input_char, step *tail_step)
 {
+    //printf("detect src_step stat->%s, status->%d\n", &src_step->curr_stat->val, src_step->status);
     statm *des_stat = NULL;
     if (src_step->status == STEP_ON) {
         des_stat = src_step->curr_stat->next;
@@ -199,6 +220,7 @@ print_steps(step *head_step)
     char *statval = NULL;
     char *stattyp = NULL;
     int count = 0;
+    int stat_index = 0;
 
     for (tmp = head_step; tmp != NULL; tmp=tmp->next) {
         if(tmp->status == STEP_OFF) {
@@ -226,8 +248,9 @@ print_steps(step *head_step)
                 statval = &tmp->curr_stat->val;
                 stattyp = "ATTR_REPEAT";
             }
+            stat_index = tmp->curr_stat->index;
         }
-        printf ("[%d: step_stat:%s, step_typ:%s, step_status:%s]\n", count, statval, stattyp, status);
+        printf ("[%d: step_stat:%s, step_typ:%s, step_status:%s, index:%d]\n", count, statval, stattyp, status, stat_index);
         count++;
     }
 }
@@ -265,9 +288,9 @@ int main(int argc, char **argv)
     //printf("isMatch %d\n", isMatch("aa", "a"));
     //printf("isMatch %d\n", isMatch("aa", ".*"));
     //printf("isMatch %d\n", isMatch("aa", "."));
-    //printf("isMatch %d\n", isMatch("aa", ".*ax*aa*"));
+    printf("isMatch %d\n", isMatch("aa", ".*ax*aa*"));
     //printf("isMatch %d\n", isMatch("mississippi", "mis*is*p*."));
     //printf("isMatch %d\n", isMatch("mississippi", "mis*is*ip*."));
-    printf("isMatch %d\n", isMatch("abbaaaabaabbcba", "a*.*ba.*c*..a*.a*."));
+    //printf("isMatch %d\n", isMatch("abbaaaabaabbcba", "a*.*ba.*c*..a*.a*."));
     return 0;
 }
