@@ -251,7 +251,7 @@ isMatch(char* s, char* p)
     step *head_step = new_step(stat_head);
     for (ss=s; end_flag != 1; ss++) {
         if(*ss == '\0') end_flag = 1;
-        printf("%s,%c-------------------------------------------%s\n",s, *ss, p);
+        printf("\n\n%s,%c-------------------------------------------%s\n",s, *ss, p);
         print_steps(head_step);
         read_one_char(*ss, head_step);
         printf("########################\n");
@@ -265,8 +265,9 @@ int main(int argc, char **argv)
     //printf("isMatch %d\n", isMatch("aa", "a"));
     //printf("isMatch %d\n", isMatch("aa", ".*"));
     //printf("isMatch %d\n", isMatch("aa", "."));
-    printf("isMatch %d\n", isMatch("aa", ".*ax*aa*"));
+    //printf("isMatch %d\n", isMatch("aa", ".*ax*aa*"));
     //printf("isMatch %d\n", isMatch("mississippi", "mis*is*p*."));
     //printf("isMatch %d\n", isMatch("mississippi", "mis*is*ip*."));
+    printf("isMatch %d\n", isMatch("abbaaaabaabbcba", "a*.*ba.*c*..a*.a*."));
     return 0;
 }
