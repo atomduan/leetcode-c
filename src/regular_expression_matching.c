@@ -70,7 +70,10 @@ struct step_s {
     int     status;
     statm   *curr_stat;
     step    *next;
+    int     dup_flag;
 }; 
+
+static step *head_step = NULL;
 
 static statm *
 new_stat(int attr, char val)
@@ -92,6 +95,7 @@ new_step(statm *st)
     res->status = STEP_ON;
     res->curr_stat = st;
     res->next = NULL;
+    res->dup_flag = 0;
     return res;
 }
 
@@ -156,7 +160,25 @@ static void append_tail(step *tail_step, step *tmp_step)
             break;
         }
     }
-    tail_step->next = tmp_step;
+
+    int uniq_flag = 1;
+    step *hstep = head_step;
+    for (;;) {
+        if (hstep->curr_stat == tmp_step->curr_stat) {
+            hstep->dup_flag = 1;
+            uniq_flag = 0;
+            break;
+        }
+        if (hstep->next != NULL) {
+            hstep = hstep->next;
+        } else {
+            break;
+        }
+    }
+
+    if (uniq_flag == 1) {
+        tail_step->next = tmp_step;
+    }
 }
 
 static void 
@@ -164,12 +186,10 @@ process_stat_detect(statm *des_stat, char input_char, step *tail_step)
 {
     if (des_stat == NULL) return;
     if (is_compatibale(&des_stat->val, &input_char)) {
-        //printf("xx\n");
         step *tmp_step = new_step(des_stat);
         append_tail(tail_step, tmp_step);
     }
     if (des_stat->attr == ATTR_REPEAT){
-        //printf("detect recursive, stat:%s\n", &des_stat->val);
         process_stat_detect(des_stat->next, input_char, tail_step);
     }
 }
@@ -180,7 +200,7 @@ evaluate_src_step_close(step *src_step, char input_char)
     if (src_step->curr_stat->attr != ATTR_REPEAT){
         src_step->status = STEP_OFF;
     } else {
-        if (false == is_compatibale(&src_step->curr_stat->val, &input_char)) {
+        if (false == is_compatibale(&src_step->curr_stat->val,&input_char)) {
             src_step->status = STEP_OFF;
         }
     }
@@ -189,7 +209,6 @@ evaluate_src_step_close(step *src_step, char input_char)
 static void
 process_curr_step(step *src_step, char input_char, step *tail_step)
 {
-    //printf("detect src_step stat->%s, status->%d\n", &src_step->curr_stat->val, src_step->status);
     statm *des_stat = NULL;
     if (src_step->status == STEP_ON) {
         des_stat = src_step->curr_stat->next;
@@ -265,18 +284,52 @@ determin_match(step *head_step)
     return false;
 }
 
+static void
+clean_uniq_flag(step *head_step)
+{
+    step *hstep = head_step;
+    for (;;) {
+        hstep->dup_flag = 0;
+        if (hstep->next != NULL) {
+            hstep = hstep->next;
+        } else {
+            break;
+        }
+    }
+
+}
+
+static void
+effect_uniq_flag(step *head_step)
+{
+    step *hstep = head_step;
+    for (;;) {
+        if(hstep->dup_flag == 1) {
+            hstep->status = STEP_ON;
+        }
+        if (hstep->next != NULL) {
+            hstep = hstep->next;
+        } else {
+            break;
+        }
+    }
+
+}
+
 static bool 
 isMatch(char* s, char* p) 
 {
     char *ss = NULL;
     int end_flag = 0;
     statm *stat_head = compile_pattern(p);
-    step *head_step = new_step(stat_head);
+    head_step = new_step(stat_head);
     for (ss=s; end_flag != 1; ss++) {
         if(*ss == '\0') end_flag = 1;
         //printf("\n\n%s,%c-------------------------------------------%s\n",s, *ss, p);
         //print_steps(head_step);
+        clean_uniq_flag(head_step);
         read_one_char(*ss, head_step);
+        effect_uniq_flag(head_step);
         //printf("########################\n");
         //print_steps(head_step);
     }
@@ -288,10 +341,13 @@ int main(int argc, char **argv)
     //printf("isMatch %d\n", isMatch("aa", "a"));
     //printf("isMatch %d\n", isMatch("aa", ".*"));
     //printf("isMatch %d\n", isMatch("aa", "."));
-    //printf("isMatch %d\n", isMatch("aa", ".*ax*aa*"));
-    //printf("isMatch %d\n", isMatch("mississippi", "mis*is*p*."));
-    //printf("isMatch %d\n", isMatch("mississippi", "mis*is*ip*."));
-    printf("isMatch %d\n", isMatch("abbaaaabaabbcba", "a*.*ba.*c*..a*.a*."));
-    //printf("isMatch %d\n", isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*a*a*b"));
+    //printf("isMatch %d\n", isMatch("aa", ".*ax*aa*"));//true
+    printf("isMatch %d\n", isMatch("mississippi", "mis*is*p*."));//false
+    //printf("isMatch %d\n", isMatch("mississippi", "mis*is*ip*."));//true
+    //printf("isMatch %d\n", isMatch("abbaaaabaabbcba", "a*.*ba.*c*..a*.a*."));//true
+    //printf("isMatch %d\n", isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*a*a*b")); //true
+    //printf("isMatch %d\n", isMatch("cacbcacbacbccac", ".*c*c*bb*c*..*a*a"));//false
+    //printf("isMatch %d\n", isMatch("aaca", "ab*a*c*a"));//true
+    //printf("isMatch %d\n", isMatch("ccbbabbbabababa", ".*.ba*c*c*aab.a*b*"));//false
     return 0;
 }
