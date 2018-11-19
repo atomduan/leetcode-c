@@ -18,8 +18,17 @@
 int 
 maxArea(int* height, int heightSize)
 {
-    printf("max value is for heightSize %d\n", heightSize);
-    return 99;        
+    int weigth,high,max,value = 0;
+    int i,j = 0;
+    for (i=0; i<heightSize; i++) {
+        for (j=heightSize-1; j>i; j--) {
+            weigth = j-i; 
+            high = height[i] < height[j] ? height[i] : height[j];  
+            value = high * weigth;
+            max = value > max ? value : max;
+        }
+    }
+    return max;        
 }
 
 
