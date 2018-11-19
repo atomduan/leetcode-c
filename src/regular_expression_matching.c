@@ -56,9 +56,6 @@
 #define STEP_OFF 0
 #define STEP_ON 1
 
-#define MATCH_DENY 0
-#define MATCH_ACCEPT 1
-
 typedef struct statm_s statm;
 typedef struct step_s step;
 
@@ -158,15 +155,25 @@ process_stat_detect(statm *des_stat, char input_char, step *tail_step)
 }
 
 static void
+evaluate_src_step_close(step *src_step, char input_char)
+{
+    if (src_step->curr_stat->attr != ATTR_REPEAT){
+        src_step->status = STEP_OFF;
+    } else {
+        if (false == is_compatibale(&src_step->curr_stat->val, &input_char)) {
+            src_step->status = STEP_OFF;
+        }
+    }
+}
+
+static void
 process_curr_step(step *src_step, char input_char, step *tail_step)
 {
     statm *des_stat = NULL;
     if (src_step->status == STEP_ON) {
         des_stat = src_step->curr_stat->next;
         process_stat_detect(des_stat, input_char, tail_step);
-        if (src_step->curr_stat->attr != ATTR_REPEAT){
-            src_step->status = STEP_OFF;
-        }
+        evaluate_src_step_close(src_step, input_char);
     }
 }
 
@@ -244,20 +251,22 @@ isMatch(char* s, char* p)
     step *head_step = new_step(stat_head);
     for (ss=s; end_flag != 1; ss++) {
         if(*ss == '\0') end_flag = 1;
-        //printf("%c-------------------------------------------%s\n",*ss, p);
-        //print_steps(head_step);
+        printf("%s,%c-------------------------------------------%s\n",s, *ss, p);
+        print_steps(head_step);
         read_one_char(*ss, head_step);
-        //printf("########################\n");
-        //print_steps(head_step);
+        printf("########################\n");
+        print_steps(head_step);
     }
     return determin_match(head_step); 
 }
 
 int main(int argc, char **argv) 
 {
-    printf("isMatch %d\n", isMatch("aa", "a"));
-    printf("isMatch %d\n", isMatch("aa", ".*"));
-    printf("isMatch %d\n", isMatch("aa", "."));
+    //printf("isMatch %d\n", isMatch("aa", "a"));
+    //printf("isMatch %d\n", isMatch("aa", ".*"));
+    //printf("isMatch %d\n", isMatch("aa", "."));
     printf("isMatch %d\n", isMatch("aa", ".*ax*aa*"));
+    //printf("isMatch %d\n", isMatch("mississippi", "mis*is*p*."));
+    //printf("isMatch %d\n", isMatch("mississippi", "mis*is*ip*."));
     return 0;
 }
