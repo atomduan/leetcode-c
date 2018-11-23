@@ -46,7 +46,6 @@
  */
 
 #include <linux_config.h>
-#include <misc_utils.h>
 
 #define ATTR_START 0
 #define ATTR_PLAN 1 

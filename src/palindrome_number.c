@@ -20,7 +20,6 @@
  *Coud you solve it without converting the integer to a string?
  */
 #include <linux_config.h>
-#include <misc_utils.h>
 
 static int 
 isPalindrome(int x) {

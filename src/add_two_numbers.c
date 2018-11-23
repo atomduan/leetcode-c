@@ -18,7 +18,6 @@
  * };
  */
 #include <linux_config.h>
-#include <misc_utils.h>
 
 struct ListNode {
     int val;

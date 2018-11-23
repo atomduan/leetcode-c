@@ -15,10 +15,9 @@
 */
 
 #include <linux_config.h>
-#include <misc_utils.h>
 
 int** threeSum(int* nums, int numsSize, int* returnSize) {
-     
+    return 0; 
 }
 
 int main(int argc, char **argv)

@@ -12,7 +12,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <stdarg.h>
-#include <stddef.h>             /* offsetof() */
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -23,7 +23,7 @@
 #include <grp.h>
 #include <dirent.h>
 #include <glob.h>
-#include <sys/vfs.h>            /* statfs() */
+#include <sys/vfs.h>
 
 #include <sys/uio.h>
 #include <sys/stat.h>
@@ -36,25 +36,22 @@
 
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <netinet/tcp.h>        /* TCP_NODELAY, TCP_CORK */
+#include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <sys/un.h>
 
-#include <time.h>               /* tzset() */
-#include <malloc.h>             /* memalign() */
-#include <limits.h>             /* IOV_MAX */
+#include <time.h>
+#include <malloc.h>
+#include <limits.h>
 #include <sys/ioctl.h>
 #include <crypt.h>
-#include <sys/utsname.h>        /* uname() */
+#include <sys/utsname.h>
 #include <stdbool.h>
 
 /* use of dirname */
 #include <libgen.h>
-
 #include <dlfcn.h>
 
 extern char **environ;
-
-
 #endif /* _LINUX_CONFIG_H_INCLUDED_ */

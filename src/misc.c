@@ -1,5 +1,4 @@
 #include <linux_config.h>
-#include <misc_utils.h>
 
 static void
 atm_sys_profile()

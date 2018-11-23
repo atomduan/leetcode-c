@@ -12,7 +12,6 @@
  * Output: 49
  * */
 #include <linux_config.h>
-#include <misc_utils.h>
 
 
 int 

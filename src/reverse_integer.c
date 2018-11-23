@@ -19,7 +19,6 @@
  *For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
  */
 #include <linux_config.h>
-#include <misc_utils.h>
 
 static int reverse(int x) {
     int truck = 0;

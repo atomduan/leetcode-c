@@ -8,7 +8,6 @@
  *
  * */
 #include <linux_config.h>
-#include <misc_utils.h>
 
 struct char_dict {
     char *cp;

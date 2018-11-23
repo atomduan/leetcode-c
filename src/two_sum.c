@@ -11,7 +11,6 @@
  *
  */
 #include <linux_config.h>
-#include <misc_utils.h>
 
 int* twoSum(int* nums, int numsSize, int target) {
     int i = 0;

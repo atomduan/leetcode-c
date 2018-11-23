@@ -43,7 +43,6 @@
  */
 
 #include <linux_config.h>
-#include <misc_utils.h>
 
 char *sig[10] = {"Z", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
 char *des[10] = {"Z", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};

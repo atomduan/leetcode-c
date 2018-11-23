@@ -42,8 +42,6 @@
  *             Thefore INT_MIN (−231) is returned.
  */
 #include <linux_config.h>
-#include <misc_utils.h>
-
 
 int myAtoi(char* str) {
     int INIT_STAT = 0;

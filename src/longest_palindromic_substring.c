@@ -12,7 +12,6 @@
  * Output: "bb"
  */
 #include <linux_config.h>
-#include <misc_utils.h>
 
 static char *
 scan_eve_palindrome(char *s, int *maxp)

@@ -26,7 +26,6 @@
  * P     I
  */
 #include <linux_config.h>
-#include <misc_utils.h>
 
 static int 
 compute_line_number(int index, int row_num) 
