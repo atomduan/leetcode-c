@@ -27,9 +27,9 @@ isPalindrome(int x) {
     int orgx = x;
     if (x < 0) return 0;
     while (1) {
-       result = result * 10 + (x % 10); 
-       x /= 10;
-       if (x == 0) break;
+        result = result * 10 + (x % 10); 
+        x /= 10;
+        if (x == 0) break;
     }
     return result == orgx;
 }
