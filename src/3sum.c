@@ -16,10 +16,43 @@
 
 #include <linux_config.h>
 
+int *register_pool(int vi, int vj, int vk, int *pool, int *pool_head) {
+    //check whether tuple exsited in pool_head.
+    int *p = pool_head;
+    int exist_flag = 0; 
+    int count = 0;
+    while (p != pool) {
+        if(*p++ == vi) count += 1; 
+        if(*p++ == vj) count += 1; 
+        if(*p++ == vk) count += 1; 
+        if (count == 3) {
+            exist_flag = 1;
+            break;
+        }
+        count = 0;
+    }
+    if (!exist_flag) {
+        *pool++ = vi;
+        *pool++ = vj;
+        *pool++ = vk;
+    }
+    return pool;
+}
+
 int** threeSum(int* nums, int numsSize, int* returnSize) {
-    int *p
+    size_t pool_size = sizeof(int)*3*numsSize*numsSize;
+    int *pool_head = malloc(pool_size);
     int i=0,j=0,k=0;
     int vi=0,vj=0,vk=0;
+    int *ptm = pool_head;
+    int *tmp = NULL;
+
+    size_t res_size = sizeof(int)*numsSize*numsSize;
+    int **res_head = malloc(res_size);
+    int **res = res_head;
+
+    memset(pool_head, 0, pool_size);
+    memset(res_head, 0, res_size);
     while (i < numsSize-2) {
         vj = vi-nums[i];
         j = i+1;
@@ -28,8 +61,13 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
             k = j+1;
             while (k < numsSize) {
                 if(vk == nums[k]) {
-                    printf("find one, %d, %d, %d, returnSize:%d\n", nums[i], nums[j], nums[k], *returnSize, nums);
-                    (*returnSize)++;     
+                    tmp = register_pool(nums[i],nums[j],nums[k],ptm,pool_head);
+                    if (ptm != tmp) {
+                        *res++ = ptm; ptm = tmp;
+                        (*returnSize)++;     
+                    } else {
+                        tmp = NULL;
+                    }
                 }
                 k++;
             }
@@ -37,14 +75,24 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         }
         i++;
     }
-    return 0; 
+    return res_head; 
 }
 
 int main(int argc, char **argv)
 {
     int returnSize = 0;
-    int nums[] = {-1,0,1,2,-1,-4};
+    int nums[] = {-1,0,1,2,-1,-4,-1,0,1};
     int numsSize = sizeof(nums)/sizeof(int);
-    threeSum(nums, numsSize, &returnSize); 
+    int **res = threeSum(nums, numsSize, &returnSize); 
+    printf("returnSize is %d\n", returnSize);
+    int vi=0, vj=0, vk=0, i=0, *pi = NULL;
+    for (i=0; i<returnSize; i++) {
+        pi = res[i];
+        vi = pi[0];
+        vj = pi[1];
+        vk = pi[2];
+        printf("result tuple is %d, %d, %d, \n", vi, vj, vk);
+    }
+    free(res);
     return 0;
 }
