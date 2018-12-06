@@ -86,7 +86,7 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
             vk = vj-nums[j];
             k = j+1;
             while (k < numsSize) {
-                if(vk == nums[k]) {
+                if (vk == nums[k]) {
                     tmp = register_pool(nums[i],nums[j],nums[k],res_head);
                     if (tmp != NULL) {
                         *res++ = tmp;
