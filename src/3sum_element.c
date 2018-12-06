@@ -69,31 +69,66 @@ int *register_pool(int vi, int vj, int vk, int **res_head) {
 }
 
 int** threeSum(int* nums, int numsSize, int* returnSize) {
-    int i=0,j=0,k=0;
+    int i=0,j=0,k=0,t=0;
     int vi=0,vj=0,vk=0;
     int *tmp = NULL;
+    int *numbers = NULL;
 
     size_t res_size = sizeof(int *)*(numsSize*numsSize+1);
     int **res_head = malloc(res_size);
     int **res = res_head;
     *returnSize = 0;
 
+
+    numbers = malloc(sizeof(int)*numsSize);
+    memset(numbers, 0, sizeof(int)*numsSize);
+    for (i=0; i<numsSize; i++) {
+        numbers[i] = nums[i];
+    }
+
+    int *bm = malloc(sizeof(int)*numbers[numsSize-1]);
+    memset(bm, 0, sizeof(int)*numbers[numsSize-1]);
+    for (i=0; i<numsSize; i++) {
+        bm[numbers[i]] = 1;
+    }
+
+    for (i=0; i<numsSize; i++) {
+        for (j=0; j<numsSize-i-1; j++) {
+            if (numbers[j] < numbers[j+1]) {
+                t = numbers[j];
+                numbers[j] = numbers[j+1];
+                numbers[j+1] = t;
+            }
+        }
+    }
+    
+    i=0,j=0,k=0,t=0;
     memset(res_head, 0, res_size);
     while (i < numsSize-2) {
-        vj = vi-nums[i];
+        vj = vi-numbers[i];
         j = i+1;
         while (j < numsSize-1) {
-            vk = vj-nums[j];
-            k = j+1;
-            while (k < numsSize) {
-                if (vk == nums[k]) {
-                    tmp = register_pool(nums[i],nums[j],nums[k],res_head);
+            vk = vj-numbers[j];
+            if (numbers[j]<0) {
+                if (bm[vk]) {
+                    tmp = register_pool(numbers[i],numbers[j],vk,res_head);
                     if (tmp != NULL) {
                         *res++ = tmp;
                         (*returnSize)++;     
                     }
                 }
-                k++;
+            } else {
+                k = j+1;
+                while (k < numsSize) {
+                    if (vk == numbers[k]) {
+                        tmp = register_pool(numbers[i],numbers[j],numbers[k],res_head);
+                        if (tmp != NULL) {
+                            *res++ = tmp;
+                            (*returnSize)++;     
+                        }
+                    }
+                    k++;
+                }
             }
             j++;
         }
