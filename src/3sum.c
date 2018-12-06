@@ -40,16 +40,17 @@ int *register_pool(int vi, int vj, int vk, int *pool, int *pool_head) {
 }
 
 int** threeSum(int* nums, int numsSize, int* returnSize) {
-    size_t pool_size = sizeof(int)*3*numsSize*numsSize;
+    size_t pool_size = sizeof(int)*3*(numsSize*numsSize+1);
     int *pool_head = malloc(pool_size);
     int i=0,j=0,k=0;
     int vi=0,vj=0,vk=0;
     int *ptm = pool_head;
     int *tmp = NULL;
 
-    size_t res_size = sizeof(int)*numsSize*numsSize;
+    size_t res_size = sizeof(int *)*(numsSize*numsSize+1);
     int **res_head = malloc(res_size);
     int **res = res_head;
+    *returnSize = 0;
 
     memset(pool_head, 0, pool_size);
     memset(res_head, 0, res_size);
@@ -82,6 +83,7 @@ int main(int argc, char **argv)
 {
     int returnSize = 0;
     int nums[] = {-1,0,1,2,-1,-4,-1,0,1};
+    //int nums[] = {-1,0,1,2,-1,-4};
     int numsSize = sizeof(nums)/sizeof(int);
     int **res = threeSum(nums, numsSize, &returnSize); 
     printf("returnSize is %d\n", returnSize);
