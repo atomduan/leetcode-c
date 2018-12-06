@@ -134,6 +134,8 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         }
         i++;
     }
+    free(bm);
+    free(numbers);
     return res_head; 
 }
 
