@@ -69,19 +69,40 @@ int *register_pool(int vi, int vj, int vk, int **res_head) {
 }
 
 int** threeSum(int* nums, int numsSize, int* returnSize) {
-    int i=0,j=0,k=0,t=0;
+    int i=0,j=0,t=0;
     int vi=0,vj=0,vk=0;
     int *tmp = NULL;
     int *numbers = NULL;
+    int all_zero = 1;
 
     size_t res_size = sizeof(int *)*(numsSize*numsSize+1);
     int **res_head = malloc(res_size);
     int **res = res_head;
     *returnSize = 0;
+    memset(res_head, 0, res_size);
 
+    if (numsSize < 3) {
+        return res_head;
+    }
 
     numbers = malloc(sizeof(int)*numsSize);
     memset(numbers, 0, sizeof(int)*numsSize);
+
+    for (i=0; i<numsSize; i++) {
+        if (nums[i] != 0) {
+            all_zero = 0;
+        }
+    }
+
+    if (all_zero) {
+        tmp = register_pool(0,0,0,res_head);
+        if (tmp != NULL) {
+            *res++ = tmp;
+            (*returnSize)++;     
+        }
+        return res_head;
+    }
+
     for (i=0; i<numsSize; i++) {
         numbers[i] = nums[i];
     }
@@ -96,10 +117,14 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         }
     }
 
-    for (i=0; i<numsSize; i++) {
-        printf("numbers sort:%d\n", numbers[i]);
-    }
 
+    if (numbers[0] > 0) {
+        return res_head;
+    }
+    if (numbers[numsSize-1] < 0) {
+        printf("b");
+        return res_head;
+    }
 
     int *bm = malloc(1024*1024);
     memset(bm, 0, 1024*1024);
@@ -109,32 +134,60 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         }
     }
 
-    i=0,j=0,k=0,t=0;
-    memset(res_head, 0, res_size);
+    i=0,j=0,t=0;
     while (i < numsSize-2) {
         vj = vi-numbers[i];
         j = i+1;
         while (j < numsSize-1) {
             vk = vj-numbers[j];
-            if (numbers[j]<0) {
-                if (bm[vk]) {
-                    tmp = register_pool(numbers[i],numbers[j],vk,res_head);
-                    if (tmp != NULL) {
-                        *res++ = tmp;
-                        (*returnSize)++;     
+            if (numbers[j]<0 || numbers[j]>0) {
+                if (vk > 0) {
+                    if (bm[vk]) {
+                        if (vk != numbers[j]) {
+                            tmp = register_pool(numbers[i],numbers[j],vk,res_head);
+                            if (tmp != NULL) {
+                                *res++ = tmp;
+                                (*returnSize)++;     
+                            }
+                        } else {
+                            if (numbers[j]==numbers[j+1]) {
+                                tmp = register_pool(numbers[i],numbers[j],vk,res_head);
+                                if (tmp != NULL) {
+                                    *res++ = tmp;
+                                    (*returnSize)++;     
+                                }
+                            }
+                        }
                     }
                 }
             } else {
-                k = j+1;
-                while (k < numsSize) {
-                    if (vk == numbers[k]) {
-                        tmp = register_pool(numbers[i],numbers[j],numbers[k],res_head);
+                if (vk > 0) {
+                    if (bm[vk]) {
+                        if (vk != numbers[j]) {
+                            tmp = register_pool(numbers[i],numbers[j],vk,res_head);
+                            if (tmp != NULL) {
+                                *res++ = tmp;
+                                (*returnSize)++;     
+                            }
+                        } else {
+                            if (numbers[j]==numbers[j+1]) {
+                                tmp = register_pool(numbers[i],numbers[j],vk,res_head);
+                                if (tmp != NULL) {
+                                    *res++ = tmp;
+                                    (*returnSize)++;     
+                                }
+                            }
+                        }
+                    }
+
+                } else {
+                    if (vk == numbers[j+1]) {
+                        tmp = register_pool(numbers[i],numbers[j],numbers[j+1],res_head);
                         if (tmp != NULL) {
                             *res++ = tmp;
                             (*returnSize)++;     
                         }
                     }
-                    k++;
                 }
             }
             j++;
@@ -149,8 +202,13 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
 int main(int argc, char **argv)
 {
     int returnSize = 0;
-    int nums[] = {-1,0,1,2,-1,-4,-1,0,1};
+    int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
+    //int nums[] = {-1,0,1,2,-1,-4,-1,0,1};
     //int nums[] = {-1,0,1,2,-1,-4};
+    //int nums[] = {1,2,-2,-1};
+    //int nums[] = {0,0,0,0,0,0,0,0,0,0};
+    //int nums[] = {0,-1,1};
+
     int numsSize = sizeof(nums)/sizeof(int);
     int **res = threeSum(nums, numsSize, &returnSize); 
     printf("returnSize is %d\n", returnSize);
