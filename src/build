@@ -51,7 +51,7 @@ END
 cat <<END >> Makefile
 .PHONY:clean
 clean:
-	rm -rf *.o *.bin
+	rm -rf *.o *.bin core
 END
 
 make clean

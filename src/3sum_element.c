@@ -117,7 +117,6 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         }
     }
 
-
     if (numbers[0] > 0) {
         return res_head;
     }
@@ -179,7 +178,6 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
                             }
                         }
                     }
-
                 } else {
                     if (vk == numbers[j+1]) {
                         tmp = register_pool(numbers[i],numbers[j],numbers[j+1],res_head);
