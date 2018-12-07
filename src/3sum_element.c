@@ -23,7 +23,7 @@ int *register_pool(int vi, int vj, int vk, int **res_head) {
     int count = 0;
     int *t = NULL;
     int *res = NULL;
-    int i,j,tmp;
+    int i=0,j=0,tmp=0;
     
     int k[] = {vi, vj, vk};
     for (i=0; i<3; i++) {
@@ -86,22 +86,29 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         numbers[i] = nums[i];
     }
 
-    int *bm = malloc(sizeof(int)*numbers[numsSize-1]);
-    memset(bm, 0, sizeof(int)*numbers[numsSize-1]);
-    for (i=0; i<numsSize; i++) {
-        bm[numbers[i]] = 1;
-    }
-
     for (i=0; i<numsSize; i++) {
         for (j=0; j<numsSize-i-1; j++) {
-            if (numbers[j] < numbers[j+1]) {
+            if (numbers[j] > numbers[j+1]) {
                 t = numbers[j];
                 numbers[j] = numbers[j+1];
                 numbers[j+1] = t;
             }
         }
     }
-    
+
+    for (i=0; i<numsSize; i++) {
+        printf("numbers sort:%d\n", numbers[i]);
+    }
+
+
+    int *bm = malloc(1024*1024);
+    memset(bm, 0, 1024*1024);
+    for (i=0; i<numsSize; i++) {
+        if (numbers[i] > 0) {
+            bm[numbers[i]] = 1;
+        }
+    }
+
     i=0,j=0,k=0,t=0;
     memset(res_head, 0, res_size);
     while (i < numsSize-2) {
