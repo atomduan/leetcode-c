@@ -74,8 +74,10 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
     int *tmp = NULL;
     int *numbers = NULL;
     int all_zero = 1;
+    int positive = 0;
+    int negtive = 0;
 
-    size_t res_size = sizeof(int *)*(numsSize*numsSize+1);
+    size_t res_size = sizeof(int *)+1;
     int **res_head = malloc(res_size);
     int **res = res_head;
     *returnSize = 0;
@@ -85,12 +87,15 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         return res_head;
     }
 
-    numbers = malloc(sizeof(int)*numsSize);
-    memset(numbers, 0, sizeof(int)*numsSize);
-
     for (i=0; i<numsSize; i++) {
         if (nums[i] != 0) {
             all_zero = 0;
+        }
+        if (nums[i] > 0) {
+            negtive++;
+        }
+        if (nums[i] < 0) {
+            positive++;
         }
     }
 
@@ -102,6 +107,19 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         }
         return res_head;
     }
+
+    if (positive == 0 || negtive == 0) {
+        return res_head;
+    }
+
+    free(res_head);
+
+    res_size = sizeof(int *)*positive*positive;
+    res_head = malloc(res_size);
+    res = res_head;
+    
+    numbers = malloc(sizeof(int)*numsSize);
+    memset(numbers, 0, sizeof(int)*numsSize);
 
     for (i=0; i<numsSize; i++) {
         numbers[i] = nums[i];
@@ -121,17 +139,17 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         return res_head;
     }
     if (numbers[numsSize-1] < 0) {
-        printf("b");
         return res_head;
     }
 
-    int *bm = malloc(1024*1024);
-    memset(bm, 0, 1024*1024);
+    int *bm = malloc(sizeof(int)*numbers[numsSize-1]*2);
+    memset(bm, 0, sizeof(int)*numbers[numsSize-1]*2);
     for (i=0; i<numsSize; i++) {
         if (numbers[i] > 0) {
             bm[numbers[i]] = 1;
         }
     }
+
 
     i=0,j=0,t=0;
     while (i < numsSize-2) {
@@ -200,12 +218,14 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
 int main(int argc, char **argv)
 {
     int returnSize = 0;
-    int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
+    //int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
     //int nums[] = {-1,0,1,2,-1,-4,-1,0,1};
     //int nums[] = {-1,0,1,2,-1,-4};
     //int nums[] = {1,2,-2,-1};
-    //int nums[] = {0,0,0,0,0,0,0,0,0,0};
+    int nums[] = {0,0,0,0,0,0,0,0,0,0};
     //int nums[] = {0,-1,1};
+    //int nums[] = {-1,-1,-1,1};
+    //int nums[] = {-1,0,1,0};
 
     int numsSize = sizeof(nums)/sizeof(int);
     int **res = threeSum(nums, numsSize, &returnSize); 
