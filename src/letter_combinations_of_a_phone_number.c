@@ -31,7 +31,53 @@ leet_ctoi(char *c)
     return c - 48;
 }
 
-int digt_len = 0;
+int
+res_size(char *digits)
+{
+    char *p = digits;
+    int count = 1;
+    while (*p != '\0') {
+        count *= 3;
+    }
+    return count;
+}
+
+char **
+do_letter_combination(char *digits, int *returnSize, int digtLen, int pos)
+{
+    char **res = NULL, r;
+    char *digt;
+    char *tmp,rs;
+    int index,i;
+
+    tmp = digits;
+    digt = digits+1;
+
+    for (i=0; i<3; i++) {
+        index = leet_ctoi(tmp);
+        if (digt != '\0') {
+            if (res == NULL) {
+                
+            }
+            r = do_letter_combination(digt, returnSize, digtLen, digtLen, pos+1); 
+            rs = *r;
+            while (rs != NULL) {
+                rs[pos] = *dict[index][i];
+                rs = *r++;
+            }
+        } else {
+            if (res == NULL) {
+                res = calloc(sizeof(char*)*4);
+                r = res;
+            }
+            rs = calloc(digtLen+1);
+            rs[pos] = *dict[index][i];
+            *r++ = rs;
+            returnSize++;
+        }
+    }
+    return res;
+}
 
 /* 
  * Return an array of size *returnSize.
@@ -40,16 +86,21 @@ int digt_len = 0;
 char** 
 letterCombinations(char* digits, int* returnSize) 
 {
-    char **res = NULL, digt = NULL, r = NULL;
-    char *tmp = NULL;
-    char currc = *digits;
-    int curr_idx = leet_ctoi(currc), i=0;
+    char **res,digt;
+    int curr_idx;
+    int digt_len;
+    int res_size;
 
-    if (digt_len == 0) {
-        digt_len = strlen(digits);
-    }
+    digt_len = strlen(digits);
+    rsz = res_size(digits);
 
-    digt = digits + 1;
+    res = calloc(sizeof(char *)*(rsz+1));
+
+    do_letter_combination(digits, returnSize, digt_len, res, 0);
+
+    return res;
+
+
     if (digt != NULL) {
         for (i=0; i<3; i++) {
             **r = letterCombinations(digt, returnSize);
