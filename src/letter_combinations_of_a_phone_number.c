@@ -11,17 +11,17 @@
 
 #include <linux_config.h>
 
-char *dict[10][3] =  {
-    {" "},
-    {"_"},
-    {"a","b","c"},
-    {"d","e","f"},
-    {"g","h","i"},
-    {"j","k","l"},
-    {"m","n","o"},
-    {"p","q","s"},
-    {"t","u","v"},
-    {"x","y","x"}
+char *dict[10] =  {
+    " ",
+    "_",
+    "abc",
+    "def",
+    "ghi",
+    "jkl",
+    "mno",
+    "pqrs",
+    "tuvw",
+    "xyz"
 };
 
 int
@@ -43,78 +43,91 @@ res_size(char *digits)
 }
 
 char **
-do_letter_combination(char *digits, int *returnSize, int digtLen, int pos)
+span_dict_str(char *ds) 
 {
-    char **res = NULL, r;
-    char *digt;
-    char *tmp,rs;
-    int index,i;
-
-    tmp = digits;
-    digt = digits+1;
-
-    for (i=0; i<3; i++) {
-        index = leet_ctoi(tmp);
-        if (digt != '\0') {
-            if (res == NULL) {
-                
-            }
-            r = do_letter_combination(digt, returnSize, digtLen, digtLen, pos+1); 
-            rs = *r;
-            while (rs != NULL) {
-                rs[pos] = *dict[index][i];
-                rs = *r++;
-            }
-        } else {
-            if (res == NULL) {
-                res = calloc(sizeof(char*)*4);
-                r = res;
-            }
-            rs = calloc(digtLen+1);
-            rs[pos] = *dict[index][i];
-            *r++ = rs;
-            returnSize++;
-        }
+    char *ss;
+    char **res, rp;
+    int ds_len,i;
+    ds_len = strlen(ds);
+    res = rp = calloc(sizeof(char *)*(ds_len+1));
+    for (i=0 ; i<ds_len; i++) {
+        ss = calloc(sizeof(char)*2);
+        ss = ds[i];
+        *rp++ = ss;
     }
     return res;
 }
 
-/* 
- * Return an array of size *returnSize.
- * Note: The returned array must be malloced, assume caller calls free().
- */
+int
+compute_collect_size(void *clt)
+{
+    int count = 0;
+    void *p = clt;
+    while (p != NULL) {
+        count++; 
+    }
+    return count;
+}
+
+char **
+span_res_with_dict(char *ds, char **res) 
+{
+    char **result,rp,rt;
+    char *ss,dp;
+    int ds_size,res_size,total_size,ssize;
+
+    ds_size = compute_res_size(ds);
+    res_size = compute_res_size(res);
+    total_size = ds_size * res_size + 1;
+    result = rt = calloc(sizeof(char *)*total_size);
+
+    rp = res;
+    while(rp != NULL) {
+        ss = *rp;    
+        dp = ds;
+        while (*dp != '\0') {
+            ssize = strlen(ss);
+            dp++;
+        }
+        rp++;
+    }
+    return result;
+}
+
+char **
+do_letter_combination(char *digits)
+{
+    char **res;
+    char *digt, ds;
+
+    digt = digits+1;
+    ds = dict[leet_ctoi(digits)];
+    if (*digt == '\0') {
+        res = span_dict_str(ds);
+    } else {
+        res = do_letter_combination(digt); 
+        res = span_res_with_dict(ds,res);
+    }
+    return res;
+}
+
+int
+compute_res_size(char **res)
+{
+    int size = 0;
+    char **p = res;
+    while (p != NULL) {
+        size++;
+    }
+    return size;
+}
+
 char** 
 letterCombinations(char* digits, int* returnSize) 
 {
-    char **res,digt;
-    int curr_idx;
-    int digt_len;
-    int res_size;
-
-    digt_len = strlen(digits);
-    rsz = res_size(digits);
-
-    res = calloc(sizeof(char *)*(rsz+1));
-
-    do_letter_combination(digits, returnSize, digt_len, res, 0);
-
-    return res;
-
-
-    if (digt != NULL) {
-        for (i=0; i<3; i++) {
-            **r = letterCombinations(digt, returnSize);
-        }
-    } else {
-        for (i=0; i<3; i++) {
-            tmp = malloc(digt_len+1);
-            memset(tmp, 0, digt_len+1);
-            tmp[0] = *dict[curr_idx][i];
-            res = malloc(sizeof(char *)*4);
-            memset(res, 0, sizeof(char *)*4);
-            res[i] = tmp;
-        }
-    }
+    char **res;
+    res = do_letter_combination(digits);
+    *returnSize = compute_res_size(res);
     return res; 
 }
 
