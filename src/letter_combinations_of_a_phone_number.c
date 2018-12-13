@@ -20,8 +20,8 @@ char *dict[10] =  {
     "jkl",
     "mno",
     "pqrs",
-    "tuvw",
-    "xyz"
+    "tuv",
+    "wxyz"
 };
 
 static int
