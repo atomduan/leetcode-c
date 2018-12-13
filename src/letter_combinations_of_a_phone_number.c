@@ -35,7 +35,7 @@ compute_res_size(char **res)
 {
     int size = 0;
     char **p = res;
-    while (p != NULL) {
+    while (*p++ != NULL) {
         size++;
     }
     return size;
@@ -53,8 +53,7 @@ leet_malloc(size_t memsize)
 static char **
 span_dict_str(char *ds) 
 {
-    char *ss;
-    char **res, **rp;
+    char *ss, **res, **rp;
     int ds_len,i;
     ds_len = strlen(ds);
     res = rp = leet_malloc(sizeof(char *)*(ds_len+1));
@@ -79,10 +78,10 @@ span_res_with_dict(char *ds, char **res)
     result = rt = leet_malloc(sizeof(char *)*total_size);
 
     rp = res;
-    while(rp != NULL) {
-        ss = *rp;    
+    while(rp != NULL && *rp != NULL) {
         dp = ds;
         while (*dp != '\0') {
+            ss = *rp;    
             //allocate new mem for new string
             ssize = strlen(ss);
             ns = nss = leet_malloc(ssize+2); 
@@ -95,7 +94,7 @@ span_res_with_dict(char *ds, char **res)
             dp++;
         }
         //free old string
-        free(ss);
+        free(*rp);
         rp++;
     }
     //free old result
@@ -106,15 +105,12 @@ span_res_with_dict(char *ds, char **res)
 static char **
 do_letter_combination(char *digits)
 {
-    char **res;
-    char *digt, *ds;
-
-    digt = digits+1;
+    char **res, *ds;
     ds = dict[leet_ctoi(digits)];
-    if (*digt == '\0') {
+    if (*(digits+1) == '\0') {
         res = span_dict_str(ds);
     } else {
-        res = do_letter_combination(digt); 
+        res = do_letter_combination(digits+1); 
         res = span_res_with_dict(ds,res);
     }
     return res;
@@ -123,16 +119,20 @@ do_letter_combination(char *digits)
 char** 
 letterCombinations(char* digits, int* returnSize) 
 {
-    char **res;
-    res = do_letter_combination(digits);
-    *returnSize = compute_res_size(res);
+    char **res = NULL;
+    *returnSize = 0;
+    if (digits!=NULL && strlen(digits)>0) {
+        res = do_letter_combination(digits);
+        *returnSize = compute_res_size(res);
+    }
     return res; 
 }
 
 int 
 main(int argc, char **argv)
 {
-    char *digits = "23";
+    //char *digits = "27";
+    char *digits = "";
     int returnSize = 0;
     char ** res = letterCombinations(digits, &returnSize);
     if (res != NULL) {
@@ -144,5 +144,6 @@ main(int argc, char **argv)
     } else {
         printf("the res is NULL pointer......\n");
     }
+    printf("returnSize is %d\n", returnSize);
     return 0;
 }
