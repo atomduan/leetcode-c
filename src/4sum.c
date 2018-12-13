@@ -35,10 +35,19 @@ leet_swap(int *nums, const int dest_idx, const int src_idx)
     return dest_idx;
 }
 
-int *
+static int *
 int_tuple()
 {
     return leet_malloc(sizeof(int)*4);
+}
+
+int **
+res_default()
+{
+    int *r = int_tuple();
+    int **res = leet_malloc(sizeof(int *)*2);
+    *res = r;
+    return res;
 }
 
 void
@@ -71,6 +80,18 @@ fourSum(int* nums, int numsSize, int target, int* returnSize)
 {
     int **res = NULL;
     *returnSize = 0;
+    nums_sort(nums, numsSize); 
+    //bad case, quick retrun 
+    if (numsSize < 4) return res; 
+    if (nums[numsSize-1] < 0 && target > 0) return res;
+    if (nums[0] > 0 && target < 0) return res;
+    if (nums[0] == nums[numsSize-1] && nums[0] == 0 && target != 0) return res;
+    //all zero, quick return
+    if (nums[0] == nums[numsSize-1] && nums[0] == 0 && target == 0) {
+        res = res_default();
+        *returnSize += 1;
+        return res;
+    }
     return res; 
 }
 
