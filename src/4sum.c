@@ -15,7 +15,7 @@
  */
 #include <linux_config.h>
 
-void *
+static void *
 leet_malloc(size_t memn)
 {
     void *res = NULL;
@@ -26,10 +26,51 @@ leet_malloc(size_t memn)
     return res;
 }
 
+static int 
+leet_swap(int *nums, const int dest_idx, const int src_idx)
+{
+    int tmp = nums[dest_idx];
+    nums[dest_idx] = nums[src_idx];
+    nums[src_idx] = tmp;
+    return dest_idx;
+}
+
+int *
+int_tuple()
+{
+    return leet_malloc(sizeof(int)*4);
+}
+
+void
+nums_sort(int *nums, int numsSize)
+{
+    int m_idx, m_val, i, j;
+    m_idx = numsSize/2;
+    m_val = nums[m_idx];
+    i=0, j=numsSize-1;
+    while (i < j) {
+        for (; i<m_idx; i++) {
+            if (nums[i] > m_val) {
+                m_idx = leet_swap(nums, i, m_idx);                
+            }
+        }
+        for (; j>=m_idx; j--) {
+            if (nums[j] < m_val) {
+                m_idx = leet_swap(nums, j, m_idx);                
+            }
+        }
+    }
+    if (numsSize/2 > 0) {
+        nums_sort(nums, numsSize/2);
+        nums_sort(nums+(numsSize/2),numsSize/2);
+    }
+}
+
 int** 
 fourSum(int* nums, int numsSize, int target, int* returnSize)
 {
     int **res = NULL;
+    *returnSize = 0;
     return res; 
 }
 
