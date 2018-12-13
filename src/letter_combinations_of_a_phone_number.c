@@ -24,81 +24,90 @@ char *dict[10] =  {
     "xyz"
 };
 
-int
+static int
 leet_ctoi(char *c)
 {
-    char c = *c;
-    return c - 48;
+    return *c - 48;
 }
 
-int
-res_size(char *digits)
+static int
+compute_res_size(char **res)
 {
-    char *p = digits;
-    int count = 1;
-    while (*p != '\0') {
-        count *= 3;
+    int size = 0;
+    char **p = res;
+    while (p != NULL) {
+        size++;
     }
-    return count;
+    return size;
 }
 
-char **
+static void *
+leet_malloc(size_t memsize)
+{
+    void *res;
+    res = malloc(memsize);
+    memset(res,0,memsize);
+    return res;
+}
+
+static char **
 span_dict_str(char *ds) 
 {
     char *ss;
-    char **res, rp;
+    char **res, **rp;
     int ds_len,i;
     ds_len = strlen(ds);
-    res = rp = calloc(sizeof(char *)*(ds_len+1));
+    res = rp = leet_malloc(sizeof(char *)*(ds_len+1));
     for (i=0 ; i<ds_len; i++) {
-        ss = calloc(sizeof(char)*2);
-        ss = ds[i];
+        ss = leet_malloc(sizeof(char)*2);
+        *ss = ds[i];
         *rp++ = ss;
     }
     return res;
 }
 
-int
-compute_collect_size(void *clt)
-{
-    int count = 0;
-    void *p = clt;
-    while (p != NULL) {
-        count++; 
-    }
-    return count;
-}
-
-char **
+static char **
 span_res_with_dict(char *ds, char **res) 
 {
-    char **result,rp,rt;
-    char *ss,dp;
-    int ds_size,res_size,total_size,ssize;
+    char **result,**rp,**rt;
+    char *ss,*dp,*ns,*nss;
+    int ds_size,res_size,total_size,ssize,i;
 
-    ds_size = compute_res_size(ds);
+    ds_size = strlen(ds);
     res_size = compute_res_size(res);
     total_size = ds_size * res_size + 1;
-    result = rt = calloc(sizeof(char *)*total_size);
+    result = rt = leet_malloc(sizeof(char *)*total_size);
 
     rp = res;
     while(rp != NULL) {
         ss = *rp;    
         dp = ds;
         while (*dp != '\0') {
+            //allocate new mem for new string
             ssize = strlen(ss);
+            ns = nss = leet_malloc(ssize+2); 
+            //concat dp char and old string to new string
+            *nss++ = *dp; 
+            for (i=0; i<ssize; i++) {
+                *nss++ = *ss++;
+            }
+            *rt++ = ns;
             dp++;
         }
+        //free old string
+        free(ss);
         rp++;
     }
+    //free old result
+    free(res);
     return result;
 }
 
-char **
+static char **
 do_letter_combination(char *digits)
 {
     char **res;
-    char *digt, ds;
+    char *digt, *ds;
 
     digt = digits+1;
     ds = dict[leet_ctoi(digits)];
@@ -109,17 +118,6 @@ do_letter_combination(char *digits)
         res = span_res_with_dict(ds,res);
     }
     return res;
-}
-
-int
-compute_res_size(char **res)
-{
-    int size = 0;
-    char **p = res;
-    while (p != NULL) {
-        size++;
-    }
-    return size;
 }
 
 char** 
