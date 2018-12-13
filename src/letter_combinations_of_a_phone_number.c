@@ -82,10 +82,8 @@ span_res_with_dict(char *ds, char **res)
         dp = ds;
         while (*dp != '\0') {
             ss = *rp;    
-            //allocate new mem for new string
             ssize = strlen(ss);
             ns = nss = leet_malloc(ssize+2); 
-            //concat dp char and old string to new string
             *nss++ = *dp; 
             for (i=0; i<ssize; i++) {
                 *nss++ = *ss++;
@@ -93,11 +91,9 @@ span_res_with_dict(char *ds, char **res)
             *rt++ = ns;
             dp++;
         }
-        //free old string
         free(*rp);
         rp++;
     }
-    //free old result
     free(res);
     return result;
 }
