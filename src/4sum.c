@@ -15,19 +15,6 @@
  */
 #include <linux_config.h>
 
-typedef struct res_ele_s res_ele;
-struct res_ele_s {
-    int i;
-    int j;
-    int k;
-    int l;
-};
-
-typedef struct tmp_res_s tmp_res;
-struct tmp_res_s {
-    res_ele *val;
-    tmp_res *next;
-};
 
 static void *
 leet_malloc(size_t memn)
