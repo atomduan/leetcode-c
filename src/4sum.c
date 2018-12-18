@@ -81,6 +81,25 @@ nums_sort(int *nums, int numsSize)
     }
 }
 
+int
+result_contain(int **res, int *res_ele)
+{
+    int **res_tmp = res, *res_val, count;
+    while (res_tmp != NULL && *res_tmp != NULL) {
+        res_val = *res_tmp; 
+        if (*res_val++ == res_ele[0]) count++;
+        if (*res_val++ == res_ele[1]) count++;
+        if (*res_val++ == res_ele[2]) count++;
+        if (*res_val++ == res_ele[3]) count++;
+        if (count == 4) {
+            return 1;
+        }
+        count = 0;
+        res_tmp++;
+    }
+    return 0;
+}
+
 int** 
 fourSum(int* nums, int numsSize, int target, int* returnSize)
 {
@@ -104,13 +123,9 @@ fourSum(int* nums, int numsSize, int target, int* returnSize)
     res = res_tmp = leet_malloc(1024*1024);
     i=j=k=l=0;
     for (i=0;i<numsSize-3;i++) {
-        if (i < numsSize-4 && nums[i]==nums[i+1]) continue;
         for (j=i+1;j<numsSize-2;j++) {
-            if (j < numsSize-3 && nums[j]==nums[j+1]) continue;
             for (k=j+1;k<numsSize-1;k++) {
-                if (k < numsSize-2 && nums[k]==nums[k+1]) continue;
                 for (l=k+1;l<numsSize;l++) {
-                    if (l < numsSize-1 && nums[l]==nums[l+1]) continue;
                     sum = nums[i]+nums[j]+nums[k]+nums[l];
                     if (sum == target) {
                         res_ele = leet_malloc(sizeof(int)*4);
@@ -118,8 +133,12 @@ fourSum(int* nums, int numsSize, int target, int* returnSize)
                         res_ele[1] = nums[j];
                         res_ele[2] = nums[k];
                         res_ele[3] = nums[l];
-                        *res_tmp++ = res_ele;
-                        (*returnSize)++;     
+                        if (!result_contain(res, res_ele)) {
+                            *res_tmp++ = res_ele;
+                            (*returnSize)++;     
+                        } else {
+                            free(res_ele);
+                        }
                     }
                 }
             }
@@ -133,7 +152,8 @@ int main(int argc, char **argv)
     int vi=0,vj=0,vk=0,vl=0,i=0,*pi=NULL;
     int target = 0;
     int returnSize = 0;
-    int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
+    //int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
+    int nums[] = {-3,-2,-1,0,0,1,2,3};
     int numsSize = sizeof(nums)/sizeof(int);
     int ** res = fourSum(nums, numsSize, target, &returnSize);
     printf("returnSize is %d\n", returnSize);
