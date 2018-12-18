@@ -23,6 +23,12 @@ leet_malloc(size_t size)
     return res;
 }
 
+char *
+alloc_str_block(int n)
+{
+    return leet_malloc(2*n+1);
+}
+
 /**
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
@@ -30,7 +36,7 @@ leet_malloc(size_t size)
 char** 
 generateParenthesis(int n, int* returnSize)
 {
-    return NULL;    
+    return NULL;
 }
 
 int
