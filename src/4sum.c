@@ -60,7 +60,7 @@ nums_sort(int *nums, int numsSize)
     m_val = nums[m_idx];
     i=0, j=numsSize-1;
     while (i < j) {
-        for (; i<m_idx; i++) {
+        for (; i <m_idx; i++) {
             if (nums[i] > m_val) {
                 m_idx = leet_swap(nums, i, m_idx);                
                 break;
@@ -152,8 +152,7 @@ int main(int argc, char **argv)
     int vi=0,vj=0,vk=0,vl=0,i=0,*pi=NULL;
     int target = 0;
     int returnSize = 0;
-    //int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
-    int nums[] = {-3,-2,-1,0,0,1,2,3};
+    int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
     int numsSize = sizeof(nums)/sizeof(int);
     int ** res = fourSum(nums, numsSize, target, &returnSize);
     printf("returnSize is %d\n", returnSize);

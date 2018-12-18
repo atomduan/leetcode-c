@@ -21,7 +21,7 @@ leet_quick_sort(int *nums, int numsSize)
     m_val = nums[m_idx];
     i=0, j=numsSize-1;
     while (i < j) {
-        for (; i<m_idx; i++) {
+        for (; i <m_idx; i++) {
             if (nums[i] > m_val) {
                 m_idx = leet_swap(nums, i, m_idx);                
                 break; //to for loop not to outter while
