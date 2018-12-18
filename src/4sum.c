@@ -97,7 +97,7 @@ nums_sort(int *nums, int numsSize)
 int** 
 fourSum(int* nums, int numsSize, int target, int* returnSize)
 {
-    int **res = NULL;
+    int **res = NULL, *res_ele, **res_tmp;
     int i,j,k,l,sum;
 
     *returnSize = 0;
@@ -114,6 +114,7 @@ fourSum(int* nums, int numsSize, int target, int* returnSize)
         return res;
     }
     //compute
+    res = res_tmp = leet_malloc(1024*1024);
     i=j=k=l=0;
     for (i=0;i<numsSize-3;i++) {
         if (i < numsSize-4 && nums[i]==nums[i+1]) continue;
@@ -125,7 +126,13 @@ fourSum(int* nums, int numsSize, int target, int* returnSize)
                     if (l < numsSize-1 && nums[l]==nums[l+1]) continue;
                     sum = nums[i]+nums[j]+nums[k]+nums[l];
                     if (sum == target) {
-                        printf("find target:%d -> i:%d,j:%d,k:%d,l:%d\n",target,nums[i],nums[j],nums[k],nums[l]);
+                        res_ele = leet_malloc(sizeof(int)*4);
+                        res_ele[0] = nums[i];
+                        res_ele[1] = nums[j];
+                        res_ele[2] = nums[k];
+                        res_ele[3] = nums[l];
+                        *res_tmp++ = res_ele;
+                        (*returnSize)++;     
                     }
                 }
             }
