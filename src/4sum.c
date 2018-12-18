@@ -15,6 +15,20 @@
  */
 #include <linux_config.h>
 
+typedef struct res_ele_s res_ele;
+struct res_ele_s {
+    int i;
+    int j;
+    int k;
+    int l;
+};
+
+typedef struct tmp_res_s tmp_res;
+struct tmp_res_s {
+    res_ele *val;
+    tmp_res *next;
+};
+
 static void *
 leet_malloc(size_t memn)
 {
@@ -84,6 +98,8 @@ int**
 fourSum(int* nums, int numsSize, int target, int* returnSize)
 {
     int **res = NULL;
+    int i,j,k,l,sum;
+
     *returnSize = 0;
     nums_sort(nums, numsSize); 
     //bad case, quick retrun 
@@ -96,6 +112,24 @@ fourSum(int* nums, int numsSize, int target, int* returnSize)
         res = res_default();
         *returnSize += 1;
         return res;
+    }
+    //compute
+    i=j=k=l=0;
+    for (i=0;i<numsSize-3;i++) {
+        if (i < numsSize-4 && nums[i]==nums[i+1]) continue;
+        for (j=i+1;j<numsSize-2;j++) {
+            if (j < numsSize-3 && nums[j]==nums[j+1]) continue;
+            for (k=j+1;k<numsSize-1;k++) {
+                if (k < numsSize-2 && nums[k]==nums[k+1]) continue;
+                for (l=k+1;l<numsSize;l++) {
+                    if (l < numsSize-1 && nums[l]==nums[l+1]) continue;
+                    sum = nums[i]+nums[j]+nums[k]+nums[l];
+                    if (sum == target) {
+                        printf("find target:%d -> i:%d,j:%d,k:%d,l:%d\n",target,nums[i],nums[j],nums[k],nums[l]);
+                    }
+                }
+            }
+        }
     }
     return res; 
 }
