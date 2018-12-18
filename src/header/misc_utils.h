@@ -8,12 +8,12 @@
 #define TEST_BAR        TEST_FOO
 
 
-typedef struct timespec    atm_timespec_t;
+typedef struct timespec leet_timespec_t;
 
 
 unsigned long
-atm_time_mval(atm_timespec_t *rct,
-        atm_timespec_t *old);
+leet_time_mval(leet_timespec_t *rct,
+        leet_timespec_t *old);
 
 void
-atm_time_mono(atm_timespec_t *ts);
+leet_time_mono(leet_timespec_t *ts);

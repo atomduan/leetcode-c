@@ -6,8 +6,8 @@
  * A micro seconds diff will return
  */
 unsigned long
-atm_time_mval(atm_timespec_t *rct,
-        atm_timespec_t *old)
+leet_time_mval(leet_timespec_t *rct,
+        leet_timespec_t *old)
 {
     unsigned long res = 0;
     unsigned long sec_diff = 0;
@@ -25,7 +25,7 @@ atm_time_mval(atm_timespec_t *rct,
 
 
 void
-atm_time_mono(atm_timespec_t *ts)
+leet_time_mono(leet_timespec_t *ts)
 {
     clock_gettime(CLOCK_MONOTONIC_COARSE, ts);
 }

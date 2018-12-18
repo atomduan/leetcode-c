@@ -41,7 +41,7 @@ int_tuple()
     return leet_malloc(sizeof(int)*4);
 }
 
-int **
+static int **
 res_default()
 {
     int *r = int_tuple();
@@ -50,6 +50,7 @@ res_default()
     return res;
 }
 
+//quick sort
 void
 nums_sort(int *nums, int numsSize)
 {
@@ -61,17 +62,21 @@ nums_sort(int *nums, int numsSize)
         for (; i<m_idx; i++) {
             if (nums[i] > m_val) {
                 m_idx = leet_swap(nums, i, m_idx);                
+                break;
             }
         }
         for (; j>=m_idx; j--) {
             if (nums[j] < m_val) {
                 m_idx = leet_swap(nums, j, m_idx);                
+                break;
             }
         }
     }
-    if (numsSize/2 > 0) {
-        nums_sort(nums, numsSize/2);
-        nums_sort(nums+(numsSize/2),numsSize/2);
+    if (m_idx>0) {
+        nums_sort(nums,m_idx);
+    }
+    if (m_idx < numsSize-1) {
+        nums_sort(nums+m_idx,numsSize-m_idx);
     }
 }
 
@@ -97,12 +102,20 @@ fourSum(int* nums, int numsSize, int target, int* returnSize)
 
 int main(int argc, char **argv) 
 {
+    int vi=0,vj=0,vk=0,vl=0,i=0,*pi=NULL;
     int target = 0;
     int returnSize = 0;
     int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
     int numsSize = sizeof(nums)/sizeof(int);
+    nums_sort(nums,numsSize);
+
+    printf("sort result: ");
+    for (i=0; i<numsSize; i++) {
+        printf("%d,", nums[i]);
+    }
+    printf("\n");
+
     int ** res = fourSum(nums, numsSize, target, &returnSize);
-    int vi=0,vj=0,vk=0,vl=0,i=0,*pi=NULL;
     printf("returnSize is %d\n", returnSize);
     if (res != NULL) {
         for (i=0; i<returnSize; i++) {

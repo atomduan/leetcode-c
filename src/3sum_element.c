@@ -68,8 +68,47 @@ int *register_pool(int vi, int vj, int vk, int **res_head) {
     return res;
 }
 
+static int 
+leet_swap(int *nums, const int dest_idx, const int src_idx)
+{
+    int tmp = nums[dest_idx];
+    nums[dest_idx] = nums[src_idx];
+    nums[src_idx] = tmp;
+    return dest_idx;
+}
+
+//quick sort
+void
+nums_sort(int *nums, int numsSize)
+{
+    int m_idx, m_val, i, j;
+    m_idx = numsSize/2;
+    m_val = nums[m_idx];
+    i=0, j=numsSize-1;
+    while (i < j) {
+        for (; i<m_idx; i++) {
+            if (nums[i] > m_val) {
+                m_idx = leet_swap(nums, i, m_idx);                
+                break;
+            }
+        }
+        for (; j>=m_idx; j--) {
+            if (nums[j] < m_val) {
+                m_idx = leet_swap(nums, j, m_idx);                
+                break;
+            }
+        }
+    }
+    if (m_idx>0) {
+        nums_sort(nums,m_idx);
+    }
+    if (m_idx < numsSize-1) {
+        nums_sort(nums+m_idx,numsSize-m_idx);
+    }
+}
+
 int** threeSum(int* nums, int numsSize, int* returnSize) {
-    int i=0,j=0,t=0;
+    int i=0,j=0;
     int vi=0,vj=0,vk=0;
     int *tmp = NULL;
     int *numbers = NULL;
@@ -125,15 +164,8 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         numbers[i] = nums[i];
     }
 
-    for (i=0; i<numsSize; i++) {
-        for (j=0; j<numsSize-i-1; j++) {
-            if (numbers[j] > numbers[j+1]) {
-                t = numbers[j];
-                numbers[j] = numbers[j+1];
-                numbers[j+1] = t;
-            }
-        }
-    }
+    //sort
+    nums_sort(numbers, numsSize);
 
     if (numbers[0] > 0) {
         return res_head;
@@ -151,7 +183,7 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
     }
 
 
-    i=0,j=0,t=0;
+    i=0,j=0;
     while (i < numsSize-2) {
         vj = vi-numbers[i];
         j = i+1;
@@ -220,9 +252,9 @@ int main(int argc, char **argv)
     int returnSize = 0;
     //int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
     //int nums[] = {-1,0,1,2,-1,-4,-1,0,1};
-    //int nums[] = {-1,0,1,2,-1,-4};
+    int nums[] = {-1,0,1,2,-1,-4};
     //int nums[] = {1,2,-2,-1};
-    int nums[] = {0,0,0,0,0,0,0,0,0,0};
+    //int nums[] = {0,0,0,0,0,0,0,0,0,0};
     //int nums[] = {0,-1,1};
     //int nums[] = {-1,-1,-1,1};
     //int nums[] = {-1,0,1,0};
