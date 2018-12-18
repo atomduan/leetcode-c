@@ -107,14 +107,6 @@ int main(int argc, char **argv)
     int returnSize = 0;
     int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
     int numsSize = sizeof(nums)/sizeof(int);
-    nums_sort(nums,numsSize);
-
-    printf("sort result: ");
-    for (i=0; i<numsSize; i++) {
-        printf("%d,", nums[i]);
-    }
-    printf("\n");
-
     int ** res = fourSum(nums, numsSize, target, &returnSize);
     printf("returnSize is %d\n", returnSize);
     if (res != NULL) {
