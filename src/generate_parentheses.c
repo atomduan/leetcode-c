@@ -71,7 +71,7 @@ generate_parenthe_element(int n, int p_size)
         rr = generate_parenthe_element(n-1,p_size);
         return merge_result_arr(lr,rr,index);
     } else {
-        rt = leet_malloc(sizeof(char **)*2);
+        rt = leet_malloc(sizeof(char *)*2);
         rt[0] = alloc_str_block(p_size);
         return rt;
     }
