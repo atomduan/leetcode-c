@@ -34,7 +34,7 @@ compute_res_size(char **res)
 {
     char **rp = res;
     size_t size = 0;
-    while (rp != NULL) {
+    while (*rp != NULL) {
         size++; rp++;
     }
     return size;
@@ -48,12 +48,12 @@ merge_result_arr(char **lr, char **rr, int index)
     size_t rr_size = compute_res_size(rr);
     char **res = leet_malloc(sizeof(char*)*(lr_size+rr_size+1));
     while (lr != NULL) {
-        res[i] = *lr;
+        res[i++] = *lr;
         *lr[index] = '(';
         lr++;
     }
     while (rr != NULL) {
-        res[i] = *rr;
+        res[i++] = *rr;
         *rr[index] = ')';
         rr++;
     }
