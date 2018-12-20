@@ -90,5 +90,31 @@ mergeKLists(struct ListNode** lists, int listsSize)
 int
 main(int argc, char **argv)
 {
+    struct ListNode *res_head, *res, *tmp, **tuple, *result;
+    int listsSize = 3;
+    tuple = leet_malloc(sizeof(struct ListNode*)*4);
+
+    res_head = res = init_node(1);
+    tmp = init_node(4); res->next = tmp; res = tmp;
+    tmp = init_node(5); res->next = tmp; res = tmp;
+    tuple[0] = res_head;
+
+    res_head = res = init_node(1);
+    tmp = init_node(3); res->next = tmp; res = tmp;
+    tmp = init_node(4); res->next = tmp; res = tmp;
+    tuple[1] = res_head;
+
+    res_head = res = init_node(2);
+    tmp = init_node(6); res->next = tmp; res = tmp;
+    tuple[2] = res_head;
+
+    result = mergeKLists(tuple, listsSize);
+
+    printf("result is :\n");
+    while (result != NULL) {
+        printf("->%d", result->val);
+    }
+    printf("\n");
+
     return 0;
 }
