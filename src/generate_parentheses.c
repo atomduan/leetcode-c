@@ -9,7 +9,6 @@
  *   "()()()"
  * ]
  */
-
 #include <linux_config.h>
 
 void *
