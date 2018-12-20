@@ -38,6 +38,15 @@ init_heading_tuple(struct ListNode** lists,
     }
 }
 
+struct ListNode *
+init_node(int val)
+{
+    struct ListNode *res;
+    res = leet_malloc(sizeof(struct ListNode));
+    res->val = val;
+    return res;
+}
+
 struct ListNode* 
 mergeKLists(struct ListNode** lists, int listsSize) 
 {
@@ -53,7 +62,7 @@ mergeKLists(struct ListNode** lists, int listsSize)
         tmp_tuple = heading_tuple; 
         min_index = 0, i = 0, min_val = (*tmp_tuple)->val;
         all_null = 1;
-        while (1) {
+        while (tmp_tuple != NULL) {
             if (*tmp_tuple != NULL) {
                 all_null = 0;
                 if (*tmp_tuple != NULL && (*tmp_tuple)->val < min_val) { 
@@ -63,16 +72,16 @@ mergeKLists(struct ListNode** lists, int listsSize)
             }
             tmp_tuple++, i++;
         }
-        tmp_tuple[min_index] = tmp_tuple[min_index]->next;
-        if (res == NULL) {
-            res = leet_malloc(sizeof(struct ListNode));
-            res->val = tmp_tuple[min_index]->val;
-            res_head = res;
-        } else {
-            res_tmp = leet_malloc(sizeof(struct ListNode));
-            res_tmp->val = tmp_tuple[min_index]->val;
-            res->next = res_tmp;
-            res = res_tmp;
+        if (!all_null) {
+            tmp_tuple[min_index] = tmp_tuple[min_index]->next;
+            if (res == NULL) {
+                res = init_node(tmp_tuple[min_index]->val);
+                res_head = res;
+            } else {
+                res_tmp = init_node(tmp_tuple[min_index]->val);
+                res->next = res_tmp;
+                res = res_tmp;
+            }
         }
     }
     return res_head;
