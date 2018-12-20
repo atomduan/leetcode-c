@@ -28,8 +28,8 @@ leet_malloc(size_t size)
 }
 
 void
-init_heading_tuple(struct ListNode** lists, 
-                   int listsSize, 
+init_heading_tuple(struct ListNode** lists,
+                   int listsSize,
                    struct ListNode **heading_tuple)
 {
     int i = 0;
@@ -47,25 +47,25 @@ init_node(int val)
     return res;
 }
 
-struct ListNode* 
-mergeKLists(struct ListNode** lists, int listsSize) 
+struct ListNode*
+mergeKLists(struct ListNode** lists, int listsSize)
 {
     struct ListNode **heading_tuple, **tmp_tuple;
     struct ListNode *res = NULL, *res_tmp = NULL, *res_head = NULL;
     int min_index, i, min_val, all_null, hd_size;
-  
+
     hd_size = sizeof(struct ListNode*)*(listsSize+1);
-    heading_tuple = leet_malloc(hd_size); 
+    heading_tuple = leet_malloc(hd_size);
     init_heading_tuple(lists, listsSize, heading_tuple);
     all_null = 0;
     while (!all_null) {
-        tmp_tuple = heading_tuple; 
+        tmp_tuple = heading_tuple;
         min_index = 0, i = 0, min_val = (*tmp_tuple)->val;
         all_null = 1;
         while (tmp_tuple != NULL) {
             if (*tmp_tuple != NULL) {
                 all_null = 0;
-                if (*tmp_tuple != NULL && (*tmp_tuple)->val < min_val) { 
+                if (*tmp_tuple != NULL && (*tmp_tuple)->val < min_val) {
                     min_index = i;
                     min_val = (*tmp_tuple)->val;
                 }

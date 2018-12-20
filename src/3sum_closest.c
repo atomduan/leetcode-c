@@ -1,6 +1,6 @@
-/* Given an array nums of n integers and an integer target, 
- * find three integers in nums such that the sum is closest to target. 
- * Return the sum of the three integers. 
+/* Given an array nums of n integers and an integer target,
+ * find three integers in nums such that the sum is closest to target.
+ * Return the sum of the three integers.
  * You may assume that each input would have exactly one solution.
  *Example:
  *Given array nums = [-1, 2, 1, -4], and target = 1.
@@ -17,7 +17,7 @@ int threeSumClosest(int* nums, int numsSize, int target) {
                 s = nums[i] + nums[j] + nums[k];
                 d = target-s<0? s-target : target-s;
                 if (d == 0) {
-                    return s; 
+                    return s;
                 } else {
                     if (d < diff || diff == -1) {
                         diff = d;
@@ -30,12 +30,12 @@ int threeSumClosest(int* nums, int numsSize, int target) {
     return sum;
 }
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
     int nums[] = {-1, 2, 1, -4};
     int numsSize = sizeof(nums)/sizeof(int);
     int target = 1;
-    int sum = threeSumClosest(nums, numsSize, target); 
+    int sum = threeSumClosest(nums, numsSize, target);
     printf("result sum is %d\n", sum);
     return 0;
 }

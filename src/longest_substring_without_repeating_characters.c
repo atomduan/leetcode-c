@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * Given a string, find the length of the longest substring without repeating characters.
  * Examples:
@@ -18,7 +18,7 @@ static int hash(char c) {
     return (int) c;
 }
 
-int lengthOfLongestSubstring(char* s) 
+int lengthOfLongestSubstring(char* s)
 {
     int slen = strlen(s);
     if (slen == 0) return 0;

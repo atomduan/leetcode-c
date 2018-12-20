@@ -1,6 +1,6 @@
 /*
-*Given an array nums of n integers, are there elements a, b, c 
-*in nums such that a + b + c = 0? 
+*Given an array nums of n integers, are there elements a, b, c
+*in nums such that a + b + c = 0?
 *Find all unique triplets in the array which gives the sum of zero.
 *Note:
 *The solution set must not contain duplicate triplets.
@@ -19,12 +19,12 @@
 int *register_pool(int vi, int vj, int vk, int *pool, int *pool_head) {
     //check whether tuple exsited in pool_head.
     int *p = pool_head;
-    int exist_flag = 0; 
+    int exist_flag = 0;
     int count = 0;
     while (p != pool) {
-        if(*p++ == vi) count += 1; 
-        if(*p++ == vj) count += 1; 
-        if(*p++ == vk) count += 1; 
+        if(*p++ == vi) count += 1;
+        if(*p++ == vj) count += 1;
+        if(*p++ == vk) count += 1;
         if (count == 3) {
             exist_flag = 1;
             break;
@@ -65,7 +65,7 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
                     tmp = register_pool(nums[i],nums[j],nums[k],ptm,pool_head);
                     if (ptm != tmp) {
                         *res++ = ptm; ptm = tmp;
-                        (*returnSize)++;     
+                        (*returnSize)++;
                     } else {
                         tmp = NULL;
                     }
@@ -76,7 +76,7 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         }
         i++;
     }
-    return res_head; 
+    return res_head;
 }
 
 int main(int argc, char **argv)
@@ -85,7 +85,7 @@ int main(int argc, char **argv)
     int nums[] = {-1,0,1,2,-1,-4,-1,0,1};
     //int nums[] = {-1,0,1,2,-1,-4};
     int numsSize = sizeof(nums)/sizeof(int);
-    int **res = threeSum(nums, numsSize, &returnSize); 
+    int **res = threeSum(nums, numsSize, &returnSize);
     printf("returnSize is %d\n", returnSize);
     int vi=0, vj=0, vk=0, i=0, *pi = NULL;
     for (i=0; i<returnSize; i++) {

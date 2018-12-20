@@ -1,6 +1,6 @@
 /*
-*Given an array nums of n integers, are there elements a, b, c 
-*in nums such that a + b + c = 0? 
+*Given an array nums of n integers, are there elements a, b, c
+*in nums such that a + b + c = 0?
 *Find all unique triplets in the array which gives the sum of zero.
 *Note:
 *The solution set must not contain duplicate triplets.
@@ -19,12 +19,12 @@
 int *register_pool(int vi, int vj, int vk, int **res_head) {
     //check whether tuple exsited in pool_head.
     int **p = res_head;
-    int exist_flag = 0; 
+    int exist_flag = 0;
     int count = 0;
     int *t = NULL;
     int *res = NULL;
     int i=0,j=0,tmp=0;
-    
+
     int k[] = {vi, vj, vk};
     for (i=0; i<3; i++) {
         for (j=0; j<3-i-1; j++) {
@@ -38,9 +38,9 @@ int *register_pool(int vi, int vj, int vk, int **res_head) {
 
     while (p != NULL && *p != NULL) {
         t = *p;
-        if(*t++ == k[0]) count += 1; 
-        if(*t++ == k[1]) count += 1; 
-        if(*t++ == k[2]) count += 1; 
+        if(*t++ == k[0]) count += 1;
+        if(*t++ == k[1]) count += 1;
+        if(*t++ == k[2]) count += 1;
         if (count == 3) {
             exist_flag = 1;
             break;
@@ -58,7 +58,7 @@ int *register_pool(int vi, int vj, int vk, int **res_head) {
         for (i=0; i<3; i++) {
             for (j=0; j<3-i-1; j++) {
                 if (res[j]>res[j+1]) {
-                    tmp = res[j];      
+                    tmp = res[j];
                     res[j] = res[j+1];
                     res[j+1] = tmp;
                 }
@@ -68,7 +68,7 @@ int *register_pool(int vi, int vj, int vk, int **res_head) {
     return res;
 }
 
-static int 
+static int
 leet_swap(int *nums, const int dest_idx, const int src_idx)
 {
     int tmp = nums[dest_idx];
@@ -88,13 +88,13 @@ nums_sort(int *nums, int numsSize)
     while (i < j) {
         for (; i<m_idx; i++) {
             if (nums[i] > m_val) {
-                m_idx = leet_swap(nums, i, m_idx);                
+                m_idx = leet_swap(nums, i, m_idx);
                 break;
             }
         }
         for (; j>=m_idx; j--) {
             if (nums[j] < m_val) {
-                m_idx = leet_swap(nums, j, m_idx);                
+                m_idx = leet_swap(nums, j, m_idx);
                 break;
             }
         }
@@ -142,7 +142,7 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
         tmp = register_pool(0,0,0,res_head);
         if (tmp != NULL) {
             *res++ = tmp;
-            (*returnSize)++;     
+            (*returnSize)++;
         }
         return res_head;
     }
@@ -156,7 +156,7 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
     res_size = sizeof(int *)*positive*positive;
     res_head = malloc(res_size);
     res = res_head;
-    
+
     numbers = malloc(sizeof(int)*numsSize);
     memset(numbers, 0, sizeof(int)*numsSize);
 
@@ -196,14 +196,14 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
                             tmp = register_pool(numbers[i],numbers[j],vk,res_head);
                             if (tmp != NULL) {
                                 *res++ = tmp;
-                                (*returnSize)++;     
+                                (*returnSize)++;
                             }
                         } else {
                             if (numbers[j]==numbers[j+1]) {
                                 tmp = register_pool(numbers[i],numbers[j],vk,res_head);
                                 if (tmp != NULL) {
                                     *res++ = tmp;
-                                    (*returnSize)++;     
+                                    (*returnSize)++;
                                 }
                             }
                         }
@@ -216,14 +216,14 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
                             tmp = register_pool(numbers[i],numbers[j],vk,res_head);
                             if (tmp != NULL) {
                                 *res++ = tmp;
-                                (*returnSize)++;     
+                                (*returnSize)++;
                             }
                         } else {
                             if (numbers[j]==numbers[j+1]) {
                                 tmp = register_pool(numbers[i],numbers[j],vk,res_head);
                                 if (tmp != NULL) {
                                     *res++ = tmp;
-                                    (*returnSize)++;     
+                                    (*returnSize)++;
                                 }
                             }
                         }
@@ -233,7 +233,7 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
                         tmp = register_pool(numbers[i],numbers[j],numbers[j+1],res_head);
                         if (tmp != NULL) {
                             *res++ = tmp;
-                            (*returnSize)++;     
+                            (*returnSize)++;
                         }
                     }
                 }
@@ -244,7 +244,7 @@ int** threeSum(int* nums, int numsSize, int* returnSize) {
     }
     free(bm);
     free(numbers);
-    return res_head; 
+    return res_head;
 }
 
 int main(int argc, char **argv)
@@ -260,7 +260,7 @@ int main(int argc, char **argv)
     //int nums[] = {-1,0,1,0};
 
     int numsSize = sizeof(nums)/sizeof(int);
-    int **res = threeSum(nums, numsSize, &returnSize); 
+    int **res = threeSum(nums, numsSize, &returnSize);
     printf("returnSize is %d\n", returnSize);
     int vi=0, vj=0, vk=0, i=0, *pi = NULL;
     for (i=0; i<returnSize; i++) {

@@ -21,13 +21,13 @@
  */
 #include <linux_config.h>
 
-static int 
+static int
 isPalindrome(int x) {
     int result = 0;
     int orgx = x;
     if (x < 0) return 0;
     while (1) {
-        result = result * 10 + (x % 10); 
+        result = result * 10 + (x % 10);
         x /= 10;
         if (x == 0) break;
     }

@@ -3,7 +3,7 @@
  */
 #include <linux_config.h>
 
-static int 
+static int
 leet_swap(int *nums, const int dest_idx, const int src_idx)
 {
     int tmp = nums[dest_idx];
@@ -23,13 +23,13 @@ leet_quick_sort(int *nums, int numsSize)
     while (i < j) {
         for (; i <m_idx; i++) {
             if (nums[i] > m_val) {
-                m_idx = leet_swap(nums, i, m_idx);                
+                m_idx = leet_swap(nums, i, m_idx);
                 break; //to for loop not to outter while
             }
         }
         for (; j>=m_idx; j--) {
             if (nums[j] < m_val) {
-                m_idx = leet_swap(nums, j, m_idx);                
+                m_idx = leet_swap(nums, j, m_idx);
                 break;
             }
         }
@@ -43,7 +43,7 @@ leet_quick_sort(int *nums, int numsSize)
     }
 }
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
     int i=0;
     int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};

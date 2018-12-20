@@ -1,4 +1,4 @@
-/** 
+/**
  * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
  * For example, given n = 3, a solution set is:
  * [
@@ -16,7 +16,7 @@ leet_malloc(size_t size)
 {
     void *res = NULL;
     if (size > 0) {
-        res = malloc(size); 
+        res = malloc(size);
         memset(res,0,size);
     }
     return res;
@@ -99,7 +99,7 @@ evaluate_res(char *r)
 }
 
 
-char ** 
+char **
 generateParenthesis(int n, int *returnSize)
 {
     char **init_res;
@@ -111,7 +111,7 @@ generateParenthesis(int n, int *returnSize)
     if (init_res != NULL) {
         for (i=0; i<*returnSize; i++) {
             if (0 == evaluate_res(init_res[i])) {
-                *res++ = init_res[i]; 
+                *res++ = init_res[i];
                 valid_count++;
             } else {
                 free(init_res[i]);

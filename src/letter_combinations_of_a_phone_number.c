@@ -1,11 +1,11 @@
 /* Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
  * A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
  * Example:
- * 
+ *
  * Input: "23"
  * Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
  * Note:
- * 
+ *
  * Although the above answer is in lexicographical order, your answer could be in any order you want.
  */
 
@@ -51,7 +51,7 @@ leet_malloc(size_t memsize)
 }
 
 static char **
-span_dict_str(char *ds) 
+span_dict_str(char *ds)
 {
     char *ss, **res, **rp;
     int ds_len,i;
@@ -66,7 +66,7 @@ span_dict_str(char *ds)
 }
 
 static char **
-span_res_with_dict(char *ds, char **res) 
+span_res_with_dict(char *ds, char **res)
 {
     char **result,**rp,**rt;
     char *ss,*dp,*ns,*nss;
@@ -81,10 +81,10 @@ span_res_with_dict(char *ds, char **res)
     while(rp != NULL && *rp != NULL) {
         dp = ds;
         while (*dp != '\0') {
-            ss = *rp;    
+            ss = *rp;
             ssize = strlen(ss);
-            ns = nss = leet_malloc(ssize+2); 
-            *nss++ = *dp; 
+            ns = nss = leet_malloc(ssize+2);
+            *nss++ = *dp;
             for (i=0; i<ssize; i++) {
                 *nss++ = *ss++;
             }
@@ -106,14 +106,14 @@ do_letter_combination(char *digits)
     if (*(digits+1) == '\0') {
         res = span_dict_str(ds);
     } else {
-        res = do_letter_combination(digits+1); 
+        res = do_letter_combination(digits+1);
         res = span_res_with_dict(ds,res);
     }
     return res;
 }
 
-char** 
-letterCombinations(char* digits, int* returnSize) 
+char**
+letterCombinations(char* digits, int* returnSize)
 {
     char **res = NULL;
     *returnSize = 0;
@@ -121,10 +121,10 @@ letterCombinations(char* digits, int* returnSize)
         res = do_letter_combination(digits);
         *returnSize = compute_res_size(res);
     }
-    return res; 
+    return res;
 }
 
-int 
+int
 main(int argc, char **argv)
 {
     //char *digits = "27";

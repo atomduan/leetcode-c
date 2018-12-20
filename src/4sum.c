@@ -1,6 +1,6 @@
 /*
- * Given an array nums of n integers and an integer target, 
- * are there elements a, b, c, and d in nums such that a + b + c + d = target? 
+ * Given an array nums of n integers and an integer target,
+ * are there elements a, b, c, and d in nums such that a + b + c + d = target?
  * Find all unique quadruplets in the array which gives the sum of target.
  * Note:
  * The solution set must not contain duplicate quadruplets.
@@ -27,7 +27,7 @@ leet_malloc(size_t memn)
     return res;
 }
 
-static int 
+static int
 leet_swap(int *nums, const int dest_idx, const int src_idx)
 {
     int tmp = nums[dest_idx];
@@ -62,13 +62,13 @@ nums_sort(int *nums, int numsSize)
     while (i < j) {
         for (; i <m_idx; i++) {
             if (nums[i] > m_val) {
-                m_idx = leet_swap(nums, i, m_idx);                
+                m_idx = leet_swap(nums, i, m_idx);
                 break;
             }
         }
         for (; j>=m_idx; j--) {
             if (nums[j] < m_val) {
-                m_idx = leet_swap(nums, j, m_idx);                
+                m_idx = leet_swap(nums, j, m_idx);
                 break;
             }
         }
@@ -86,7 +86,7 @@ result_contain(int **res, int *res_ele)
 {
     int **res_tmp = res, *res_val, count;
     while (res_tmp != NULL && *res_tmp != NULL) {
-        res_val = *res_tmp; 
+        res_val = *res_tmp;
         if (*res_val++ == res_ele[0]) count++;
         if (*res_val++ == res_ele[1]) count++;
         if (*res_val++ == res_ele[2]) count++;
@@ -100,16 +100,16 @@ result_contain(int **res, int *res_ele)
     return 0;
 }
 
-int** 
+int**
 fourSum(int* nums, int numsSize, int target, int* returnSize)
 {
     int **res = NULL, *res_ele, **res_tmp;
     int i,j,k,l,sum;
 
     *returnSize = 0;
-    nums_sort(nums, numsSize); 
-    //bad case, quick retrun 
-    if (numsSize < 4) return res; 
+    nums_sort(nums, numsSize);
+    //bad case, quick retrun
+    if (numsSize < 4) return res;
     if (nums[numsSize-1] < 0 && target > 0) return res;
     if (nums[0] > 0 && target < 0) return res;
     if (nums[0] == nums[numsSize-1] && nums[0] == 0 && target != 0) return res;
@@ -135,7 +135,7 @@ fourSum(int* nums, int numsSize, int target, int* returnSize)
                         res_ele[3] = nums[l];
                         if (!result_contain(res, res_ele)) {
                             *res_tmp++ = res_ele;
-                            (*returnSize)++;     
+                            (*returnSize)++;
                         } else {
                             free(res_ele);
                         }
@@ -144,10 +144,10 @@ fourSum(int* nums, int numsSize, int target, int* returnSize)
             }
         }
     }
-    return res; 
+    return res;
 }
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
     int vi=0,vj=0,vk=0,vl=0,i=0,*pi=NULL;
     int target = 0;

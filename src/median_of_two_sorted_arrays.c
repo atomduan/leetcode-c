@@ -1,25 +1,25 @@
 /*
  * There are two sorted arrays nums1 and nums2 of size m and n respectively.
- * 
+ *
  * Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
- * 
+ *
  * Example 1:
  * nums1 = [1, 3]
  * nums2 = [2]
- * 
+ *
  * The median is 2.0
  * Example 2:
  * nums1 = [1, 2]
  * nums2 = [3, 4]
- * 
+ *
  * The median is (2 + 3)/2 = 2.5
  */
 #include <linux_config.h>
 
-double 
-findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size) 
+double
+findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size)
 {
-    int m_index = (nums1Size + nums2Size)/2;        
+    int m_index = (nums1Size + nums2Size)/2;
     int i1 = 0;
     int i2 = 0;
     int is_odd = (nums1Size + nums2Size) % 2;
@@ -74,10 +74,10 @@ findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size)
     return result;
 }
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
-    int nums1[4] = {1, 2, 3, 5}; 
-    int nums1Size = 4; 
+    int nums1[4] = {1, 2, 3, 5};
+    int nums1Size = 4;
     int nums2[3] = {2, 4, 6};
     int nums2Size = 3;
     double res = 0.0;

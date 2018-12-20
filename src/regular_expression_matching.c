@@ -48,7 +48,7 @@
 #include <linux_config.h>
 
 #define ATTR_START 0
-#define ATTR_PLAN 1 
+#define ATTR_PLAN 1
 #define ATTR_REPEAT 2
 #define ATTR_END 3
 
@@ -60,17 +60,17 @@ typedef struct step_s step;
 
 struct statm_s {
     int     index;
-    int     attr; 
+    int     attr;
     char    val;
     statm   *next;
-}; 
+};
 
 struct step_s {
     int     status;
     statm   *curr_stat;
     step    *next;
     int     dup_flag;
-}; 
+};
 
 static step *head_step = NULL;
 
@@ -128,7 +128,7 @@ compile_pattern(char *pattern)
 }
 
 static step *
-get_tail_step(step *step_head) 
+get_tail_step(step *step_head)
 {
     step *curr_step = step_head;
     step *tail_step = NULL;
@@ -180,7 +180,7 @@ static void append_tail(step *tail_step, step *tmp_step)
     }
 }
 
-static void 
+static void
 process_stat_detect(statm *des_stat, char input_char, step *tail_step)
 {
     if (des_stat == NULL) return;
@@ -221,16 +221,16 @@ read_one_char(char c, step *head_step) {
     step *curr_step = NULL;
     step *tail_step = NULL;
     tail_step = get_tail_step(head_step);
-    for (curr_step=head_step; 
-            curr_step!=NULL && 
-            curr_step!=tail_step; 
+    for (curr_step=head_step;
+            curr_step!=NULL &&
+            curr_step!=tail_step;
             curr_step=curr_step->next) {
-        process_curr_step(curr_step,c,tail_step); 
+        process_curr_step(curr_step,c,tail_step);
     }
-    process_curr_step(tail_step,c,tail_step); 
+    process_curr_step(tail_step,c,tail_step);
 }
 
-void 
+void
 print_steps(step *head_step)
 {
     step *tmp = NULL;
@@ -278,7 +278,7 @@ determin_match(step *head_step)
 {
     step *curr_step = NULL;
     for (curr_step=head_step; curr_step!=NULL; curr_step=curr_step->next) {
-        if (curr_step->curr_stat->val == '\0') return true; 
+        if (curr_step->curr_stat->val == '\0') return true;
     }
     return false;
 }
@@ -315,8 +315,8 @@ effect_uniq_flag(step *head_step)
 
 }
 
-static bool 
-isMatch(char* s, char* p) 
+static bool
+isMatch(char* s, char* p)
 {
     char *ss = NULL;
     int end_flag = 0;
@@ -332,10 +332,10 @@ isMatch(char* s, char* p)
         //printf("########################\n");
         //print_steps(head_step);
     }
-    return determin_match(head_step); 
+    return determin_match(head_step);
 }
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
     //printf("isMatch %d\n", isMatch("aa", "a"));
     //printf("isMatch %d\n", isMatch("aa", ".*"));

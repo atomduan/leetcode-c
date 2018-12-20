@@ -1,25 +1,25 @@
 /*
- * The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: 
+ * The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this:
  * (you may want to display this pattern in a fixed font for better legibility)
- * 
+ *
  * P   A   H   N
  * A P L S I I G
  * Y   I   R
  * And then read line by line: "PAHNAPLSIIGYIR"
- * 
+ *
  * Write the code that will take a string and make this conversion given a number of rows:
- * 
+ *
  * string convert(string s, int numRows);
  * Example 1:
- * 
+ *
  * Input: s = "PAYPALISHIRING", numRows = 3
  * Output: "PAHNAPLSIIGYIR"
  * Example 2:
- * 
+ *
  * Input: s = "PAYPALISHIRING", numRows = 4
  * Output: "PINALSIGYAHRPI"
  * Explanation:
- * 
+ *
  * P     I    N
  * A   L S  I G
  * Y A   H R
@@ -27,8 +27,8 @@
  */
 #include <linux_config.h>
 
-static int 
-compute_line_number(int index, int row_num) 
+static int
+compute_line_number(int index, int row_num)
 {
     int step = 0;
     int sidx = 0;
@@ -40,12 +40,12 @@ compute_line_number(int index, int row_num)
 }
 
 char *
-convert(char* s, int numRows) 
+convert(char* s, int numRows)
 {
-    int len = 0; 
+    int len = 0;
     int line_index = 0;
     int i = 0;
-    char *result = NULL; 
+    char *result = NULL;
     char *curr = NULL;
     char **dict = NULL;
     char **tmpd = NULL;
@@ -53,7 +53,7 @@ convert(char* s, int numRows)
     if (numRows == 1) return s;
 
     len = strlen(s);
-    result = malloc(len+1);; 
+    result = malloc(len+1);;
     curr = result;
     memset(result, 0, len+1);
 

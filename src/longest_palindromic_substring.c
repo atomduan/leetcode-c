@@ -1,13 +1,13 @@
 /*
  * Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
- * 
+ *
  * Example 1:
- * 
+ *
  * Input: "babad"
  * Output: "bab"
  * Note: "aba" is also a valid answer.
  * Example 2:
- * 
+ *
  * Input: "cbbd"
  * Output: "bb"
  */
@@ -23,7 +23,7 @@ scan_eve_palindrome(char *s, int *maxp)
     char * res;
     int length;
     while (1) {
-        lt = l, lr = r;  
+        lt = l, lr = r;
         do {
              if(*lt - *lr == 0) {
                  length += 2; lt--, lr++;
@@ -32,7 +32,7 @@ scan_eve_palindrome(char *s, int *maxp)
              }
         } while(*lt!='\0' && *lr!='\0');
         if (length > *maxp) {
-            res=lt+1, *maxp=length; 
+            res=lt+1, *maxp=length;
         }
         length=0, l++, r++;
         if (*r == '\0') break;
@@ -49,8 +49,8 @@ scan_odd_palindrome(char *s, int *maxp)
     char * res;
     int length = -1;
     while (1) {
-        lt = m; 
-        lr = m;  
+        lt = m;
+        lr = m;
         do {
              if(*lt - *lr == 0) {
                  length += 2; lt--, lr++;
@@ -59,7 +59,7 @@ scan_odd_palindrome(char *s, int *maxp)
              }
         } while(*lt!='\0' && *lr!='\0');
         if (length > *maxp) {
-            res=lt+1, *maxp=length; 
+            res=lt+1, *maxp=length;
         }
         length=-1, m++;
         if (*m == '\0') break;
@@ -68,7 +68,7 @@ scan_odd_palindrome(char *s, int *maxp)
 }
 
 char*
-longestPalindrome(char* s) 
+longestPalindrome(char* s)
 {
     char *ss = malloc(strlen(s)+2);
     char *eve = NULL;
@@ -82,18 +82,18 @@ longestPalindrome(char* s)
 
     memset(ss, 0, strlen(s)+2);
     memcpy(ss+1, s, strlen(s));
-    
+
     eve = scan_eve_palindrome(ss+1, &max), eve_len = max;
     max = 0;
     odd = scan_odd_palindrome(ss+1, &max), odd_len = max;
 
-    result = eve_len > odd_len ? eve : odd; 
-    len = eve_len > odd_len ? eve_len : odd_len; 
+    result = eve_len > odd_len ? eve : odd;
+    len = eve_len > odd_len ? eve_len : odd_len;
     result[len] = '\0';
     return result;
 }
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 {
     char *s = "cbbd";
     printf("result is %s\n", longestPalindrome(s));
