@@ -51,12 +51,12 @@ struct ListNode*
 mergeKLists(struct ListNode** lists, int listsSize) 
 {
     struct ListNode **heading_tuple, **tmp_tuple;
-    struct ListNode *res=NULL, *res_tmp=NULL, *res_head=NULL;
+    struct ListNode *res = NULL, *res_tmp = NULL, *res_head = NULL;
     int min_index, i, min_val, all_null, hd_size;
   
     hd_size = sizeof(struct ListNode*)*(listsSize+1);
     heading_tuple = leet_malloc(hd_size); 
-    init_heading_tuple(lists,listsSize,heading_tuple);
+    init_heading_tuple(lists, listsSize, heading_tuple);
     all_null = 0;
     while (!all_null) {
         tmp_tuple = heading_tuple; 
@@ -70,7 +70,7 @@ mergeKLists(struct ListNode** lists, int listsSize)
                     min_val = (*tmp_tuple)->val;
                 }
             }
-            tmp_tuple++, i++;
+            tmp_tuple++,i++;
         }
         if (!all_null) {
             tmp_tuple[min_index] = tmp_tuple[min_index]->next;
