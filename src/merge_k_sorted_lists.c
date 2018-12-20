@@ -28,7 +28,9 @@ leet_malloc(size_t size)
 }
 
 void
-init_heading_tuple(struct ListNode** lists, int listsSize, struct ListNode **heading_tuple)
+init_heading_tuple(struct ListNode** lists, 
+                   int listsSize, 
+                   struct ListNode **heading_tuple)
 {
     int i = 0;
     for (i=0; i<listsSize; i++) {
@@ -40,23 +42,40 @@ struct ListNode*
 mergeKLists(struct ListNode** lists, int listsSize) 
 {
     struct ListNode **heading_tuple, **tmp_tuple;
-    int max_index, i, max_val;
-
-    heading_tuple = leet_malloc(sizeof(struct ListNode*)*(listsSize+1)); 
+    struct ListNode *res=NULL, *res_tmp=NULL, *res_head=NULL;
+    int min_index, i, min_val, all_null, hd_size;
+  
+    hd_size = sizeof(struct ListNode*)*(listsSize+1);
+    heading_tuple = leet_malloc(hd_size); 
     init_heading_tuple(lists,listsSize,heading_tuple);
-    while (1) {
+    all_null = 0;
+    while (!all_null) {
         tmp_tuple = heading_tuple; 
-        max_index = 0, i = 0, max_val = (*tmp_tuple)->val;
-        while (*tmp_tuple != NULL) {
-            if (*tmp_tuple != NULL && (*tmp_tuple)->val > max_val) { 
-                max_index = i;
-                max_val = (*tmp_tuple)->val;
+        min_index = 0, i = 0, min_val = (*tmp_tuple)->val;
+        all_null = 1;
+        while (1) {
+            if (*tmp_tuple != NULL) {
+                all_null = 0;
+                if (*tmp_tuple != NULL && (*tmp_tuple)->val < min_val) { 
+                    min_index = i;
+                    min_val = (*tmp_tuple)->val;
+                }
             }
             tmp_tuple++, i++;
         }
-        tmp_tuple[max_index] = tmp_tuple[max_index]->next;
+        tmp_tuple[min_index] = tmp_tuple[min_index]->next;
+        if (res == NULL) {
+            res = leet_malloc(sizeof(struct ListNode));
+            res->val = tmp_tuple[min_index]->val;
+            res_head = res;
+        } else {
+            res_tmp = leet_malloc(sizeof(struct ListNode));
+            res_tmp->val = tmp_tuple[min_index]->val;
+            res->next = res_tmp;
+            res = res_tmp;
+        }
     }
-    return NULL;
+    return res_head;
 }
 
 int
