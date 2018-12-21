@@ -62,26 +62,26 @@ mergeKLists(struct ListNode** lists, int listsSize)
         tmp_tuple = heading_tuple;
         min_index = 0, i = 0, min_val = (*tmp_tuple)->val;
         all_null = 1;
-        while (tmp_tuple != NULL) {
-            if (*tmp_tuple != NULL) {
-                all_null = 0;
-                if (*tmp_tuple != NULL && (*tmp_tuple)->val < min_val) {
-                    min_index = i;
-                    min_val = (*tmp_tuple)->val;
-                }
+        while (*tmp_tuple != NULL) {
+            all_null = 0;
+            if (*tmp_tuple != NULL && (*tmp_tuple)->val < min_val) {
+                min_index = i;
+                min_val = (*tmp_tuple)->val;
             }
             tmp_tuple++,i++;
+            printf("ppp %p\n", tmp_tuple);
         }
+        printf("xxx %d\n", min_index);
         if (!all_null) {
-            tmp_tuple[min_index] = tmp_tuple[min_index]->next;
             if (res == NULL) {
-                res = init_node(tmp_tuple[min_index]->val);
+                res = init_node(heading_tuple[min_index]->val);
                 res_head = res;
             } else {
-                res_tmp = init_node(tmp_tuple[min_index]->val);
+                res_tmp = init_node(heading_tuple[min_index]->val);
                 res->next = res_tmp;
                 res = res_tmp;
             }
+            heading_tuple[min_index] = heading_tuple[min_index]->next;
         }
     }
     return res_head;
