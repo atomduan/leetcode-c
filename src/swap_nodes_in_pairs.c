@@ -37,7 +37,15 @@ init_node(int val)
 struct ListNode*
 swapPairs(struct ListNode* head)
 {
-    return NULL; 
+    struct ListNode *tmp;
+    tmp = head->next;
+    if (tmp != NULL) {
+        head->next = swapPairs(tmp->next);
+        tmp->next = head;
+        return tmp; 
+    } else {
+        return head;
+    }
 }
 
 int
