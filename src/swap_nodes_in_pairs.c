@@ -48,6 +48,7 @@ main(int argc, char **argv)
     tmp = init_node(2); res->next = tmp; res = tmp;
     tmp = init_node(3); res->next = tmp; res = tmp;
     tmp = init_node(4); res->next = tmp; res = tmp;
+    tmp = init_node(5); res->next = tmp; res = tmp;
     result = swapPairs(res_head);
     printf("result print:\n");
     while (result != NULL) {
