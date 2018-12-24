@@ -49,7 +49,7 @@ reverseKGroup(struct ListNode* head, int k)
 int
 main(int argc, char **argv)
 {
-    int k=3;
+    int k=2;
     struct ListNode *res_head, *res, *tmp, *result;
     res_head = res = tmp = init_node(1);
     tmp = init_node(2); res->next = tmp; res = tmp;
@@ -60,7 +60,6 @@ main(int argc, char **argv)
     tmp = init_node(7); res->next = tmp; res = tmp;
     tmp = init_node(8); res->next = tmp; res = tmp;
     tmp = init_node(9); res->next = tmp; res = tmp;
-    tmp = init_node(10); res->next = tmp; res = tmp;
     result = reverseKGroup(res_head,k);
     printf("result print:\n");
     while (result != NULL) {
