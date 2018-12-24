@@ -23,7 +23,7 @@ struct ListNode {
 };
 
 struct ListNode *
-addTwoNumbers(struct ListNode* l1, struct ListNode* l2)
+addTwoNumbers(struct ListNode* l1,struct ListNode* l2)
 {
     struct ListNode *r = NULL;
     struct ListNode *result = NULL;
@@ -70,7 +70,8 @@ addTwoNumbers(struct ListNode* l1, struct ListNode* l2)
     return result;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
     return 0;
 }

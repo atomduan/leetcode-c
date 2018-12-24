@@ -14,7 +14,7 @@
 #include <linux_config.h>
 
 double
-findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size)
+findMedianSortedArrays(int* nums1,int nums1Size,int* nums2,int nums2Size)
 {
     int m_index = (nums1Size + nums2Size)/2;
     int i1 = 0;
@@ -71,7 +71,8 @@ findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size)
     return result;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc,char **argv)
 {
     int nums1[4] = {1, 2, 3, 5};
     int nums1Size = 4;

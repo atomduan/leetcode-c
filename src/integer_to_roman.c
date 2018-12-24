@@ -87,7 +87,8 @@ intToRoman(int num)
     return res;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc,char **argv)
 {
     printf("intToRoman %s\n", intToRoman(1994));
     return 0;

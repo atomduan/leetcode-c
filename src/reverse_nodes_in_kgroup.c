@@ -20,7 +20,7 @@ struct ListNode {
     struct ListNode *next;
 };
 
-void *
+static void *
 leet_malloc(size_t size)
 {
     void *res = NULL;
@@ -31,7 +31,7 @@ leet_malloc(size_t size)
     return res;
 }
 
-struct ListNode *
+static struct ListNode *
 init_node(int val)
 {
     struct ListNode *res = NULL;

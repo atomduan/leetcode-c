@@ -10,7 +10,9 @@
 
 #include <linux_config.h>
 
-int threeSumClosest(int* nums, int numsSize, int target) {
+int
+threeSumClosest(int* nums, int numsSize, int target)
+{
     int i=0, j=0, k=0, s=0, d=0, sum=0, diff=-1;
     for (i=0; i<numsSize-2; i++) {
         for (j=i+1; j<numsSize-1; j++) {
@@ -31,7 +33,8 @@ int threeSumClosest(int* nums, int numsSize, int target) {
     return sum;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
     int nums[] = {-1, 2, 1, -4};
     int numsSize = sizeof(nums)/sizeof(int);

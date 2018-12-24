@@ -73,7 +73,7 @@ struct step_s {
 static step *head_step = NULL;
 
 static statm *
-new_stat(int attr, char val)
+new_stat(int attr,char val)
 {
     statm *res = NULL;
     res = malloc(sizeof(statm));
@@ -138,7 +138,7 @@ get_tail_step(step *step_head)
 }
 
 static bool
-is_compatibale(char *sp, char *ss) {
+is_compatibale(char *sp,char *ss) {
     if (*sp == '.') {
         return true;
     } else {
@@ -147,7 +147,8 @@ is_compatibale(char *sp, char *ss) {
     return false;
 }
 
-static void append_tail(step *tail_step, step *tmp_step)
+static void
+append_tail(step *tail_step,step *tmp_step)
 {
     if (tail_step == NULL) return;
     for (;;) {
@@ -179,7 +180,7 @@ static void append_tail(step *tail_step, step *tmp_step)
 }
 
 static void
-process_stat_detect(statm *des_stat, char input_char, step *tail_step)
+process_stat_detect(statm *des_stat,char input_char,step *tail_step)
 {
     if (des_stat == NULL) return;
     if (is_compatibale(&des_stat->val, &input_char)) {

@@ -19,7 +19,9 @@
  */
 #include <linux_config.h>
 
-static int reverse(int x) {
+static int
+reverse(int x)
+{
     int truck = 0;
     int xbase = x;
     int result = 0;
@@ -39,7 +41,8 @@ static int reverse(int x) {
     return result;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc,char **argv)
 {
     printf("reverse is %d\n",reverse(1534236469));
     return 0;

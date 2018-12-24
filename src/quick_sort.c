@@ -4,7 +4,7 @@
 #include <linux_config.h>
 
 static int
-leet_swap(int *nums, const int dest_idx, const int src_idx)
+leet_swap(int *nums,const int dest_idx,const int src_idx)
 {
     int tmp = nums[dest_idx];
     nums[dest_idx] = nums[src_idx];
@@ -14,7 +14,7 @@ leet_swap(int *nums, const int dest_idx, const int src_idx)
 
 //quick sort
 static void
-leet_quick_sort(int *nums, int numsSize)
+leet_quick_sort(int *nums,int numsSize)
 {
     int m_idx, m_val, i, j;
     m_idx = numsSize/2; //compute partition index
@@ -43,7 +43,8 @@ leet_quick_sort(int *nums, int numsSize)
     }
 }
 
-int main(int argc, char **argv)
+int
+main(int argc,char **argv)
 {
     int i=0;
     int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};

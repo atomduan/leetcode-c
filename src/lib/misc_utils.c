@@ -6,8 +6,7 @@
  * A micro seconds diff will return
  */
 unsigned long
-leet_time_mval(leet_timespec_t *rct,
-        leet_timespec_t *old)
+leet_time_mval(leet_timespec_t *rct,leet_timespec_t *old)
 {
     unsigned long res = 0;
     unsigned long sec_diff = 0;

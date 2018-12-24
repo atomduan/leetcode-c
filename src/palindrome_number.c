@@ -33,7 +33,7 @@ isPalindrome(int x) {
 }
 
 int
-main(int argc, char **argv)
+main(int argc,char **argv)
 {
     printf("result is %d\n", isPalindrome(1111));
 }

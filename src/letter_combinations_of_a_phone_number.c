@@ -12,7 +12,7 @@
 
 #include <linux_config.h>
 
-char *dict[10] =  {
+char *dict[10] = {
     " ",
     "_",
     "abc",
@@ -67,7 +67,7 @@ span_dict_str(char *ds)
 }
 
 static char **
-span_res_with_dict(char *ds, char **res)
+span_res_with_dict(char *ds,char **res)
 {
     char **result,**rp,**rt;
     char *ss,*dp,*ns,*nss;
@@ -114,7 +114,7 @@ do_letter_combination(char *digits)
 }
 
 char**
-letterCombinations(char* digits, int* returnSize)
+letterCombinations(char* digits,int* returnSize)
 {
     char **res = NULL;
     *returnSize = 0;
@@ -126,7 +126,7 @@ letterCombinations(char* digits, int* returnSize)
 }
 
 int
-main(int argc, char **argv)
+main(int argc,char **argv)
 {
     //char *digits = "27";
     char *digits = "";

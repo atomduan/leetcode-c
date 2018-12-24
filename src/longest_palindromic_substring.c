@@ -13,7 +13,7 @@
 #include <linux_config.h>
 
 static char *
-scan_eve_palindrome(char *s, int *maxp)
+scan_eve_palindrome(char *s,int *maxp)
 {
     char * l=s;
     char * r=s+1;
@@ -40,7 +40,7 @@ scan_eve_palindrome(char *s, int *maxp)
 }
 
 static char *
-scan_odd_palindrome(char *s, int *maxp)
+scan_odd_palindrome(char *s,int *maxp)
 {
     char * m = s;
     char * lt;
@@ -92,7 +92,8 @@ longestPalindrome(char* s)
     return result;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc,char **argv)
 {
     char *s = "cbbd";
     printf("result is %s\n", longestPalindrome(s));

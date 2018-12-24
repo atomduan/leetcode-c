@@ -90,7 +90,9 @@ get_value(char *token)
     return 0;
 }
 
-int romanToInt(char* s) {
+int
+romanToInt(char* s)
+{
     char *p = s;
     int sum,i,n=0;
     char *token=NULL;
@@ -134,7 +136,8 @@ int romanToInt(char* s) {
     return sum;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc,char **argv)
 {
     //printf("romanToInt %d\n", romanToInt("MCMXCIV"));
     printf("romanToInt %d\n", romanToInt("III"));

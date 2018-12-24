@@ -11,7 +11,7 @@
  */
 #include <linux_config.h>
 
-void *
+static void *
 leet_malloc(size_t size)
 {
     void *res = NULL;
@@ -22,13 +22,13 @@ leet_malloc(size_t size)
     return res;
 }
 
-char *
+static char *
 alloc_str_block(int n)
 {
     return leet_malloc(2*n+1);
 }
 
-size_t
+static size_t
 compute_res_size(char **res)
 {
     char **rp = res;
@@ -39,8 +39,8 @@ compute_res_size(char **res)
     return size;
 }
 
-char **
-merge_result_arr(char **lr, char **rr, int index)
+static char **
+merge_result_arr(char **lr,char **rr,int index)
 {
     int i=0;
     char **lr_head = lr;
@@ -63,8 +63,8 @@ merge_result_arr(char **lr, char **rr, int index)
     return res;
 }
 
-char **
-generate_parenthe_element(int n, int p_size, int *returnSize)
+static char **
+generate_parenthe_element(int n,int p_size,int *returnSize)
 {
     char **lr, **rr, **rt;
     int index;
@@ -81,7 +81,7 @@ generate_parenthe_element(int n, int p_size, int *returnSize)
     }
 }
 
-int
+static int
 evaluate_res(char *r)
 {
     int sum = 0;
@@ -100,7 +100,7 @@ evaluate_res(char *r)
 
 
 char **
-generateParenthesis(int n, int *returnSize)
+generateParenthesis(int n,int *returnSize)
 {
     char **init_res;
     char **res, **res_head;
@@ -124,7 +124,7 @@ generateParenthesis(int n, int *returnSize)
 }
 
 int
-main(int argc, char **argv)
+main(int argc,char **argv)
 {
     char **res = NULL;
     int returnSize = 0;

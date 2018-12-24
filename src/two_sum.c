@@ -10,7 +10,9 @@
  */
 #include <linux_config.h>
 
-int* twoSum(int* nums, int numsSize, int target) {
+int *
+twoSum(int* nums,int numsSize,int target)
+{
     int i = 0;
     int j = 0;
     int a = 0;

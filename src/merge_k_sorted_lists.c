@@ -16,7 +16,7 @@ struct ListNode {
     struct ListNode *next;
 };
 
-void *
+static void *
 leet_malloc(size_t size)
 {
     void *res = NULL;
@@ -27,7 +27,7 @@ leet_malloc(size_t size)
     return res;
 }
 
-void
+static void
 init_heading_tuple(struct ListNode** lists,
                    int listsSize,
                    struct ListNode **heading_tuple)
@@ -38,7 +38,7 @@ init_heading_tuple(struct ListNode** lists,
     }
 }
 
-struct ListNode *
+static struct ListNode *
 init_node(int val)
 {
     struct ListNode *res;
@@ -48,7 +48,7 @@ init_node(int val)
 }
 
 struct ListNode*
-mergeKLists(struct ListNode** lists, int listsSize)
+mergeKLists(struct ListNode** lists,int listsSize)
 {
     struct ListNode **heading_tuple, **tmp_tuple, *tmp_node;
     struct ListNode *res = NULL, *res_tmp = NULL, *res_head = NULL;
@@ -88,7 +88,7 @@ mergeKLists(struct ListNode** lists, int listsSize)
 }
 
 int
-main(int argc, char **argv)
+main(int argc,char **argv)
 {
     struct ListNode *res_head, *res, *tmp, **tuple, *result;
     int listsSize = 3;

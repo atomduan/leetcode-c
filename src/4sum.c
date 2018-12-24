@@ -28,7 +28,7 @@ leet_malloc(size_t memn)
 }
 
 static int
-leet_swap(int *nums, const int dest_idx, const int src_idx)
+leet_swap(int *nums,const int dest_idx,const int src_idx)
 {
     int tmp = nums[dest_idx];
     nums[dest_idx] = nums[src_idx];
@@ -52,8 +52,8 @@ res_default()
 }
 
 //quick sort
-void
-nums_sort(int *nums, int numsSize)
+static void
+nums_sort(int *nums,int numsSize)
 {
     int m_idx, m_val, i, j;
     m_idx = numsSize/2;
@@ -81,8 +81,8 @@ nums_sort(int *nums, int numsSize)
     }
 }
 
-int
-result_contain(int **res, int *res_ele)
+static int
+result_contain(int **res,int *res_ele)
 {
     int **res_tmp = res, *res_val, count;
     while (res_tmp != NULL && *res_tmp != NULL) {

@@ -15,7 +15,7 @@
 
 
 int
-maxArea(int* height, int heightSize)
+maxArea(int* height,int heightSize)
 {
     int weigth,high,max,value = 0;
     int i,j = 0;
@@ -31,7 +31,7 @@ maxArea(int* height, int heightSize)
 }
 
 
-int main(int argc, char **argv)
+int main(int argc,char **argv)
 {
     int contails[4] = {1, 2, 3, 5};
     printf("max value is %d\n", maxArea(contails, sizeof(contails)/sizeof(int)));

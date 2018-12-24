@@ -44,7 +44,9 @@
  */
 #include <linux_config.h>
 
-int myAtoi(char* str) {
+int
+myAtoi(char* str)
+{
     int INIT_STAT = 0;
     int NUM_STAT = 2;
     int FIN_STAT = 3;
@@ -112,7 +114,8 @@ int myAtoi(char* str) {
 }
 
 int
-main(int argc, char **argv) {
+main(int argc,char **argv)
+{
     char *p = "   -42";
     printf("result is %d\n", myAtoi(p));
 }

@@ -13,11 +13,14 @@ struct char_dict {
     int index;
 };
 
-static int hash(char c) {
+static int 
+hash(char c) 
+{
     return (int) c;
 }
 
-int lengthOfLongestSubstring(char* s)
+int
+lengthOfLongestSubstring(char* s)
 {
     int slen = strlen(s);
     if (slen == 0) return 0;
@@ -59,7 +62,8 @@ int lengthOfLongestSubstring(char* s)
     return max;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc,char **argv)
 {
     //char *p = "bbbbbbb";
     //char *p = "abcabcbb";

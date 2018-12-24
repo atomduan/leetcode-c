@@ -9,7 +9,8 @@ leet_sys_profile()
 }
 
 
-int main(int argc, char **argv)
+int
+main(int argc,char **argv)
 {
     char * p = NULL;
     printf("p addr is %p\n", p);

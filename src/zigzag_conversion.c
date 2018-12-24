@@ -26,7 +26,7 @@
 #include <linux_config.h>
 
 static int
-compute_line_number(int index, int row_num)
+compute_line_number(int index,int row_num)
 {
     int step = 0;
     int sidx = 0;
@@ -38,7 +38,7 @@ compute_line_number(int index, int row_num)
 }
 
 char *
-convert(char* s, int numRows)
+convert(char* s,int numRows)
 {
     int len = 0;
     int line_index = 0;
@@ -78,7 +78,9 @@ convert(char* s, int numRows)
     return result;
 }
 
-int main(int argc, char **argv) {
+int
+main(int argc,char **argv)
+{
     char *s = "PAYPALISHIRING";
     int numRows = 4;
     printf("result is:\n%s\n%s should\n", convert(s, numRows), "PINALSIGYAHRPI");
