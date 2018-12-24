@@ -60,21 +60,18 @@ mergeKLists(struct ListNode** lists, int listsSize)
     all_null = 0;
     while (!all_null) {
         tmp_tuple = heading_tuple;
-        min_index = 0, i = 0, min_val;
+        min_index = 0, i = 0, min_val = INT_MAX;
         all_null = 1;
-        while (*tmp_tuple != NULL) {
-            tmp_node = *tmp_tuple;
+        for (i=0; i<listsSize; i++) {
+            tmp_node = tmp_tuple[i];
             if (tmp_node != NULL) {
-                min_val = tmp_node->val;
                 all_null = 0;
                 if (tmp_node->val < min_val) {
                     min_index = i;
                     min_val = tmp_node->val;
                 }
             }
-            tmp_tuple++,i++;
         }
-
         if (!all_null) {
             if (res == NULL) {
                 res = init_node(heading_tuple[min_index]->val);
