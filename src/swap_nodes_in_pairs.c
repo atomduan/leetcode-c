@@ -43,7 +43,7 @@ swapPairs(struct ListNode* head)
     if (tmp != NULL) {
         head->next = swapPairs(tmp->next);
         tmp->next = head;
-        return tmp; 
+        return tmp;
     } else {
         return head;
     }
@@ -66,5 +66,5 @@ main(int argc, char **argv)
         result = result->next;
     }
     printf("\n");
-    return 0; 
+    return 0;
 }

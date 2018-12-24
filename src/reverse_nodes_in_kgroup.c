@@ -1,13 +1,13 @@
 /*
  * Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
- * k is a positive integer and is less than or equal to the length of the linked list. 
+ * k is a positive integer and is less than or equal to the length of the linked list.
  * If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
- * 
+ *
  * Example:
  * Given this linked list: 1->2->3->4->5
  * For k = 2, you should return: 2->1->4->3->5
  * For k = 3, you should return: 3->2->1->4->5
- * 
+ *
  * Note:
  * Only constant extra memory is allowed.
  * You may not alter the values in the list's nodes, only nodes itself may be changed.
@@ -44,17 +44,17 @@ struct ListNode *
 reverse_seg(struct ListNode *head, int k)
 {
     struct ListNode *tail,*reverse_head;
-    if (head==NULL || k==0) return head; 
+    if (head==NULL || k==0) return head;
     tail = head->next;
     reverse_head = reverse_seg(head->next,k-1);
     tail->next = head;
     return reverse_head;
 }
 
-struct ListNode * 
+struct ListNode *
 reverseKGroup(struct ListNode* head, int k)
 {
-    struct ListNode *tail, *next_head; 
+    struct ListNode *tail, *next_head;
     int i = k;
     if (head == NULL) return head;
     next_head = head;
@@ -91,5 +91,5 @@ main(int argc, char **argv)
         result = result->next;
     }
     printf("\n");
-    return 0; 
+    return 0;
 }
