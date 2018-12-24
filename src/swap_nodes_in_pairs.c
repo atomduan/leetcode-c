@@ -38,6 +38,7 @@ struct ListNode*
 swapPairs(struct ListNode* head)
 {
     struct ListNode *tmp;
+    if (head == NULL) return head;
     tmp = head->next;
     if (tmp != NULL) {
         head->next = swapPairs(tmp->next);
@@ -57,6 +58,7 @@ main(int argc, char **argv)
     tmp = init_node(3); res->next = tmp; res = tmp;
     tmp = init_node(4); res->next = tmp; res = tmp;
     tmp = init_node(5); res->next = tmp; res = tmp;
+    tmp = init_node(6); res->next = tmp; res = tmp;
     result = swapPairs(res_head);
     printf("result print:\n");
     while (result != NULL) {
