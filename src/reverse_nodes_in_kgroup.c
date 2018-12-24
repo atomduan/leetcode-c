@@ -64,7 +64,7 @@ reverseKGroup(struct ListNode* head, int k)
     }
     if (i == 0) {
         tail = head;
-        head = reverse_seg(head,k); //just reverse k eles
+        head = reverse_seg(head,k-1);
         tail->next = reverseKGroup(next_head,k);
     }
     return head;
