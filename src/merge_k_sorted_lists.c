@@ -50,7 +50,7 @@ init_node(int val)
 struct ListNode*
 mergeKLists(struct ListNode** lists, int listsSize)
 {
-    struct ListNode **heading_tuple, **tmp_tuple;
+    struct ListNode **heading_tuple, **tmp_tuple, *tmp_node;
     struct ListNode *res = NULL, *res_tmp = NULL, *res_head = NULL;
     int min_index, i, min_val, all_null, hd_size;
 
@@ -60,18 +60,21 @@ mergeKLists(struct ListNode** lists, int listsSize)
     all_null = 0;
     while (!all_null) {
         tmp_tuple = heading_tuple;
-        min_index = 0, i = 0, min_val = (*tmp_tuple)->val;
+        min_index = 0, i = 0, min_val;
         all_null = 1;
         while (*tmp_tuple != NULL) {
-            all_null = 0;
-            if (*tmp_tuple != NULL && (*tmp_tuple)->val < min_val) {
-                min_index = i;
-                min_val = (*tmp_tuple)->val;
+            tmp_node = *tmp_tuple;
+            if (tmp_node != NULL) {
+                min_val = tmp_node->val;
+                all_null = 0;
+                if (tmp_node->val < min_val) {
+                    min_index = i;
+                    min_val = tmp_node->val;
+                }
             }
             tmp_tuple++,i++;
-            printf("ppp %p\n", tmp_tuple);
         }
-        printf("xxx %d\n", min_index);
+
         if (!all_null) {
             if (res == NULL) {
                 res = init_node(heading_tuple[min_index]->val);
@@ -113,6 +116,7 @@ main(int argc, char **argv)
     printf("result is :\n");
     while (result != NULL) {
         printf("->%d", result->val);
+        result = result->next;
     }
     printf("\n");
 
