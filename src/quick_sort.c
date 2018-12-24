@@ -1,5 +1,5 @@
-/*
- * Quick sort demo
+/**
+ * Quick sort DEMO
  */
 #include <linux_config.h>
 

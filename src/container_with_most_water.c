@@ -1,4 +1,4 @@
-/* *
+/**
  * Given n non-negative integers a1, a2, ..., an ,
  * where each represents a point at coordinate (i, ai).
  * n vertical lines are drawn such that the two endpoints of line
@@ -10,7 +10,7 @@
  *
  * Input: [1,8,6,2,5,4,8,3,7]
  * Output: 49
- * */
+ */
 #include <linux_config.h>
 
 
