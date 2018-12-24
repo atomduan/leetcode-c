@@ -22,7 +22,7 @@ leet_malloc(size_t size)
     return res;
 }
 
-static char *
+static inline char *
 alloc_str_block(int n)
 {
     return leet_malloc(2*n+1);

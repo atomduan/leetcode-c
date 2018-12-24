@@ -25,7 +25,7 @@ char *dict[10] = {
     "wxyz"
 };
 
-static int
+static inline int
 leet_ctoi(char *c)
 {
     return *c - 48;

@@ -13,7 +13,7 @@ struct char_dict {
     int index;
 };
 
-static int 
+static inline int 
 hash(char c) 
 {
     return (int) c;
