@@ -40,9 +40,33 @@ init_node(int val)
     return res;
 }
 
+struct ListNode *
+reverse_seg(struct ListNode *head, int k)
+{
+    struct ListNode *tail,*reverse_head;
+    if (head==NULL || k==0) return head; 
+    tail = head->next;
+    reverse_head = reverse_seg(head->next,k-1);
+    tail->next = head;
+    return reverse_head;
+}
+
 struct ListNode * 
 reverseKGroup(struct ListNode* head, int k)
 {
+    struct ListNode *tail, *next_head; 
+    int i = k;
+    if (head == NULL) return head;
+    next_head = head;
+    while (next_head!=NULL && i>0) {
+        next_head = next_head->next;
+        i--;
+    }
+    if (i == 0) {
+        tail = head;
+        head = reverse_seg(head,k); //just reverse k eles
+        tail->next = reverseKGroup(next_head,k);
+    }
     return head;
 }
 
