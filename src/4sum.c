@@ -101,7 +101,7 @@ result_contain(int **res,int *res_ele)
 }
 
 int**
-fourSum(int* nums, int numsSize, int target, int* returnSize)
+fourSum(int* nums,int numsSize,int target,int* returnSize)
 {
     int **res = NULL, *res_ele, **res_tmp;
     int i,j,k,l,sum;
@@ -147,7 +147,8 @@ fourSum(int* nums, int numsSize, int target, int* returnSize)
     return res;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc,char **argv)
 {
     int vi=0,vj=0,vk=0,vl=0,i=0,*pi=NULL;
     int target = 0;

@@ -16,7 +16,7 @@
 #include <linux_config.h>
 
 static int *
-register_pool(int vi, int vj, int vk, int **res_head)
+register_pool(int vi,int vj,int vk,int **res_head)
 {
     //check whether tuple exsited in pool_head.
     int **p = res_head;
@@ -70,7 +70,7 @@ register_pool(int vi, int vj, int vk, int **res_head)
 }
 
 static int
-leet_swap(int *nums, const int dest_idx, const int src_idx)
+leet_swap(int *nums,const int dest_idx,const int src_idx)
 {
     int tmp = nums[dest_idx];
     nums[dest_idx] = nums[src_idx];
@@ -80,7 +80,7 @@ leet_swap(int *nums, const int dest_idx, const int src_idx)
 
 //quick sort
 static void
-nums_sort(int *nums, int numsSize)
+nums_sort(int *nums,int numsSize)
 {
     int m_idx, m_val, i, j;
     m_idx = numsSize/2;
@@ -109,7 +109,7 @@ nums_sort(int *nums, int numsSize)
 }
 
 int** 
-threeSum(int* nums, int numsSize, int* returnSize)
+threeSum(int* nums,int numsSize,int* returnSize)
 {
     int i=0,j=0;
     int vi=0,vj=0,vk=0;
@@ -251,7 +251,7 @@ threeSum(int* nums, int numsSize, int* returnSize)
 }
 
 int
-main(int argc, char **argv)
+main(int argc,char **argv)
 {
     int returnSize = 0;
     //int nums[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};

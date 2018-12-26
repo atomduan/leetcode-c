@@ -11,7 +11,7 @@
 #include <linux_config.h>
 
 int
-threeSumClosest(int* nums, int numsSize, int target)
+threeSumClosest(int* nums,int numsSize,int target)
 {
     int i=0, j=0, k=0, s=0, d=0, sum=0, diff=-1;
     for (i=0; i<numsSize-2; i++) {

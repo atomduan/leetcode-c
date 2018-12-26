@@ -16,7 +16,7 @@
 #include <linux_config.h>
 
 static int *
-register_pool(int vi, int vj, int vk, int *pool, int *pool_head)
+register_pool(int vi,int vj,int vk,int *pool,int *pool_head)
 {
     //check whether tuple exsited in pool_head.
     int *p = pool_head;
@@ -41,7 +41,7 @@ register_pool(int vi, int vj, int vk, int *pool, int *pool_head)
 }
 
 int **
-threeSum(int* nums, int numsSize, int* returnSize)
+threeSum(int* nums,int numsSize,int* returnSize)
 {
     size_t pool_size = sizeof(int)*3*(numsSize*numsSize+1);
     int *pool_head = malloc(pool_size);
@@ -83,7 +83,7 @@ threeSum(int* nums, int numsSize, int* returnSize)
 }
 
 int
-main(int argc, char **argv)
+main(int argc,char **argv)
 {
     int returnSize = 0;
     int nums[] = {-1,0,1,2,-1,-4,-1,0,1};
