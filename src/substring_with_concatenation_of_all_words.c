@@ -32,5 +32,18 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
 int
 main(int argc, char **argv)
 {
+    char *s = "barfoothefoobarman";
+    char *warr[] = {"foo","bar"};
+    char **words = warr;
+    int wordsSize = strlen(words[0]);
+    int returnSize = 0;
+    int *result;
+
+    result = findSubstring(s,words,wordsSize,&returnSize);
+    printf("result print:\n");
+    if (result != NULL) {
+        printf(",%d", *result++);
+    }
+    printf("\n");
     return 0;
 }
