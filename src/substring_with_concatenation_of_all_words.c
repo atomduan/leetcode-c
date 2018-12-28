@@ -20,7 +20,7 @@
 #include <linux_config.h>
 
 
-void *
+static void *
 leet_malloc(size_t size)
 {
     void *res = NULL;
