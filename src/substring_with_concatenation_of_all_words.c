@@ -19,6 +19,16 @@
  */
 #include <linux_config.h>
 
+
+void *
+leet_malloc(size_t size)
+{
+    void *res = NULL;
+    res = malloc(size);
+    memset(res,0,size);
+    return res;
+}
+
 /**
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
@@ -26,7 +36,14 @@
 int *
 findSubstring(char* s,char** words,int wordsSize,int* returnSize)
 {
-    return NULL;
+    int *res;
+    res = leet_malloc(sizeof(int)*6);
+    res[0] = 11;
+    res[1] = 3331;
+    res[2] = 213;
+    res[3] = 97;
+    res[4] = 83;
+    return res;
 }
 
 int
@@ -40,10 +57,14 @@ main(int argc, char **argv)
     int *result;
 
     result = findSubstring(s,words,wordsSize,&returnSize);
-    printf("result print:\n");
     if (result != NULL) {
-        printf(",%d", *result++);
+        printf("result print:\n");
+        while (*result != 0) {
+            printf(",%d", *result++);
+        }
+        printf("\n");
+    } else {
+        printf("return result is NULL\n");
     }
-    printf("\n");
     return 0;
 }
