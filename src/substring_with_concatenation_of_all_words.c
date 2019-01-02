@@ -29,13 +29,7 @@ leet_malloc(size_t size)
     return res;
 }
 
-void
-reset_bitmap(int *bitmap, size_t size)
-{
-    memset(bitmap,0,size);
-}
-
-int
+static int
 check_bitmap(int *bitmap, int index) {
     int res = 0, bi, *buck, offset, bit_flag;
     //TODO need optimize, should we do not use divide
@@ -50,7 +44,7 @@ check_bitmap(int *bitmap, int index) {
     return res;
 }
 
-int
+static int
 match_word(char *s, char *word)
 {
     int res = 1;
@@ -76,19 +70,20 @@ match_substring(char* s,char** words,int wordsSize)
     for (i=0; i<wordsSize; i++) {
         for (j=0; j<wordsSize; j++) {
             if (!match_word(s,words[j])) {
-                res = 0;
                 goto fail_handle;
             } else {
                 if (!check_bitmap(bit_map,j)) {
-                    res = 0;
                     goto fail_handle;  
                 }
             }
         }
         s += word_len;
     }
+    goto success_handle;
 
 fail_handle:
+    res = 0;
+success_handle:
     free(bit_map);
     return res;
 }
