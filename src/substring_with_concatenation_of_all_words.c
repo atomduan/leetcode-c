@@ -60,6 +60,7 @@ match_word(char *s, char *word)
 int
 match_substring(char* s,char** words,int wordsSize)
 {
+    printf("char trunk is %s\n", s);
     int word_len, *bit_map, bit_size;
     int i, j, res=1;
 
@@ -69,6 +70,7 @@ match_substring(char* s,char** words,int wordsSize)
     
     for (i=0; i<wordsSize; i++) {
         for (j=0; j<wordsSize; j++) {
+            printf("try match is %s, %s\n", s, words[j]);
             if (!match_word(s,words[j])) {
                 goto fail_handle;
             } else {
@@ -79,6 +81,10 @@ match_substring(char* s,char** words,int wordsSize)
         }
         s += word_len;
     }
+
+    //must work all words
+    if (i < wordsSize-1) goto fail_handle;
+
     goto success_handle;
 
 fail_handle:
@@ -103,6 +109,7 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
     word_len = strlen(*words);
     while (*tmp_s != '\0') {
         if (match_substring(tmp_s,words,wordsSize)) {
+            printf("aaa");
             *res_tmp++ = index; 
             (*returnSize)++;
         }
