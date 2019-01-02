@@ -29,6 +29,70 @@ leet_malloc(size_t size)
     return res;
 }
 
+void
+reset_bitmap(int *bitmap, size_t size)
+{
+    memset(bitmap,0,size);
+}
+
+int
+check_bitmap(int *bitmap, int index) {
+    int res = 0, bi, *buck, offset, bit_flag;
+    //TODO need optimize, should we do not use divide
+    bi = index / (sizeof(int)*8); 
+    offset = index % (sizeof(int)*8);
+    buck = bitmap+bi;
+    bit_flag = 0x1 << offset; 
+    if (!(*buck & bit_flag)) {
+        *buck = *buck | bit_flag;
+        res = 1;
+    }
+    return res;
+}
+
+int
+match_word(char *s, char *word)
+{
+    int res = 1;
+    while (*word != '\0') {
+        if (*s != *word) {
+            res = 0; break;
+        }
+        s++; word++;
+    }
+    return res;
+}
+
+int
+match_substring(char* s,char** words,int wordsSize)
+{
+    int word_len, *bit_map, bit_size;
+    int i, j, res=1;
+
+    word_len = strlen(*words);
+    bit_size = wordsSize/(sizeof(int)*8) + 1;
+    bit_map = leet_malloc(bit_size);
+    
+    for (i=0; i<wordsSize; i++) {
+        for (j=0; j<wordsSize; j++) {
+            if (!match_word(s,words[j])) {
+                res = 0;
+                goto fail_handle;
+            } else {
+                if (!check_bitmap(bit_map,j)) {
+                    res = 0;
+                    goto fail_handle;  
+                }
+            }
+        }
+        s += word_len;
+    }
+
+fail_handle:
+    free(bit_map);
+    return res;
+}
+
 /**
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
@@ -36,13 +100,20 @@ leet_malloc(size_t size)
 int *
 findSubstring(char* s,char** words,int wordsSize,int* returnSize)
 {
-    int *res;
-    res = leet_malloc(sizeof(int)*6);
-    res[0] = 11;
-    res[1] = 3331;
-    res[2] = 213;
-    res[3] = 97;
-    res[4] = 83;
+    char *tmp_s;
+    int *res, *res_tmp, index, word_len;
+    res = res_tmp = leet_malloc(sizeof(int)*strlen(s));
+
+    tmp_s = s; index = 0;
+    word_len = strlen(*words);
+    while (*tmp_s != '\0') {
+        if (match_substring(tmp_s,words,wordsSize)) {
+            *res_tmp++ = index; 
+            (*returnSize)++;
+        }
+        tmp_s += word_len;
+        index += word_len;
+    }
     return res;
 }
 
@@ -53,14 +124,14 @@ main(int argc, char **argv)
     char *warr[] = {"foo","bar"};
     char **words = warr;
     int wordsSize = strlen(words[0]);
-    int returnSize = 0;
+    int returnSize = 0, i;
     int *result;
 
     result = findSubstring(s,words,wordsSize,&returnSize);
     if (result != NULL) {
         printf("result print:\n");
-        while (*result != 0) {
-            printf(",%d", *result++);
+        for (i=0; i<returnSize; i++) {
+            printf(",%d", result[i]);
         }
         printf("\n");
     } else {
