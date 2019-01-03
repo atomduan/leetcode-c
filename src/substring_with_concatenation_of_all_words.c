@@ -19,7 +19,6 @@
  */
 #include <linux_config.h>
 
-
 static void *
 leet_malloc(size_t size)
 {
@@ -57,12 +56,12 @@ match_word(char *s, char *word)
     return res;
 }
 
-int
+static int
 match_substring(char* s,char** words,int wordsSize)
 {
     printf("char trunk is %s\n", s);
     int word_len, *bit_map, bit_size;
-    int i, j, res=1;
+    int i, j, res=1, match_flag=0;
 
     word_len = strlen(*words);
     bit_size = wordsSize/(sizeof(int)*8) + 1;
@@ -71,20 +70,20 @@ match_substring(char* s,char** words,int wordsSize)
     for (i=0; i<wordsSize; i++) {
         for (j=0; j<wordsSize; j++) {
             printf("try match is %s, %s\n", s, words[j]);
-            if (!match_word(s,words[j])) {
-                goto fail_handle;
-            } else {
-                if (!check_bitmap(bit_map,j)) {
-                    goto fail_handle;  
+            if (match_word(s,words[j])) {
+                if (check_bitmap(bit_map,j)) {
+                    match_flag = 1;  
                 }
             }
         }
-        s += word_len;
+        if (!match_flag) {
+            goto fail_handle;
+        }
+        s += word_len; match_flag = 0;
     }
 
     //must work all words
     if (i < wordsSize-1) goto fail_handle;
-
     goto success_handle;
 
 fail_handle:
@@ -109,7 +108,6 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
     word_len = strlen(*words);
     while (*tmp_s != '\0') {
         if (match_substring(tmp_s,words,wordsSize)) {
-            printf("aaa");
             *res_tmp++ = index; 
             (*returnSize)++;
         }
@@ -125,7 +123,7 @@ main(int argc, char **argv)
     char *s = "barfoothefoobarman";
     char *warr[] = {"foo","bar"};
     char **words = warr;
-    int wordsSize = strlen(words[0]);
+    int wordsSize = 2;
     int returnSize = 0, i;
     int *result;
 
