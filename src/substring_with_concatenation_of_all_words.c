@@ -28,6 +28,12 @@ leet_malloc(size_t size)
     return res;
 }
 
+static inline void
+reset_bitmap(int* bit_map, int size)
+{
+    memset(bit_map,0,size);
+}
+
 static int
 check_bitmap(int *bitmap, int index) {
     int res = 0, bi, *buck, offset, bit_flag;
@@ -57,15 +63,12 @@ match_word(char *s, char *word)
 }
 
 static int
-match_substring(char* s,char** words,int wordsSize)
+match_substring(char* s,char** words,int wordsSize,int* bit_map)
 {
-    int word_len, *bit_map, bit_size;
+    int word_len;
     int i, j, res=1, match_flag=0;
 
     word_len = strlen(*words);
-    bit_size = wordsSize/(sizeof(int)*8) + 1;
-    bit_map = leet_malloc(bit_size);
-    
     for (i=0; i<wordsSize; i++) {
         for (j=0; j<wordsSize; j++) {
             if (match_word(s,words[j])) {
@@ -88,7 +91,6 @@ match_substring(char* s,char** words,int wordsSize)
 fail_handle:
     res = 0;
 success_handle:
-    free(bit_map);
     return res;
 }
 
@@ -102,6 +104,7 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
     char *tmp_s;
     int *res, *res_tmp, index, word_len;
     res = res_tmp = leet_malloc(sizeof(int)*strlen(s));
+    int *bit_map, bit_size;
 
     if (words == NULL) return res; 
     if (*words == NULL) return res; 
@@ -110,11 +113,15 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
     word_len = strlen(*words);
     if (word_len == 0) return res; 
 
+    bit_size = wordsSize/(sizeof(int)*8) + 1;
+    bit_map = leet_malloc(bit_size);
+
     while (*tmp_s != '\0') {
-        if (match_substring(tmp_s,words,wordsSize)) {
+        if (match_substring(tmp_s,words,wordsSize,bit_map)) {
             *res_tmp++ = index; 
             (*returnSize)++;
         }
+        reset_bitmap(bit_map,bit_size);
         tmp_s += word_len;
         index += word_len;
     }
