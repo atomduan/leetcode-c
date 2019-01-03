@@ -131,10 +131,10 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
 int
 main(int argc, char **argv)
 {
-    char *s = "aaaaaaaaaaaaaaaaaaaa";
-    char *warr[] = {"a","a"};
+    char *s = "lingmindraboofooowingdingbarrwingmonkeypoundcake";
+    char *warr[] = {"fooo","barr","wing","ding","wing"};
     char **words = warr;
-    int wordsSize = 2;
+    int wordsSize = 5;
     int returnSize = 0, i;
     int *result;
 
