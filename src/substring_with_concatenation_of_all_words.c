@@ -59,7 +59,6 @@ match_word(char *s, char *word)
 static int
 match_substring(char* s,char** words,int wordsSize)
 {
-    printf("char trunk is %s\n", s);
     int word_len, *bit_map, bit_size;
     int i, j, res=1, match_flag=0;
 
@@ -69,10 +68,10 @@ match_substring(char* s,char** words,int wordsSize)
     
     for (i=0; i<wordsSize; i++) {
         for (j=0; j<wordsSize; j++) {
-            printf("try match is %s, %s\n", s, words[j]);
             if (match_word(s,words[j])) {
                 if (check_bitmap(bit_map,j)) {
                     match_flag = 1;  
+                    break;
                 }
             }
         }
@@ -104,8 +103,13 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
     int *res, *res_tmp, index, word_len;
     res = res_tmp = leet_malloc(sizeof(int)*strlen(s));
 
+    if (words == NULL) return res; 
+    if (*words == NULL) return res; 
+
     tmp_s = s; index = 0;
     word_len = strlen(*words);
+    if (word_len == 0) return res; 
+
     while (*tmp_s != '\0') {
         if (match_substring(tmp_s,words,wordsSize)) {
             *res_tmp++ = index; 
@@ -120,8 +124,8 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
 int
 main(int argc, char **argv)
 {
-    char *s = "barfoothefoobarman";
-    char *warr[] = {"foo","bar"};
+    char *s = "aaaaaaaaaaaaaaaaaaaa";
+    char *warr[] = {"a","a"};
     char **words = warr;
     int wordsSize = 2;
     int returnSize = 0, i;
