@@ -122,8 +122,7 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
             (*returnSize)++;
         }
         reset_bitmap(bit_map,bit_size);
-        tmp_s += word_len;
-        index += word_len;
+        tmp_s++; index++;
     }
     return res;
 }
