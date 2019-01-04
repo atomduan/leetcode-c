@@ -36,14 +36,9 @@ reset_bitmap(int* bit_map, int size)
 
 static int
 check_bitmap(int *bitmap, int index) {
-    int res = 0, bi, *buck, offset, bit_flag;
-    //TODO need optimize, should we do not use divide
-    bi = index / (sizeof(int)*8); 
-    offset = index % (sizeof(int)*8);
-    buck = bitmap+bi;
-    bit_flag = 0x1 << offset; 
-    if (!(*buck & bit_flag)) {
-        *buck = *buck | bit_flag;
+    int res = 0;
+    if(!bitmap[index]) {
+        bitmap[index] = 1;
         res = 1;
     }
     return res;
@@ -113,7 +108,7 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
     word_len = strlen(*words);
     if (word_len == 0) return res; 
 
-    bit_size = wordsSize/(sizeof(int)*8) + 1;
+    bit_size = sizeof(int)*(wordsSize+1);
     bit_map = leet_malloc(bit_size);
 
     while (*tmp_s != '\0') {
@@ -130,10 +125,10 @@ findSubstring(char* s,char** words,int wordsSize,int* returnSize)
 int
 main(int argc, char **argv)
 {
-    char *s = "lingmindraboofooowingdingbarrwingmonkeypoundcake";
-    char *warr[] = {"fooo","barr","wing","ding","wing"};
+    char *s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    char *warr[] = {"a","a"};
     char **words = warr;
-    int wordsSize = 5;
+    int wordsSize = sizeof(warr)/sizeof(char*);
     int returnSize = 0, i;
     int *result;
 
