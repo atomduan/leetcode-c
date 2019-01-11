@@ -35,7 +35,7 @@ int bin_serach(int* nums, int si, int ei, int target) {
 int 
 search(int* nums, int numsSize, int target)
 {
-    return bin_serach(nums, 0, numsSize-1, target); 
+    return bin_serach(nums,0,numsSize-1,target); 
 }
 
 int
