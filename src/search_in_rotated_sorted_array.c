@@ -19,16 +19,13 @@
 
 int bin_serach(int* nums, int si, int ei, int target) {
     int mi = (si+ei)/2, li, ri;
-    if (si == ei) {
+    if (si == ei)
         return nums[si]==target ? nums[si] : -1;
-    }
-    if (si == mi) {
+    if (si == mi)
         if (nums[si] == target) return si;
-    }
-    if (mi == ei) {
+    if (mi == ei)
         if (nums[si] == target) return si;
-    }
-    if (ei - si == 1) return -1;
+    if (ei-si == 1) return -1;
     li = bin_serach(nums, si, mi, target);    
     if (li > 0) return li;
     ri = bin_serach(nums, mi, ei, target);    
@@ -46,8 +43,7 @@ main(int argc, char **argv)
 {
     int nums[] = {4,5,6,7,0,1,2};
     int numsSize = sizeof(nums)/sizeof(int);
-    //int target = 0;
-    int target = 3;
+    int target = 0;
     printf("result is %d\n", search(nums,numsSize,target));
     return 0;
 }
