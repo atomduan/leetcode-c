@@ -22,6 +22,25 @@ leet_malloc(size_t size)
     return res;
 }
 
+void
+binary_serach(int *nums, int si, int ei, int *res, int target)
+{
+    int mi = (si+ei)/2;
+    if (ei - si <= 1) {
+        if (nums[si] == target) {
+            if (res[0]==-1 || res[0]>=si) res[0] = si;
+            if (res[1]==-1 || res[1]<=si) res[1] = si;
+        }
+        if (nums[ei] == target) {
+            if (res[0]==-1 || res[0]>=ei) res[0] = ei;
+            if (res[1]==-1 || res[1]<=ei) res[1] = ei;
+        }
+        return;
+    }
+    binary_serach(nums,si,mi,res,target);    
+    binary_serach(nums,mi+1,ei,res,target);    
+}
+
 /*
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
@@ -29,8 +48,12 @@ leet_malloc(size_t size)
 int * 
 searchRange(int* nums, int numsSize, int target, int* returnSize)
 {
-    int *res = leet_malloc(sizeof(int)*numsSize);
+    int *res = leet_malloc(sizeof(int)*2);
     res[0] = res[1] = -1;
+    if (numsSize > 0) {
+        binary_serach(nums,0,numsSize-1,res,target);
+    }
+    *returnSize = 2;
     return res; 
 }
 
@@ -39,7 +62,7 @@ main(int argc, char **argv)
 {
     int nums[] = {5,7,7,8,8,10};
     int numsSize = sizeof(nums)/sizeof(int);
-    int target = 8;
+    int target = 10;
     int returnSize = 2;
     int *res, i;
     res = searchRange(nums,numsSize,target,&returnSize);
