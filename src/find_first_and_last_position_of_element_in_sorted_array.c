@@ -13,14 +13,25 @@
  */
 #include <linux_config.h>
 
+inline void *
+leet_malloc(size_t size) 
+{
+    void *res = NULL;
+    res = malloc(size);
+    memset(res,0,size);
+    return res;
+}
+
 /*
  * Return an array of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int* 
+int * 
 searchRange(int* nums, int numsSize, int target, int* returnSize)
 {
-    return NULL; 
+    int *res = leet_malloc(sizeof(int)*numsSize);
+    res[0] = res[1] = -1;
+    return res; 
 }
 
 int
