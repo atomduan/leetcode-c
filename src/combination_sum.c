@@ -26,6 +26,29 @@
  */
 #include <linux_config.h>
 
+typedef struct leet_queue_s leet_queue;
+struct leet_queue_s {
+    int val;
+    leet_queue *next;
+};
+
+void *
+leet_malloc(size_t size)
+{
+    void *res = malloc(size);
+    memset(res,0,size);
+    return res;
+}
+
+inline leet_queue * 
+leet_queue_append(leet_queue *curr, int val)
+{
+    leet_queue *res = leet_malloc(sizeof(leet_queue));
+    res->val = val;
+    if (curr != NULL) curr->next = res; 
+    return res;
+}
+
 /**
  * Return an array of arrays of size *returnSize.
  * The sizes of the arrays are returned as *columnSizes array.
