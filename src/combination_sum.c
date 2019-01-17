@@ -64,5 +64,27 @@ combinationSum(int* candidates, int candidatesSize, int target,
 int
 main(int argc, char **argv)
 {
+    int candidates[] = {2,3,6,7};
+    int candidatesSize = sizeof(candidates)/sizeof(int);
+    int target = 7;
+    int *columnSizes = NULL;
+    int returnSize = 0;
+    int **res,*arr,i,j,arr_len;
+    res = combinationSum(candidates,candidatesSize,target,&columnSizes,&returnSize);
+    if (res != NULL) {
+        printf("res is : {\n");
+        for (i=0; i<returnSize; i++) {
+            arr_len = columnSizes[i];
+            arr = res[i];
+            printf("    [");
+            for (j=0; j<arr_len; j++) {
+                printf("%d,",arr[j]); 
+            }
+            printf("]\n");
+        }
+        printf("}\n");
+    } else {
+        printf("res is NULL\n");
+    }
     return 0;
 }
