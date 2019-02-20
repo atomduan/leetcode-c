@@ -1,5 +1,9 @@
 #include <linux_config.h>
 
+#define BITS_PER_BYTE       8
+#define DIV_ROUND_UP(n, d)  (((n) + (d) - 1) / (d))
+#define BITS_TO_LONGS(nr)   DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))
+
 int
 check_bitmap_bk(int *bitmap, int index) {
     int res = 0, bi, *buck, offset, bit_flag;
@@ -15,3 +19,11 @@ check_bitmap_bk(int *bitmap, int index) {
     }
     return res;
 }
+
+inline void 
+bitmap_zero(unsigned long *dst, unsigned int nbits)
+{
+    unsigned int len = BITS_TO_LONGS(nbits) * sizeof(unsigned long);
+    memset(dst, 0, len);
+}
+
