@@ -26,9 +26,15 @@
  */
 #include <linux_config.h>
 
+typedef struct leet_vals_s leet_vals;
+struct leet_vals_s {
+    int val;
+    leet_vals *next;
+};
+
 typedef struct leet_queue_s leet_queue;
 struct leet_queue_s {
-    int val;
+    leet_vals *vals;
     leet_queue *next;
 };
 
@@ -41,11 +47,62 @@ leet_malloc(size_t size)
 }
 
 inline leet_queue * 
-leet_queue_append(leet_queue *curr, int val)
+leet_queue_append(leet_queue *curr, leet_queue *res)
 {
-    leet_queue *res = leet_malloc(sizeof(leet_queue));
+    leet_queue *head;
+    head = curr;
+    if (head == NULL) {
+        head = res;
+    } else {
+        while (curr->next != NULL)
+            curr = curr->next; 
+        curr->next = res; 
+    }
+    return head;
+}
+
+inline leet_vals * 
+leet_vals_append(leet_vals *curr, int val)
+{
+    leet_vals *head, *res;
+    head = curr;
+    res = leet_malloc(sizeof(leet_vals));
     res->val = val;
-    if (curr != NULL) curr->next = res; 
+    if (head == NULL) {
+        head = res;
+    } else {
+        while (curr->next != NULL)
+            curr = curr->next; 
+        curr->next = res; 
+    }
+    return head;
+}
+
+leet_queue *
+combination_sum(int* candidates, int candidatesSize, int target)
+{
+    leet_queue *res;
+    int i, curr_val, ntarget;
+    leet_queue *resq, *rc;
+    leet_vals *vals;
+
+    for (i=0; i<candidatesSize; i++) {
+        curr_val = candidates[i];
+        ntarget = target - curr_val;
+        if (ntarget > 0) {
+            resq = combination_sum(candidates,candidatesSize,ntarget);
+            for (rc=resq; rc!=NULL; rc=rc->next) {
+                rc->vals = leet_vals_append(rc->vals, curr_val);
+            }
+        } else
+        if (ntarget == 0) {
+            vals = leet_malloc(sizeof(leet_vals)); 
+            vals->val = curr_val;
+            resq = leet_malloc(sizeof(leet_queue));
+            resq->vals = vals;
+        }
+        res = leet_queue_append(res, resq);
+    }
     return res;
 }
 
@@ -58,7 +115,7 @@ int **
 combinationSum(int* candidates, int candidatesSize, int target, 
                int** columnSizes, int* returnSize) 
 {
-    return NULL; 
+    return NULL;
 }
 
 int
