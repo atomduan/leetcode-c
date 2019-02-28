@@ -12,8 +12,7 @@ typedef struct timespec leet_timespec_t;
 
 
 unsigned long
-leet_time_mval(leet_timespec_t *rct,
-        leet_timespec_t *old);
+leet_time_mval(leet_timespec_t *rct,leet_timespec_t *old);
 
 void
 leet_time_mono(leet_timespec_t *ts);

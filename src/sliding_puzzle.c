@@ -42,6 +42,9 @@ slidingPuzzle(int** board, int boardRowSize, int *boardColSizes)
     return 77; 
 }
 
+/** 
+ * TODO, need implemented, atomduan 
+ */
 int
 main(int argc, char **argv)
 {
