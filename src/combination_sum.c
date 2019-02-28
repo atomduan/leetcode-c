@@ -54,8 +54,10 @@ leet_queue_append(leet_queue *curr, leet_queue *res)
     if (head == NULL) {
         head = res;
     } else {
-        while (curr->next != NULL)
+        while (curr != NULL) {
+            if (curr->next == NULL) break;
             curr = curr->next; 
+        }
         curr->next = res; 
     }
     return head;
@@ -71,8 +73,10 @@ leet_vals_append(leet_vals *curr, int val)
     if (head == NULL) {
         head = res;
     } else {
-        while (curr->next != NULL)
+        while (curr != NULL) {
+            if (curr->next == NULL) break;
             curr = curr->next; 
+        }
         curr->next = res; 
     }
     return head;
@@ -91,27 +95,34 @@ leet_compute_vals_size(leet_vals *curr)
 static inline void
 leet_padding_vals_res(int *vals_res, leet_vals *curr)
 {
+    printf("--------------------\n");
     while (curr != NULL) {
         *vals_res++ = curr->val;
+        printf("%d\n", curr->val);
         curr = curr->next; 
     }
+    printf("--------------------\n");
 }
 
 leet_queue *
-combination_sum(int* candidates, int candidatesSize, int target)
+leet_combination_sum(int* candidates, int candidatesSize, int target)
 {
-    leet_queue *res;
+    leet_queue *res=NULL;
     int i, curr_val, ntarget;
     leet_queue *resq, *rc;
     leet_vals *vals;
 
+    printf("target is %d\n",target);
+
     for (i=0; i<candidatesSize; i++) {
+        resq = NULL;
         curr_val = candidates[i];
         ntarget = target - curr_val;
         if (ntarget > 0) {
-            resq = combination_sum(candidates,candidatesSize,ntarget);
-            for (rc=resq; rc!=NULL; rc=rc->next) {
-                rc->vals = leet_vals_append(rc->vals, curr_val);
+            resq = leet_combination_sum(candidates,candidatesSize,ntarget);
+            if (resq != NULL) {
+                for (rc=resq; rc!=NULL; rc=rc->next)
+                    rc->vals = leet_vals_append(rc->vals, curr_val);
             }
         } else
         if (ntarget == 0) {
@@ -120,7 +131,9 @@ combination_sum(int* candidates, int candidatesSize, int target)
             resq = leet_malloc(sizeof(leet_queue));
             resq->vals = vals;
         }
-        res = leet_queue_append(res, resq);
+        if (resq != NULL) {
+            res = leet_queue_append(res, resq);
+        }
     }
     return res;
 }
@@ -134,14 +147,15 @@ int **
 combinationSum(int* candidates, int candidatesSize, int target, 
                int** columnSizes, int* returnSize) 
 {
-    int **res, rsz=0, i, vals_sz=0, *vals_res;
+    int **res, **res_head, rsz=0, i, vals_sz=0, *vals_res;
     leet_queue *resq, *r;
-    resq = combination_sum(candidates, candidatesSize, target);
+    resq = leet_combination_sum(candidates, candidatesSize, target);
     for (r=resq; r!=NULL; r=r->next) rsz += 1;
     *returnSize = rsz;
     res = leet_malloc((rsz+1)*sizeof(int*));
     *columnSizes = leet_malloc((rsz+1)*sizeof(int));
-
+    
+    res_head = res;
     for (r=resq,i=0; r!=NULL; r=r->next, i++) {
         vals_sz = leet_compute_vals_size(r->vals); 
         (*columnSizes)[i] = vals_sz;
@@ -149,7 +163,7 @@ combinationSum(int* candidates, int candidatesSize, int target,
         leet_padding_vals_res(vals_res,r->vals);
         *res++ = vals_res;
     }
-    return res;
+    return res_head;
 }
 
 int
