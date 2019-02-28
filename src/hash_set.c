@@ -54,13 +54,11 @@ leet_hash_set_new()
 int
 leet_hash_set_put(leet_hash_set *set, int key)
 {
-    leet_hash_node *curr_node;
     int hc = leet_hash_code(set,key);
     leet_hash_node **slot = set->slot;
     leet_hash_node *entry = slot[hc];
     if (entry == NULL) {
-        curr_node = leet_hash_node_new(key);
-        entry = curr_node;
+        slot[hc] = leet_hash_node_new(key);
         return 1;
     } else {
         while (entry != NULL) {
