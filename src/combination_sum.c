@@ -95,24 +95,34 @@ leet_compute_vals_size(leet_vals *curr)
 static inline void
 leet_padding_vals_res(int *vals_res, leet_vals *curr)
 {
-    printf("--------------------\n");
     while (curr != NULL) {
         *vals_res++ = curr->val;
-        printf("%d\n", curr->val);
         curr = curr->next; 
     }
-    printf("--------------------\n");
 }
 
-leet_queue *
+static void
+leet_sort_vals_res(int *vals_res, int vals_sz)
+{
+    int i, j, tmp;
+    for (i=0; i<vals_sz; i++) {
+        for (j=0; j<vals_sz-i-1; j++) {
+            if (vals_res[j] > vals_res[j+1]) {
+                tmp = vals_res[j];
+                vals_res[j] = vals_res[j+1];
+                vals_res[j+1] = tmp;
+            }
+        }
+    }
+}
+
+static leet_queue *
 leet_combination_sum(int* candidates, int candidatesSize, int target)
 {
     leet_queue *res=NULL;
     int i, curr_val, ntarget;
     leet_queue *resq, *rc;
     leet_vals *vals;
-
-    printf("target is %d\n",target);
 
     for (i=0; i<candidatesSize; i++) {
         resq = NULL;
@@ -138,6 +148,29 @@ leet_combination_sum(int* candidates, int candidatesSize, int target)
     return res;
 }
 
+static int
+leet_is_dup_tuple(int **res_head, int *vals_res)
+{
+    int ret=0, **res, *rval, *vres;
+    for (res=res_head; *res!=NULL; res++) {
+        rval = *res; 
+        vres = vals_res;
+        for (;;) {
+            if (*rval != 0 && *vres != 0) {
+                if (*rval == *vres) {
+                    rval++, vres++;
+                    continue;
+                }
+                break;
+            } else {
+                if (*rval == *vres) ret = 1;
+                break;
+            }
+        }
+    }
+    return ret;
+}
+
 /**
  * Return an array of arrays of size *returnSize.
  * The sizes of the arrays are returned as *columnSizes array.
@@ -151,17 +184,19 @@ combinationSum(int* candidates, int candidatesSize, int target,
     leet_queue *resq, *r;
     resq = leet_combination_sum(candidates, candidatesSize, target);
     for (r=resq; r!=NULL; r=r->next) rsz += 1;
-    *returnSize = rsz;
     res = leet_malloc((rsz+1)*sizeof(int*));
     *columnSizes = leet_malloc((rsz+1)*sizeof(int));
-    
     res_head = res;
-    for (r=resq,i=0; r!=NULL; r=r->next, i++) {
+    for (r=resq,i=0; r!=NULL; r=r->next) {
         vals_sz = leet_compute_vals_size(r->vals); 
-        (*columnSizes)[i] = vals_sz;
         vals_res = leet_malloc((vals_sz+1)*sizeof(int));
         leet_padding_vals_res(vals_res,r->vals);
-        *res++ = vals_res;
+        leet_sort_vals_res(vals_res,vals_sz);
+        if (!leet_is_dup_tuple(res_head, vals_res)) {
+            *res++ = vals_res;
+            (*columnSizes)[i++] = vals_sz;
+            *returnSize = i;
+        }
     }
     return res_head;
 }
