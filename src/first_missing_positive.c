@@ -60,7 +60,8 @@ main(int argc, char **argv)
 {
     //int nums[] = {7,8,9,11,12};
     //int nums[] = {3,4,-1,1};
-    int nums[] = {0,1,2};
+    //int nums[] = {0,1,2};
+    int nums[] = {1,3};
     int numsSize = sizeof(nums)/sizeof(int);
     int result = firstMissingPositive(nums,numsSize);
     printf("result is :%d\n", result);
