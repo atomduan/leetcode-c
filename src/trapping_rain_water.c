@@ -33,7 +33,6 @@ leet_count_pool_unit(int* height, int heightSize)
             }
         } else {
             if (hv > 0) {
-                count_stat = 0;
                 commit_count += submit_count;
                 submit_count = 0;
                 continue;
@@ -42,7 +41,6 @@ leet_count_pool_unit(int* height, int heightSize)
             }
         }
     }
-    printf("slice count is %d\n", commit_count);
     return commit_count;
 }
 
@@ -64,7 +62,8 @@ int trap(int* height, int heightSize) {
 int
 main(int argc, char ** argv)
 {
-    int height[] = {0,1,0,2,1,0,1,3,2,1,2,1};
+    //int height[] = {0,1,0,2,1,0,1,3,2,1,2,1};
+    int height[] = {2,1,0,2};
     int heightSize = sizeof(height)/sizeof(int);
     printf("return result is %d\n", trap(height, heightSize));
     return 0;
