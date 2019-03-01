@@ -19,8 +19,9 @@
 
 #include <linux_config.h>
 
-#define leet_ctoi(c)  c-48
-#define leet_itoc(i)  i+48
+#define leet_ctoi(c)    c-48
+#define leet_itoc(i)    i+48
+#define TMP_SIZE        1024*4 
 
 inline void *
 leet_malloc(size_t size)
@@ -31,15 +32,15 @@ leet_malloc(size_t size)
 }
 
 char*
-multiply_deci(char *num, char *sig)
+multiply_deci_sigal(char *num, char *sig, char *tmp)
 {
-    char *res, *tmp, *np = num;
-    int sigv, crgv, mulr, num_size, i=0,j=0;
+    char *res, *np=num;
+    int sigv, crgv, mulr, num_size, i=0, j=0;
     int dsts=0, ssts=0;
-    
+
+    memset(tmp,0,TMP_SIZE);
     for (num_size=0; *np!='\0'; np++, num_size++); np--;
     res = leet_malloc(num_size+1);
-    tmp = leet_malloc(num_size+1);
 
     sigv = leet_ctoi(*sig);
     do {
@@ -57,14 +58,15 @@ multiply_deci(char *num, char *sig)
         if (tmp[i]=='\0') continue;
         res[j++] = tmp[i];
     }
-    free(tmp);
     return res;
 }
 
 char*
 multiply(char* num1, char* num2)
 {
-    return multiply_deci("12123412342342142341234123423143241234233", "8"); 
+    char *tmp = leet_malloc(TMP_SIZE);
+    return multiply_deci_sigal("444444444444444444444444444444444444444444444444", "0", tmp); 
+    free(tmp);
 }
 
 /** 
