@@ -56,6 +56,7 @@ multiply_deci_sigal(char *num, char *sig, char *tmp, char *rtp)
     int dsts=0, ssts=0;
 
     memset(tmp,0,TMP_SIZE);
+    memset(rtp,0,TMP_SIZE);
     for (num_size=0; *np!='\0'; np++, num_size++); np--;
 
     sigv = leet_ctoi(*sig);
@@ -128,18 +129,19 @@ config_res_value(char *res, char *res_tmp)
 char*
 multiply(char* num1, char* num2)
 {
-    char *n2p;
+    char *n2p, *rp;
     char *tmp = leet_malloc(TMP_SIZE);
     char *rtp = leet_malloc(TMP_SIZE);
     char *rtp_tmp = leet_malloc(TMP_SIZE);
     char *res_tmp = leet_malloc(TMP_SIZE);
     char *res = leet_malloc(TMP_SIZE);
 
-    int num2_sz=0, i, shift_step=0;
+    int num2_sz=0, i, shift_step=0, all_zero_flag=0;
 
     for (n2p=num2; *n2p!='\0'; n2p++) num2_sz++;
     for (i=num2_sz-1; i>=0; i--, shift_step++) {
         multiply_deci_sigal(num1,&num2[i],tmp,rtp);
+        //printf("rtp is %s\n", rtp);
         if (i == num2_sz-1) {
             config_res_value(res,rtp);
         } else {
@@ -147,11 +149,25 @@ multiply(char* num1, char* num2)
             sum_two_layer_nums(res,rtp_tmp,tmp,res_tmp);
             config_res_value(res,res_tmp);
         }
+        //printf("res is %s\n", res);
     }
     free(tmp);
     free(rtp);
     free(rtp_tmp);
     free(res_tmp);
+
+    for (rp=res; *rp!='\0'; rp++) {
+        if (*rp == '0') {
+            continue;
+        } else {
+            all_zero_flag++;
+        }
+    }
+
+    if (all_zero_flag==0) {
+        memset(res,0,TMP_SIZE);
+        res[0] = '0';
+    }
     return res;
 }
 
@@ -161,8 +177,8 @@ multiply(char* num1, char* num2)
 int
 main(int argc,char **argv)
 {
-    char *num1 = "12312";
-    char *num2 = "456";
+    char *num1 = "237";
+    char *num2 = "284";
     printf("multiply result is %s\n", multiply(num1, num2)); 
     return 0;
 }
