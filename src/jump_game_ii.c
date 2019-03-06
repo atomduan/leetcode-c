@@ -18,7 +18,20 @@
 int
 jump(int* nums, int numsSize)
 {
-    return 99;    
+    int i,j,r, step, maxr, maxri;
+    for (i=0,step=0; i<numsSize;) {
+        maxr = INT_MIN;
+        r = nums[i]; maxri=i+1;
+        for (j=i+1; j<=i+r && j<numsSize; j++) {
+            if (nums[j] >= maxr) {
+                maxr = nums[j];
+                maxri = j; 
+            }
+        }
+        i = maxri; step++; 
+        if (i >= numsSize-1) break;
+    }
+    return step;    
 }
 
 int 

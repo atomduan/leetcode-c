@@ -171,9 +171,6 @@ multiply(char* num1, char* num2)
     return res;
 }
 
-/** 
- * TODO need implemented
- */
 int
 main(int argc,char **argv)
 {
