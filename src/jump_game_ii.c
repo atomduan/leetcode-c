@@ -15,6 +15,8 @@
 
 #include <linux_config.h>
 
+int deepth = 0;
+
 int
 jump(int* nums, int numsSize)
 {
@@ -26,7 +28,9 @@ jump(int* nums, int numsSize)
     range = nums[0];
     min_step = 10000;
     for (i=1; i<=range && i<numsSize; i++) {
+        printf("deepth %d nums <%d>\n", deepth++, nums[i]);
         step = jump(&nums[i], numsSize-i);
+        deepth--;
         if (step < min_step) min_step = step;
     }
     return min_step+1;
@@ -40,7 +44,7 @@ main(int argc, char **argv)
 {
     //int nums[] = {2,3,1,1,4};
     //int nums[] = {4,1,1,3,1,1,1};
-    //int nums[] = {5,9,3,2,1,0,2,3,3,1,0,0};
+    int nums[] = {5,9,3,2,1,0,2,3,3,1,0,0};
     //int nums[] = {5,6,4,4,6,9,4,4,7,4,4,8,2,6,8,1,5,9,6,5,2,7,9,7,9,6,9,4,1,6,8,8,4,4,2,0,3,8,5};
     int numsSize = sizeof(nums)/sizeof(int);
     printf("jump result is %d\n", jump(nums,numsSize));
