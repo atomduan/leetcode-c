@@ -1,15 +1,15 @@
 /**
- * Given two non-negative integers num1 and num2 represented as strings, 
+ * Given two non-negative integers num1 and num2 represented as strings,
  *       return the product of num1 and num2, also represented as a string.
- * 
+ *
  * Example 1:
  * Input: num1 = "2", num2 = "3"
  * Output: "6"
- * 
+ *
  * Example 2:
  * Input: num1 = "123", num2 = "456"
  * Output: "56088"
- * 
+ *
  * Note:
  * The length of both num1 and num2 is < 110.
  * Both num1 and num2 contain only digits 0-9.
@@ -21,7 +21,7 @@
 
 #define leet_ctoi(c)    c-48
 #define leet_itoc(i)    i+48
-#define TMP_SIZE        1024 
+#define TMP_SIZE        1024
 
 inline void *
 leet_malloc(size_t size)
@@ -61,9 +61,9 @@ multiply_deci_sigal(char *num, char *sig, char *tmp, char *rtp)
 
     sigv = leet_ctoi(*sig);
     do {
-        crgv = leet_ctoi(*np--); 
+        crgv = leet_ctoi(*np--);
         mulr = crgv*sigv + dsts;
-        dsts = mulr/10;  
+        dsts = mulr/10;
         ssts = mulr%10;
         tmp[i++] = leet_itoc(ssts);
     } while(i<num_size);
@@ -82,7 +82,7 @@ sum_two_layer_nums(char *upper, char *lower, char *tmp, char *res_tmp)
 {
     int u_sz=0, l_sz=0, i, j, ts, t=0, num_size=0;
     int dsts=0, ssts=0;
-    char *unp=upper, *lnp=lower; 
+    char *unp=upper, *lnp=lower;
     for (;*unp!='\0'; unp++) u_sz++;
     for (;*lnp!='\0'; lnp++) l_sz++;
 
@@ -109,7 +109,7 @@ sum_two_layer_nums(char *upper, char *lower, char *tmp, char *res_tmp)
         ssts = ts%10;
         tmp[t++] = leet_itoc(ssts);
     }
-    
+
     num_size = (u_sz>l_sz? u_sz:l_sz)+1;
     for (i=num_size,j=0; i>=0; i--) {
         if (tmp[i]=='\0') continue;
@@ -120,7 +120,7 @@ sum_two_layer_nums(char *upper, char *lower, char *tmp, char *res_tmp)
 void
 config_res_value(char *res, char *res_tmp)
 {
-    memset(res, 0, TMP_SIZE); 
+    memset(res, 0, TMP_SIZE);
     for (;*res_tmp!='\0'; res_tmp++) {
         *res++ = *res_tmp;
     }
@@ -176,6 +176,6 @@ main(int argc,char **argv)
 {
     char *num1 = "237";
     char *num2 = "284";
-    printf("multiply result is %s\n", multiply(num1, num2)); 
+    printf("multiply result is %s\n", multiply(num1, num2));
     return 0;
 }

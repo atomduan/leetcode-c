@@ -1,12 +1,12 @@
 /**
- * Given a set of candidate numbers (candidates) (without duplicates) and a target number (target), 
+ * Given a set of candidate numbers (candidates) (without duplicates) and a target number (target),
  * find all unique combinations in candidates where the candidate numbers sums to target.
- * 
+ *
  * The same repeated number may be chosen from candidates unlimited number of times.
  * Note:
  * All numbers (including target) will be positive integers.
  * The solution set must not contain duplicate combinations.
- * 
+ *
  * Example 1:
  * Input: candidates = [2,3,6,7], target = 7,
  * A solution set is:
@@ -14,7 +14,7 @@
  *   [7],
  *   [2,2,3]
  * ]
- * 
+ *
  * Example 2:
  * Input: candidates = [2,3,5], target = 8,
  * A solution set is:
@@ -46,7 +46,7 @@ leet_malloc(size_t size)
     return res;
 }
 
-inline leet_queue * 
+inline leet_queue *
 leet_queue_append(leet_queue *curr, leet_queue *res)
 {
     leet_queue *head;
@@ -56,14 +56,14 @@ leet_queue_append(leet_queue *curr, leet_queue *res)
     } else {
         while (curr != NULL) {
             if (curr->next == NULL) break;
-            curr = curr->next; 
+            curr = curr->next;
         }
-        curr->next = res; 
+        curr->next = res;
     }
     return head;
 }
 
-inline leet_vals * 
+inline leet_vals *
 leet_vals_append(leet_vals *curr, int val)
 {
     leet_vals *head, *res;
@@ -75,9 +75,9 @@ leet_vals_append(leet_vals *curr, int val)
     } else {
         while (curr != NULL) {
             if (curr->next == NULL) break;
-            curr = curr->next; 
+            curr = curr->next;
         }
-        curr->next = res; 
+        curr->next = res;
     }
     return head;
 }
@@ -87,7 +87,7 @@ leet_compute_vals_size(leet_vals *curr)
 {
     int res = 0;
     while (curr != NULL) {
-        res++, curr = curr->next; 
+        res++, curr = curr->next;
     }
     return res;
 }
@@ -97,7 +97,7 @@ leet_padding_vals_res(int *vals_res, leet_vals *curr)
 {
     while (curr != NULL) {
         *vals_res++ = curr->val;
-        curr = curr->next; 
+        curr = curr->next;
     }
 }
 
@@ -138,7 +138,7 @@ leet_combination_sum_ii(int* candidates, int candidatesSize, int target, int *us
             }
         } else
         if (ntarget == 0) {
-            vals = leet_malloc(sizeof(leet_vals)); 
+            vals = leet_malloc(sizeof(leet_vals));
             vals->val = curr_val;
             resq = leet_malloc(sizeof(leet_queue));
             resq->vals = vals;
@@ -156,7 +156,7 @@ leet_is_dup_tuple(int **res_head, int *vals_res)
 {
     int ret=0, **res, *rval, *vres;
     for (res=res_head; *res!=NULL; res++) {
-        rval = *res; 
+        rval = *res;
         vres = vals_res;
         for (;;) {
             if (*rval != 0 && *vres != 0) {
@@ -179,9 +179,9 @@ leet_is_dup_tuple(int **res_head, int *vals_res)
  * The sizes of the arrays are returned as *columnSizes array.
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
-int ** 
-combinationSum2(int* candidates, int candidatesSize, int target, 
-               int** columnSizes, int* returnSize) 
+int **
+combinationSum2(int* candidates, int candidatesSize, int target,
+               int** columnSizes, int* returnSize)
 {
     int **res, **res_head, rsz=0, i, vals_sz=0, *vals_res, *used_map;
     leet_queue *resq, *r;
@@ -192,7 +192,7 @@ combinationSum2(int* candidates, int candidatesSize, int target,
     *columnSizes = leet_malloc((rsz+1)*sizeof(int));
     res_head = res;
     for (r=resq,i=0; r!=NULL; r=r->next) {
-        vals_sz = leet_compute_vals_size(r->vals); 
+        vals_sz = leet_compute_vals_size(r->vals);
         vals_res = leet_malloc((vals_sz+1)*sizeof(int));
         leet_padding_vals_res(vals_res,r->vals);
         leet_sort_vals_res(vals_res,vals_sz);
@@ -222,7 +222,7 @@ main(int argc, char **argv)
             arr = res[i];
             printf("    [");
             for (j=0; j<arr_len; j++) {
-                printf("%d,",arr[j]); 
+                printf("%d,",arr[j]);
             }
             printf("]\n");
         }

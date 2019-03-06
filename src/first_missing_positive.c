@@ -1,18 +1,18 @@
 /**
  * Given an unsorted integer array, find the smallest missing positive integer.
- * 
+ *
  * Example 1:
  * Input: [1,2,0]
  * Output: 3
- * 
+ *
  * Example 2:
  * Input: [3,4,-1,1]
  * Output: 2
- * 
+ *
  * Example 3:
  * Input: [7,8,9,11,12]
  * Output: 1
- * 
+ *
  * Note:
  * Your algorithm should run in O(n) time and uses constant extra space.
  */
@@ -28,7 +28,7 @@ struct leet_hash_node_s {
 
 typedef struct leet_hash_set_s leet_hash_set;
 struct leet_hash_set_s {
-    leet_hash_node **slot; 
+    leet_hash_node **slot;
     int slot_size;
 };
 
@@ -43,7 +43,7 @@ leet_malloc(size_t size)
 static leet_hash_node *
 leet_hash_node_new(int val)
 {
-    leet_hash_node *res = leet_malloc(sizeof(leet_hash_node));    
+    leet_hash_node *res = leet_malloc(sizeof(leet_hash_node));
     res->val = val;
     return res;
 }
@@ -59,7 +59,7 @@ leet_hash_code(leet_hash_set *set, int key)
 static leet_hash_set *
 leet_hash_set_new()
 {
-    leet_hash_set *res = leet_malloc(sizeof(leet_hash_set));    
+    leet_hash_set *res = leet_malloc(sizeof(leet_hash_set));
     res->slot_size = LEET_SET_SLOT_SIZE;
     leet_hash_node **slot = leet_malloc(LEET_SET_SLOT_SIZE*sizeof(leet_hash_node *));
     res->slot = slot;
@@ -77,7 +77,7 @@ leet_hash_set_put(leet_hash_set *set, int key)
         return 1;
     } else {
         while (entry != NULL) {
-            if (entry->val == key)  return 0;  
+            if (entry->val == key)  return 0;
             if (entry->next != NULL) {
                 entry = entry->next;
                 continue;
@@ -108,7 +108,7 @@ leet_dedup_nums(int* nums, int *numsSize)
     return res;
 }
 
-int 
+int
 firstMissingPositive(int* nums, int numsSize)
 {
     int i, min, max, posn, *dict, idx;
@@ -132,7 +132,7 @@ firstMissingPositive(int* nums, int numsSize)
         for (i=0; i<numsSize; i++) {
             if (nums[i]<=0) continue;
             if (min+posn < nums[i]) continue;
-            idx = nums[i] - min; 
+            idx = nums[i] - min;
             dict[idx] = 1;
         }
         for (i=0;;i++)

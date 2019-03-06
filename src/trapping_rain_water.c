@@ -1,7 +1,7 @@
 /**
- * Given n non-negative integers representing an elevation map where the width of each bar is 1, 
+ * Given n non-negative integers representing an elevation map where the width of each bar is 1,
  * compute how much water it is able to trap after raining.
- * 
+ *
  * Example:
  * Input: [0,1,0,2,1,0,1,3,2,1,2,1]
  * Output: 6
@@ -37,7 +37,7 @@ leet_count_pool_unit(int* height, int heightSize)
                 submit_count = 0;
                 continue;
             } else {
-                submit_count++; 
+                submit_count++;
             }
         }
     }
@@ -56,7 +56,7 @@ int trap(int* height, int heightSize) {
         res_count += leet_count_pool_unit(height,heightSize);
         leet_height_slice(height,heightSize);
     }
-    return res_count;        
+    return res_count;
 }
 
 int

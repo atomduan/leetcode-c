@@ -27,7 +27,7 @@ void
 append_list(nlist **head, int val)
 {
     int count;
-    nlist *pre,*tmp,*nw; 
+    nlist *pre,*tmp,*nw;
     if (*head == NULL) {
         *head = leet_malloc(sizeof(nlist));
         tmp = *head;
@@ -38,7 +38,7 @@ append_list(nlist **head, int val)
             if (count < 5) {
                 if (val < tmp->val) {
                     nw = leet_malloc(sizeof(nlist));
-                    nw->val = val; 
+                    nw->val = val;
                     nw->next = tmp;
                     if (pre == NULL) {
                         *head = nw;
@@ -47,7 +47,7 @@ append_list(nlist **head, int val)
                     }
                 }
             } else {
-                pre->next = NULL; 
+                pre->next = NULL;
                 free(tmp);
             }
             pre = tmp;
@@ -72,7 +72,7 @@ int
 kthSmallest(struct TreeNode* root, int k)
 {
     int i;
-    nlist *head = NULL; 
+    nlist *head = NULL;
     doKthSmallest(root,k,&head);
     for (int i=0; i<4; i++) {
         head++;

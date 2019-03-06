@@ -108,7 +108,7 @@ nums_sort(int *nums,int numsSize)
     }
 }
 
-int** 
+int**
 threeSum(int* nums,int numsSize,int* returnSize)
 {
     int i=0,j=0;

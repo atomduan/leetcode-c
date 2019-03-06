@@ -3,39 +3,39 @@
  * '?' Matches any single character.
  * '*' Matches any sequence of characters (including the empty sequence).
  * The matching should cover the entire input string (not partial).
- * 
+ *
  * Note:
  * s could be empty and contains only lowercase letters a-z.
  * p could be empty and contains only lowercase letters a-z, and characters like ? or *.
- * 
+ *
  * Example 1:
  * Input:
  * s = "aa"
  * p = "a"
  * Output: false
  * Explanation: "a" does not match the entire string "aa".
- * 
+ *
  * Example 2:
  * Input:
  * s = "aa"
  * p = "*"
  * Output: true
  * Explanation: '*' matches any sequence.
- * 
+ *
  * Example 3:
  * Input:
  * s = "cb"
  * p = "?a"
  * Output: false
  * Explanation: '?' matches 'c', but the second letter is 'a', which does not match 'b'.
- * 
+ *
  * Example 4:
  * Input:
  * s = "adceb"
  * p = "*a*b"
  * Output: true
  * Explanation: The first '*' matches the empty sequence, while the second '*' matches the substring "dce".
- * 
+ *
  * Example 5:
  * Input:
  * s = "acdcb"
@@ -332,7 +332,7 @@ translate_pattern(char *orgp)
         if (orgp[i] == '*') {
             *p++ = '.';
             *p++ = '*';
-        } else 
+        } else
         if (orgp[i] == '?') {
             *p++ = '.';
         } else {
@@ -344,7 +344,7 @@ translate_pattern(char *orgp)
     return res;
 }
 
-bool 
+bool
 isMatch(char* s, char* p)
 {
     char *pp;
