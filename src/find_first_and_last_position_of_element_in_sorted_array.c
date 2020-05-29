@@ -11,7 +11,7 @@
  * Input: nums = [5,7,7,8,8,10], target = 6
  * Output: [-1,-1]
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 inline void *
 leet_malloc(size_t size)

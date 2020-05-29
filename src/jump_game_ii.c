@@ -13,7 +13,7 @@
  * You can assume that you can always reach the last index.
  */
 
-#include <linux_config.h>
+#include <let_config.h>
 
 int INIT_SIZE=0;
 

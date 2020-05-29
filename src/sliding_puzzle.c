@@ -33,7 +33,7 @@
  * board will be a 2 x 3 array as described above.
  * board[i][j] will be a permutation of [0, 1, 2, 3, 4, 5].
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 
 int

@@ -8,7 +8,7 @@
  *   return [0, 1].
  *  Note: The returned array must be malloced, assume caller calls free().
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 int *
 twoSum(int* nums,int numsSize,int target)

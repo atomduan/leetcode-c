@@ -12,7 +12,7 @@
  * ]
  */
 
-#include <linux_config.h>
+#include <let_config.h>
 
 typedef leet_queue_s leet_queue;
 struct leet_queue_s {

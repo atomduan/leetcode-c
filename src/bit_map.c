@@ -1,4 +1,4 @@
-#include <linux_config.h>
+#include <let_config.h>
 
 #define BITS_PER_BYTE       8
 #define DIV_ROUND_UP(n, d)  (((n) + (d) - 1) / (d))

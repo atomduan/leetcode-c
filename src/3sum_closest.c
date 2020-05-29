@@ -8,7 +8,7 @@
  * The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
  */
 
-#include <linux_config.h>
+#include <let_config.h>
 
 int
 threeSumClosest(int* nums,int numsSize,int target)

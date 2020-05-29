@@ -13,7 +13,7 @@
  *       ]
  */
 
-#include <linux_config.h>
+#include <let_config.h>
 
 static int *
 register_pool(int vi,int vj,int vk,int **res_head)

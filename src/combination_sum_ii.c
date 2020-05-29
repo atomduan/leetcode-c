@@ -24,7 +24,7 @@
  *   [3,5]
  * ]
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 typedef struct leet_vals_s leet_vals;
 struct leet_vals_s {

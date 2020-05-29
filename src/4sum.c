@@ -13,7 +13,7 @@
  *   [-2,  0, 0, 2]
  * ]
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 
 static void *

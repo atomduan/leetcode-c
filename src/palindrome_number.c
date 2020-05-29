@@ -17,7 +17,7 @@
  * Follow up:
  * Coud you solve it without converting the integer to a string?
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 static int
 isPalindrome(int x) {

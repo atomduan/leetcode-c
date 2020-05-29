@@ -16,7 +16,7 @@
  * Note:
  * Your algorithm should run in O(n) time and uses constant extra space.
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 void *
 leet_malloc(size_t size)

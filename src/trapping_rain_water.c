@@ -7,7 +7,7 @@
  * Output: 6
  */
 
-#include <linux_config.h>
+#include <let_config.h>
 
 static void
 leet_height_slice(int* height, int heightSize)

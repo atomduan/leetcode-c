@@ -11,7 +11,7 @@
  * nums2 = [3, 4]
  * The median is (2 + 3)/2 = 2.5
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 double
 findMedianSortedArrays(int* nums1,int nums1Size,int* nums2,int nums2Size)

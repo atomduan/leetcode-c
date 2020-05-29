@@ -1,7 +1,7 @@
 /**
  * Quick sort DEMO
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 #define LEET_SET_SLOT_SIZE 73
 

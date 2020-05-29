@@ -23,7 +23,7 @@
  * Y A   H R
  * P     I
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 static int
 compute_line_number(int index,int row_num)

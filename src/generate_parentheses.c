@@ -9,7 +9,7 @@
  *   "()()()"
  * ]
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 static void *
 leet_malloc(size_t size)

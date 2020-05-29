@@ -15,7 +15,7 @@
  * Output: -1
  */
 
-#include <linux_config.h>
+#include <let_config.h>
 
 int bin_serach(int* nums, int si, int ei, int target) {
     int mi = (si+ei)/2, li, ri;

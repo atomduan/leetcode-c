@@ -12,7 +12,7 @@ name=$(echo $name | sed 's/\.//g')
 rm Makefile
 
 cat <<END > Makefile
-CC = gcc
+CC = clang
 CFLAGS = -c -pipe -O0 -W -Wall -Wpointer-arith -Wno-unused-parameter -Werror -g
 
 LINK = \$(CC)
@@ -32,7 +32,7 @@ ${name}:	${name}.o \\
 
 	\$(LINK) -o ${name}.bin ${name}.o \\
 	misc_utils.o \\
-	-ldl -lpthread -Wl,-E
+	-ldl -lpthread -Wl
 
 ${name}.o:	\$(BUILD_DEPS)
 	\$(CC) \$(CFLAGS) \$(BUILD_INCS) -o ${name}.o ${name}.c

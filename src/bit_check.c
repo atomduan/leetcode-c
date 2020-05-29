@@ -1,4 +1,4 @@
-#include <linux_config.h>
+#include <let_config.h>
 
 int
 main(int argc,char **argv)

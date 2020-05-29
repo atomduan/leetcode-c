@@ -9,7 +9,7 @@
  * ]
  * Output: 1->1->2->3->4->4->5->6
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 struct ListNode {
     int val;

@@ -17,7 +17,7 @@
  * You must not use any built-in BigInteger library or convert the inputs to integer directly.
  */
 
-#include <linux_config.h>
+#include <let_config.h>
 
 #define leet_ctoi(c)    c-48
 #define leet_itoc(i)    i+48

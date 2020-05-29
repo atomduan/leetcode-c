@@ -1,4 +1,4 @@
-#include <linux_config.h>
+#include <let_config.h>
 
 #define RES_NANO_SEC    1000000000
 #define RES_MICR_SEC    1000000

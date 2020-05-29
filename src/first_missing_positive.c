@@ -16,7 +16,7 @@
  * Note:
  * Your algorithm should run in O(n) time and uses constant extra space.
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 #define LEET_SET_SLOT_SIZE 73
 

@@ -13,7 +13,7 @@
  * Explanation: The longest valid parentheses substring is "()()"
  *
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 int
 parenthese_scan(char *s)

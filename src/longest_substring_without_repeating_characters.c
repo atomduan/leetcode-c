@@ -6,7 +6,7 @@
  * Given "pwwkew", the answer is "wke", with the length of 3.
  * Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 struct char_dict {
     char *cp;

@@ -10,7 +10,7 @@
  * Input: "cbbd"
  * Output: "bb"
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 static char *
 scan_eve_palindrome(char *s,int *maxp)

@@ -1,7 +1,7 @@
 /**
  * Quick sort DEMO
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 static int
 leet_swap(int *nums,const int dest_idx,const int src_idx)

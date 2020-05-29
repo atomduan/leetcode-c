@@ -15,7 +15,7 @@
  *     struct ListNode *next;
  * };
  */
-#include <linux_config.h>
+#include <let_config.h>
 
 struct ListNode {
     int val;

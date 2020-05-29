@@ -9,7 +9,7 @@
  *  Note: The returned array must be malloced, assume caller calls free().
  */
 #include <stdio.h>
-#include <linux_config.h>
+#include <let_config.h>
 
 int
 main(int argc, char **argv)
